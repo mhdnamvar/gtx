@@ -29,6 +29,11 @@ func Test_LLBNumeric_3(t *testing.T) {
 	value := "12345"
 	codec := LLBNumeric{Field{"", "Should return error", 4}, false}
 	expected, err := codec.Encode(value)
+
+	if err == nil {
+		t.Errorf("Should return error\n")
+	}
+
 	if !reflect.DeepEqual(err.Error(), Errors[InvalidLengthError].message) {
 		t.Errorf("Should return error\n")
 	}
@@ -37,7 +42,7 @@ func Test_LLBNumeric_3(t *testing.T) {
 	}
 }
 
-func Test_BNumeric_4(t *testing.T) {
+func Test_LLBNumeric_4(t *testing.T) {
 	value := "12345ABC"
 	codec := LLBNumeric{Field{"", "Should return nil, error", 9}, true}
 	expected, err := codec.Encode(value)
