@@ -58,3 +58,19 @@ func Test_BNumeric_4(t *testing.T) {
 		t.Errorf("actual: %x, expected: %x\n", actual, expected)
 	}
 }
+
+func Test_BNumeric_5(t *testing.T) {
+	value := []byte{0x00, 0x00, 0x01, 0x23, 0x45}
+	expected := ""
+	codec := BNumeric{Field{"", "Should return error", 4}}
+	actual, err := codec.Decode(value)
+	if err == nil {
+		t.Errorf(err.Error())
+	}
+	if !reflect.DeepEqual(err.Error(), Errors[InvalidLengthError].message) {
+		t.Errorf("Should return error\n")
+	}
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("actual: %x, expected: %x\n", actual, expected)
+	}
+}

@@ -25,5 +25,8 @@ func (codec *BNumeric) Encode(s string) ([]byte, error) {
 
 // Decode ...
 func (codec *BNumeric) Decode(b []byte) (string, error) {
+	if len(b) > codec.Fields.Length {
+		return "", Errors[InvalidLengthError]
+	}
 	return strconv.FormatUint(BcdToInt(b), 10), nil
 }
