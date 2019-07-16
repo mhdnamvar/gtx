@@ -29,3 +29,12 @@ func (codec *LLLBNumeric) Encode(s string) ([]byte, error) {
 
 	return StrToBcd(s), nil
 }
+
+// Decode ...
+func (codec *LLLBNumeric) Decode(b []byte) (string, error) {
+	if len(b) > codec.Fields.Length || len(b) > 999 {
+		return "", Errors[InvalidLengthError]
+	}
+	s := strconv.FormatUint(BcdToInt(b), 10)
+	return LeftPad2Len(s, "0", codec.Fields.Length), nil
+}
