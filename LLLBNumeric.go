@@ -1,6 +1,9 @@
 package main
 
-import "math/big"
+import (
+	"math/big"
+	"strconv"
+)
 
 // LLLBNumeric ...
 type LLLBNumeric struct {

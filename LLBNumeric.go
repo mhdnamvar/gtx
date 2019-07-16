@@ -1,6 +1,9 @@
 package main
 
-import "math/big"
+import (
+	"math/big"
+	"strconv"
+)
 
 // LLBNumeric ...
 type LLBNumeric struct {
@@ -25,4 +28,13 @@ func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
 	}
 
 	return StrToBcd(s), nil
+}
+
+// Decode ...
+func (codec *LLBNumeric) Decode(b []byte) (string, error) {
+	if len(b) > codec.Fields.Length || len(b) > 99 {
+		return "", Errors[InvalidLengthError]
+	}
+	s := strconv.FormatUint(BcdToInt(b), 10)
+	return LeftPad2Len(s, "0", codec.Fields.Length), nil
 }

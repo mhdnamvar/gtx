@@ -60,3 +60,18 @@ func Test_LLBNumeric_4(t *testing.T) {
 		t.Errorf("Should return nil\n")
 	}
 }
+
+func Test_LLBNumeric_5(t *testing.T) {
+	value := []byte{0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00,
+		0x01, 0x23, 0x45}
+	expected := "00000012345"
+	codec := LLBNumeric{Field{"", "Should be 00000012345", 11}, true}
+	actual, err := codec.Decode(value)
+	if err != nil {
+		t.Errorf("Should return value\n")
+	}
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("actual: %x, expected: %x\n", actual, expected)
+	}
+}
