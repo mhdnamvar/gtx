@@ -7,13 +7,15 @@ import (
 
 // LLBNumeric ...
 type LLBNumeric struct {
-	Fields  Field
-	Padding bool
+	Name        string
+	Description string
+	Length      int
+	Padding     bool
 }
 
 // Encode ...
 func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
-	if len(s) > codec.Fields.Length || len(s) > 99 {
+	if len(s) > codec.Length || len(s) > 99 {
 		return nil, Errors[InvalidLengthError]
 	}
 
@@ -24,7 +26,7 @@ func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
 	}
 
 	if codec.Padding {
-		s = LeftPad2Len(s, "0", codec.Fields.Length)
+		s = LeftPad2Len(s, "0", codec.Length)
 	}
 	// length := IntToBcd(uint64(len(s)))
 	// b := []byte(s)
@@ -35,9 +37,9 @@ func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
 
 // Decode ...
 func (codec *LLBNumeric) Decode(b []byte) (string, error) {
-	if len(b) > codec.Fields.Length || len(b) > 99 {
+	if len(b) > codec.Length || len(b) > 99 {
 		return "", Errors[InvalidLengthError]
 	}
 	s := strconv.FormatUint(BcdToInt(b), 10)
-	return LeftPad2Len(s, "0", codec.Fields.Length), nil
+	return LeftPad2Len(s, "0", codec.Length), nil
 }

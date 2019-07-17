@@ -8,7 +8,7 @@ import (
 func Test_BNumeric_1(t *testing.T) {
 	value := "12345"
 	expected := []byte{0x00, 0x00, 0x01, 0x23, 0x45}
-	codec := BNumeric{Field{"", "Should be 000012345", 9}}
+	codec := BNumeric{"", "Should be 000012345", 9}
 	actual, err := codec.Encode(value)
 	if err != nil {
 		t.Errorf(err.Error())
@@ -20,7 +20,7 @@ func Test_BNumeric_1(t *testing.T) {
 
 func Test_BNumeric_2(t *testing.T) {
 	value := "12345ABC"
-	codec := BNumeric{Field{"", "Should return nil, error", 9}}
+	codec := BNumeric{"", "Should return nil, error", 9}
 	actual, err := codec.Encode(value)
 	if err == nil {
 		t.Errorf("Should return error\n")
@@ -34,7 +34,7 @@ func Test_BNumeric_2(t *testing.T) {
 }
 func Test_BNumeric_3(t *testing.T) {
 	value := "12345"
-	codec := BNumeric{Field{"", "Should return invalid length error", 4}}
+	codec := BNumeric{"", "Should return invalid length error", 4}
 	actual, err := codec.Encode(value)
 	if err == nil {
 		t.Errorf("Should return error\n")
@@ -49,7 +49,7 @@ func Test_BNumeric_3(t *testing.T) {
 func Test_BNumeric_4(t *testing.T) {
 	value := []byte{0x00, 0x00, 0x01, 0x23, 0x45}
 	expected := "12345"
-	codec := BNumeric{Field{"", "Should be 12345", 9}}
+	codec := BNumeric{"", "Should be 12345", 9}
 	actual, err := codec.Decode(value)
 	if err != nil {
 		t.Errorf(err.Error())
@@ -62,7 +62,7 @@ func Test_BNumeric_4(t *testing.T) {
 func Test_BNumeric_5(t *testing.T) {
 	value := []byte{0x00, 0x00, 0x01, 0x23, 0x45}
 	expected := ""
-	codec := BNumeric{Field{"", "Should return error", 4}}
+	codec := BNumeric{"", "Should return error", 4}
 	actual, err := codec.Decode(value)
 	if err == nil {
 		t.Errorf(err.Error())

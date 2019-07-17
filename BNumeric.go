@@ -7,12 +7,14 @@ import (
 
 // BNumeric ...
 type BNumeric struct {
-	Fields Field
+	Name        string
+	Description string
+	Length      int
 }
 
 // Encode ...
 func (codec *BNumeric) Encode(s string) ([]byte, error) {
-	if len(s) > codec.Fields.Length {
+	if len(s) > codec.Length {
 		return nil, Errors[InvalidLengthError]
 	}
 	n := new(big.Int)
@@ -20,12 +22,12 @@ func (codec *BNumeric) Encode(s string) ([]byte, error) {
 	if !ok {
 		return nil, Errors[NumberFormatError]
 	}
-	return StrToBcd(LeftPad2Len(s, "0", codec.Fields.Length)), nil
+	return StrToBcd(LeftPad2Len(s, "0", codec.Length)), nil
 }
 
 // Decode ...
 func (codec *BNumeric) Decode(b []byte) (string, error) {
-	if len(b) > codec.Fields.Length {
+	if len(b) > codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
 	return strconv.FormatUint(BcdToInt(b), 10), nil
