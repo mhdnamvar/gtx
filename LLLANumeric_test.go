@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_LLLANumeric_1(t *testing.T) {
+func Test_LLLANumeric_EncodeWithPadding(t *testing.T) {
 	value := "12345"
 	expected := []byte{
 		0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
@@ -32,7 +32,7 @@ func Test_LLLANumeric_1(t *testing.T) {
 	}
 }
 
-func Test_LLLANumeric_2(t *testing.T) {
+func Test_LLLANumeric_EncodeWithoutPadding(t *testing.T) {
 	value := "12345"
 	expected := []byte{0x31, 0x32, 0x33, 0x34, 0x35}
 	codec := LLLANumeric{"", "Should be 3132333435", 103, false}
@@ -45,7 +45,7 @@ func Test_LLLANumeric_2(t *testing.T) {
 	}
 }
 
-func Test_LLLANumeric_3(t *testing.T) {
+func Test_LLLANumeric_EncodeInvalidLength(t *testing.T) {
 	value := "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
 	codec := LLLANumeric{"", "Should return LLL length error", 100, false}
 	actual, err := codec.Encode(value)
@@ -60,7 +60,7 @@ func Test_LLLANumeric_3(t *testing.T) {
 	}
 }
 
-func Test_LLLANumeric_4(t *testing.T) {
+func Test_LLLANumeric_EncodeInvalidNumber(t *testing.T) {
 	value := "12345ABC"
 	codec := LLLANumeric{"", "Should return nil, error", 199, true}
 	actual, err := codec.Encode(value)
@@ -75,7 +75,7 @@ func Test_LLLANumeric_4(t *testing.T) {
 	}
 }
 
-func Test_LLLANumeric_5(t *testing.T) {
+func Test_LLLANumeric_EncodeInvalidLength2(t *testing.T) {
 	value := `1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
 		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
 		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +

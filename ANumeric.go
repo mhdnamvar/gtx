@@ -1,7 +1,6 @@
 package main
 
 import (
-	"math/big"
 	"strconv"
 )
 
@@ -14,9 +13,8 @@ type ANumeric struct {
 
 // Encode ...
 func (codec *ANumeric) Encode(s string) ([]byte, error) {
-	n := new(big.Int)
-	n, ok := n.SetString(s, 10)
-	if !ok {
+	_, err := strconv.Atoi(s)
+	if err != nil {
 		return nil, Errors[NumberFormatError]
 	}
 	return []byte(LeftPad2Len(s, "0", codec.Length)), nil
