@@ -1,6 +1,9 @@
 package main
 
-import "math/big"
+import (
+	"math/big"
+	"strconv"
+)
 
 // LLLANumeric ...
 type LLLANumeric struct {
@@ -25,4 +28,16 @@ func (codec *LLLANumeric) Encode(s string) ([]byte, error) {
 	}
 
 	return []byte(s), nil
+}
+
+// Decode ...
+func (codec *LLANumeric) Decode(b []byte) (string, error) {
+	if len(b) > codec.Fields.Length {
+		return "", Errors[InvalidLengthError]
+	}
+	i, err := strconv.Atoi(string(b))
+	if err != nil {
+		return "", Errors[NumberFormatError]
+	}
+	return strconv.Itoa(i), nil
 }
