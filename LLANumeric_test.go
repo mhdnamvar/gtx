@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-func Test_LLANumeric_1(t *testing.T) {
+func Test_LLANumeric_encode(t *testing.T) {
 	value := "12345"
-	expected := []byte{0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35}
-	codec := LLANumeric{Field{"", "Should be 3030303030303132333435", 11}, true}
+	expected := []byte("0512345") //[]byte{0x30, 0x35, 0x31, 0x32, 0x33, 0x34, 0x35}
+	codec := LLANumeric{"", "Should be 0512345", 11}
 	actual, err := codec.Encode(value)
 	if err != nil {
 		t.Errorf(err.Error())
@@ -18,22 +18,9 @@ func Test_LLANumeric_1(t *testing.T) {
 	}
 }
 
-func Test_LLANumeric_2(t *testing.T) {
-	value := "12345"
-	expected := []byte{0x31, 0x32, 0x33, 0x34, 0x35}
-	codec := LLANumeric{Field{"", "Should be 3132333435", 11}, false}
-	actual, err := codec.Encode(value)
-	if err != nil {
-		t.Errorf(err.Error())
-	}
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("actual: %x, expected: %x\n", actual, expected)
-	}
-}
-
-func Test_LLANumeric_3(t *testing.T) {
+func Test_LLANumeric_invalidLen(t *testing.T) {
 	value := "123456789012"
-	codec := LLANumeric{Field{"", "Should return error", 11}, false}
+	codec := LLANumeric{"", "Should return error", 11}
 	actual, err := codec.Encode(value)
 	if err == nil {
 		t.Errorf("Should return error\n")
@@ -46,9 +33,9 @@ func Test_LLANumeric_3(t *testing.T) {
 	}
 }
 
-func Test_LLANumeric_4(t *testing.T) {
+func Test_LLANumeric_InvalidNumber(t *testing.T) {
 	value := "1234567890A"
-	codec := LLANumeric{Field{"", "Should return nil, error", 11}, true}
+	codec := LLANumeric{"", "Should return nil, error", 11}
 	actual, err := codec.Encode(value)
 	if err == nil {
 		t.Errorf("Should return error\n")

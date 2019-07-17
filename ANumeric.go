@@ -7,7 +7,9 @@ import (
 
 // ANumeric ...
 type ANumeric struct {
-	Fields Field
+	Name        string
+	Description string
+	Length      int
 }
 
 // Encode ...
@@ -17,12 +19,12 @@ func (codec *ANumeric) Encode(s string) ([]byte, error) {
 	if !ok {
 		return nil, Errors[NumberFormatError]
 	}
-	return []byte(LeftPad2Len(s, "0", codec.Fields.Length)), nil
+	return []byte(LeftPad2Len(s, "0", codec.Length)), nil
 }
 
 // Decode ...
 func (codec *ANumeric) Decode(b []byte) (string, error) {
-	if len(b) > codec.Fields.Length {
+	if len(b) > codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
 	i, err := strconv.Atoi(string(b))

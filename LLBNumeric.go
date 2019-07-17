@@ -26,6 +26,9 @@ func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
 	if codec.Padding {
 		s = LeftPad2Len(s, "0", codec.Fields.Length)
 	}
+	// length := IntToBcd(uint64(len(s)))
+	// b := []byte(s)
+	// b = append(length, b...)
 
 	return StrToBcd(s), nil
 }

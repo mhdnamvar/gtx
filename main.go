@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("ISO 8583 Go implemtation")
+	fmt.Println("Go ISO8583")
 }

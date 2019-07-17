@@ -32,7 +32,7 @@ func (codec *LLLANumeric) Encode(s string) ([]byte, error) {
 
 // Decode ...
 func (codec *LLANumeric) Decode(b []byte) (string, error) {
-	if len(b) > codec.Fields.Length {
+	if len(b) > codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
 	i, err := strconv.Atoi(string(b))
