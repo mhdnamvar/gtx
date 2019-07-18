@@ -77,7 +77,7 @@ func Test_LLANumeric_decodeInvalidLen(t *testing.T) {
 }
 
 func Test_LLANumeric_decodeInvalidFormat(t *testing.T) {
-	value := []byte("1012G3456789")
+	value := []byte("10123456789MN23456783E4B")
 	codec := LLANumeric{"", "Should return error", 10}
 	actual, err := codec.Decode(value)
 	if err == nil {
