@@ -10,6 +10,7 @@ type LLANumeric struct {
 	Name        string
 	Description string
 	Length      int
+	Padding     bool
 }
 
 // Encode ...
@@ -21,6 +22,9 @@ func (codec *LLANumeric) Encode(s string) ([]byte, error) {
 	n, ok := n.SetString(s, 10)
 	if !ok {
 		return nil, Errors[NumberFormatError]
+	}
+	if codec.Padding {
+		s = LeftPad2Len(s, "0", codec.Length)
 	}
 	length := []byte(LeftPad2Len(strconv.Itoa(len(s)), "0", 2))
 	return append(length, []byte(s)...), nil
