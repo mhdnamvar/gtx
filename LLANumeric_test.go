@@ -47,3 +47,16 @@ func Test_LLANumeric_InvalidNumber(t *testing.T) {
 		t.Errorf("Should return nil\n")
 	}
 }
+
+func Test_LLANumeric_decode(t *testing.T) {
+	value := []byte("101234567890123456783E4B")
+	expected :=  "1234567890"
+	codec := LLANumeric{"", "Should be 1234567890", 10}
+	actual, err := codec.Decode(value)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("actual: %x, expected: %x\n", actual, expected)
+	}
+}
