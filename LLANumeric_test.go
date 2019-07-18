@@ -60,3 +60,18 @@ func Test_LLANumeric_decode(t *testing.T) {
 		t.Errorf("actual: %x, expected: %x\n", actual, expected)
 	}
 }
+
+func Test_LLANumeric_decodeWithErro(t *testing.T) {
+	value := []byte("10123456789")
+	codec := LLANumeric{"", "Should return error", 10}
+	actual, err := codec.Decode(value)
+	if err == nil {
+		t.Errorf("Should return error\n")
+	}
+	if !reflect.DeepEqual(err.Error(), Errors[InvalidLengthError].message) {
+		t.Errorf("Should return error\n")
+	}
+	if actual != "" {
+		t.Errorf("Empty string expected but received: %s\n", actual)
+	}
+}

@@ -28,12 +28,18 @@ func (codec *LLANumeric) Encode(s string) ([]byte, error) {
 
 // Decode ...
 func (codec *LLANumeric) Decode(b []byte) (string, error) {
+	if len(b) < 3 {
+		return "", Errors[InvalidLengthError]
+	}
 	length, err := strconv.Atoi(string(b[:2]))
 	if err != nil || length <= 0 {
-		return "", Errors[NumberFormatError]
+		return "", Errors[InvalidLengthError]
+	}
+	if len(b) < length + 2 {
+		return "", Errors[InvalidLengthError]
 	}
 	n := new(big.Int)
-	n, ok := n.SetString(string(b[2:length+2]), 10)
+	n, ok := n.SetString(string(b[2 : length + 2]), 10)
 	if !ok {
 		return "", Errors[NumberFormatError]
 	}
