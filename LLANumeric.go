@@ -39,13 +39,17 @@ func (codec *LLANumeric) Decode(b []byte) (string, error) {
 	if err != nil || length <= 0 {
 		return "", Errors[InvalidLengthError]
 	}
-	if len(b) < length + 2 {
+	if len(b) < length+2 {
 		return "", Errors[InvalidLengthError]
 	}
 	n := new(big.Int)
-	n, ok := n.SetString(string(b[2 : length + 2]), 10)
+	n, ok := n.SetString(string(b[2:length+2]), 10)
 	if !ok {
 		return "", Errors[NumberFormatError]
 	}
-	return n.String(), nil
+	s := n.String()
+	if codec.Padding {
+		s = LeftPad2Len(s, "0", codec.Length)
+	}
+	return s, nil
 }

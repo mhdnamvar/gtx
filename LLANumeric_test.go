@@ -41,7 +41,7 @@ func Test_LLANumeric_InvalidFormat(t *testing.T) {
 
 func Test_LLANumeric_Decode(t *testing.T) {
 	value := []byte("101234567890123456783E4B")
-	expected :=  "1234567890"
+	expected := "1234567890"
 	codec := LLANumeric{"", "Should be 1234567890", 10, false}
 	actual, err := codec.Decode(value)
 	checkDecodeResult(t, expected, actual, err)
@@ -59,4 +59,12 @@ func Test_LLANumeric_DecodeInvalidFormat(t *testing.T) {
 	codec := LLANumeric{"", "Should return error", 10, false}
 	actual, err := codec.Decode(value)
 	checkDecodeError(t, actual, err, NumberFormatError)
+}
+
+func Test_LLANumeric_DecodePad(t *testing.T) {
+	value := []byte("100001234567890123456783E4B")
+	expected := "0001234567"
+	codec := LLANumeric{"", "Should be 0001234567", 10, true}
+	actual, err := codec.Decode(value)
+	checkDecodeResult(t, expected, actual, err)
 }
