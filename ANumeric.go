@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math/big"
 	"strconv"
 )
 
@@ -22,12 +23,13 @@ func (codec *ANumeric) Encode(s string) ([]byte, error) {
 
 // Decode ...
 func (codec *ANumeric) Decode(b []byte) (string, error) {
-	if len(b) > codec.Length {
+	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
-	i, err := strconv.Atoi(string(b))
-	if err != nil {
+	n := new(big.Int)
+	n, ok := n.SetString(string(b), 10)
+	if !ok {
 		return "", Errors[NumberFormatError]
 	}
-	return strconv.Itoa(i), nil
+	return n.String(), nil
 }
