@@ -1,4 +1,5 @@
 package main
+
 import (
 	"reflect"
 	"testing"
@@ -22,7 +23,7 @@ func checkEncodeError(t *testing.T, actual []byte, err error, errType int) {
 		t.Errorf("Should return error\n")
 	}
 	if actual != nil {
-		t.Errorf("Nil value expected but received: %X\n", actual)
+		t.Errorf("Nil expected but received: %X\n", actual)
 	}
 }
 
