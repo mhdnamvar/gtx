@@ -1,7 +1,6 @@
 package main
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -22,15 +21,10 @@ func Test_LLLBNumeric_Encode(t *testing.T) {
 
 func Test_LLLBNumeric_EncodeNoPad(t *testing.T) {
 	value := "12345"
-	expected := []byte{0x05, 0x01, 0x23, 0x45}
-	codec := LLLBNumeric{"", "Should be 012345", 103, false}
+	expected := []byte{0x00, 0x05, 0x01, 0x23, 0x45}
+	codec := LLLBNumeric{"", "Should be 0005012345", 103, false}
 	actual, err := codec.Encode(value)
-	if err != nil {
-		t.Errorf(err.Error())
-	}
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("actual: %x, expected: %x\n", actual, expected)
-	}
+	checkEncodeResult(t, expected, actual, err)
 }
 
 func Test_LLLBNumeric_InvalidLen(t *testing.T) {
