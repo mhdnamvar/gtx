@@ -31,7 +31,7 @@ func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
 
 // Decode ...
 func (codec *LLBNumeric) Decode(b []byte) (string, error) {
-	if len(b) < 3 {
+	if len(b) < 2 {
 		return "", Errors[InvalidLengthError]
 	}
 	length := BcdToInt(b[:1])
@@ -40,7 +40,7 @@ func (codec *LLBNumeric) Decode(b []byte) (string, error) {
 	} else {
 		length = length/2
 	}
-	if length <= 0 || uint64(len(b)) < length {
+	if length <= 0 || uint64(len(b)) < length+1 {
 		return "", Errors[InvalidLengthError]
 	}
 	return strconv.FormatUint(BcdToInt(b[1:length+1]), 10), nil

@@ -41,3 +41,19 @@ func Test_LLBNumeric_Decode(t *testing.T) {
 	actual, err := codec.Decode(value)
 	checkDecodeResult(t, expected, actual, err)
 }
+
+func Test_LLBNumeric_DecodeError(t *testing.T) {
+	value := []byte{0x10}
+	codec := LLBNumeric{"", "Should return error", 10, true}
+	actual, err := codec.Decode(value)
+	checkDecodeError(t, actual, err, InvalidLengthError)
+
+	value = []byte{0x10, 0x12, 0x34, 0x56, 0x78, 0x90}
+	expected := "1234567890"
+	actual, err = codec.Decode(value)
+	checkDecodeResult(t, expected, actual, err)
+
+	value = []byte{0x11, 0x12, 0x34, 0x56, 0x78, 0x90}
+	actual, err = codec.Decode(value)
+	checkDecodeError(t, actual, err, InvalidLengthError)
+}
