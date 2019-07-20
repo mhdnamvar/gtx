@@ -6,7 +6,7 @@ import (
 
 func Test_LLAChar_Encode(t *testing.T) {
 	value := "ABCD"
-	expected := []byte("04ABCD")
+	expected := []byte{0x30, 0x34, 0x41, 0x42, 0x43, 0x44}
 	codec := LLAChar{"", "Should be '04ABCD'", 11, false}
 	actual, err := codec.Encode(value)
 	checkEncodeResult(t, expected, actual, err)
