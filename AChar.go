@@ -1,0 +1,21 @@
+package main
+
+// AChar ...
+type AChar struct {
+	Name        string
+	Description string
+	Length      int
+}
+
+// Encode ...
+func (codec *AChar) Encode(s string) ([]byte, error) {
+	return []byte(RightPad2Len(s, " ", codec.Length)), nil
+}
+
+// Decode ...
+func (codec *AChar) Decode(b []byte) (string, error) {
+	if len(b) < codec.Length {
+		return "", Errors[InvalidLengthError]
+	}
+	return string(b), nil
+}
