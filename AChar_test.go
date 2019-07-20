@@ -7,7 +7,7 @@ import (
 
 func Test_AChar_encode(t *testing.T) {
 	value := "ABCD"
-	expected := []byte("ABCD   ")
+	expected := []byte("ABCD   ") // ]byte{0x41, 0x42, 0x43, 0x44, 0x20, 0x20, 0x20}
 	fmt.Printf("%x\n", expected)
 	codec := AChar{"", "Should be 'ABCD   '", 7}
 	actual, err := codec.Encode(value)
