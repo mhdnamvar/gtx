@@ -70,8 +70,8 @@ var ascii2ebcdic = []byte{
 	'p', '\xdd', '\xde', '\xdb', '\xdc', '\x8d', '\x8e', '\xdf',
 }
 
-// EbcdicToASCII ...
-func EbcdicToASCII(s string) []byte {
+// ASCIIToEbcdic ...
+func ASCIIToEbcdic(s string) []byte {
 	b := []byte(s)
 	var ebcdic = make([]byte, len(b))
 	for i, v := range b {
@@ -80,8 +80,8 @@ func EbcdicToASCII(s string) []byte {
 	return ebcdic
 }
 
-// ASCIIToEbcdic ...
-func ASCIIToEbcdic(s string) []byte {
+// EbcdicToASCII ...
+func EbcdicToASCII(s string) []byte {
 	b := []byte(s)
 	var ascii = make([]byte, len(b))
 	for i, v := range b {
