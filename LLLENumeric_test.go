@@ -1,0 +1,82 @@
+package main
+
+import (
+	"testing"
+)
+
+func Test_LLLENumeric_Encode(t *testing.T) {
+	value := "12345"
+	expected := []byte{
+		0xf1, 0xf0, 0xf3,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf1, 0xf2, 0xf3, 0xf4, 0xf5}
+	codec := LLLENumeric{"", `Should be 103000000000000000000000000000000000000000` +
+		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true}
+	actual, err := codec.Encode(value)
+	checkEncodeResult(t, expected, actual, err)
+
+	expected = ASCIIToEbcdic("00512345")
+	codec = LLLENumeric{"", `Should be 00512345`, 103, false}
+	actual, err = codec.Encode(value)
+	checkEncodeResult(t, expected, actual, err)
+}
+
+func Test_LLLENumeric_EncodeInvalidLength(t *testing.T) {
+	value := "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
+	codec := LLLENumeric{"", "Should return LLL length error", 100, false}
+	actual, err := codec.Encode(value)
+	checkEncodeError(t, actual, err, InvalidLengthError)
+}
+
+func Test_LLLENumeric_EncodeInvalidFormat(t *testing.T) {
+	value := "12345ABC"
+	codec := LLLENumeric{"", "Should return nil, error", 199, false}
+	actual, err := codec.Encode(value)
+	checkEncodeError(t, actual, err, NumberFormatError)
+}
+
+func Test_LLLENumeric_EncodeInvalidLength2(t *testing.T) {
+	value := `1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
+		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890`
+	codec := LLLENumeric{"", "Should return error", 999, false}
+	actual, err := codec.Encode(value)
+	checkEncodeError(t, actual, err, InvalidLengthError)
+}
+
+func Test_LLLENumeric_Decode(t *testing.T) {
+	value := []byte{0xf1, 0xf0, 0xf3,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
+		0xf1, 0xf2, 0xf3, 0xf4, 0xf5}
+	expected := `00000000000000000000000000000000000000000000000000` +
+		`00000000000000000000000000000000000000000000000012345`
+	codec := LLLENumeric{"", `Should be 000000000000000000000000000000000000000` +
+		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true}
+	actual, err := codec.Decode(value)
+	checkDecodeResult(t, expected, actual, err)
+}
