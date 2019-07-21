@@ -9,6 +9,9 @@ type AChar struct {
 
 // Encode ...
 func (codec *AChar) Encode(s string) ([]byte, error) {
+	if len(s) > codec.Length {
+		return nil, Errors[InvalidLengthError]
+	}
 	return []byte(RightPad2Len(s, " ", codec.Length)), nil
 }
 
