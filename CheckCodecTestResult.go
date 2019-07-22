@@ -10,7 +10,7 @@ func checkEncodeResult(t *testing.T, expected []byte, actual []byte, err error) 
 		t.Errorf(err.Error())
 	}
 	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("actual: %x, expected: %x\n", actual, expected)
+		t.Errorf("actual: %X, expected: %X\n", actual, expected)
 	}
 }
 

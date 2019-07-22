@@ -5,6 +5,8 @@ const (
 	InvalidLengthError = 1001
 	// NumberFormatError ...
 	NumberFormatError = 1002
+	// InvalidDataError
+	InvalidDataError = 1003
 )
 
 // IsoError ...
@@ -30,4 +32,5 @@ func init() {
 	Errors = make(map[int]*IsoError)
 	Errors[InvalidLengthError] = NewIsoError(InvalidLengthError, "Invalid length")
 	Errors[NumberFormatError] = NewIsoError(NumberFormatError, "Invalid value, should be numeric")
+	Errors[InvalidDataError] = NewIsoError(InvalidDataError, "Invalid data")
 }
