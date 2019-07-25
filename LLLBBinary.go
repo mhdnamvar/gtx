@@ -38,7 +38,6 @@ func (codec *LLLBBinary) Decode(b []byte) (string, error) {
 	if length%2 != 0 {
 		length = length+1
 	}
-	fmt.Println(length)
 	if length <= 0 || uint64(len(b)) < length+2 {
 		return "", Errors[InvalidLengthError]
 	}
