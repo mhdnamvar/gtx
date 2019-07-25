@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+func assertEqual(t *testing.T, expected string, actual string) {
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("actual: %s, expected: %s\n", actual, expected)
+	}
+}
+
 func checkEncodeResult(t *testing.T, expected []byte, actual []byte, err error) {
 	if err != nil {
 		t.Errorf(err.Error())
