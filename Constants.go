@@ -5,7 +5,7 @@ const (
 	InvalidLengthError = 1001
 	// NumberFormatError ...
 	NumberFormatError = 1002
-	// InvalidDataError
+	// InvalidDataError ...
 	InvalidDataError = 1003
 )
 
