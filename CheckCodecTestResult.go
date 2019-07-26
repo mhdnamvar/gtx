@@ -7,7 +7,7 @@ import (
 
 func assertEqual(t *testing.T, expected interface{}, actual interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("actual: %v(type=%T), expected: %v(type%T)\n", actual, actual, expected, expected)
+		t.Errorf("actual: %v(type=%T), expected: %v(type=%T)\n", actual, actual, expected, expected)
 	}
 }
 

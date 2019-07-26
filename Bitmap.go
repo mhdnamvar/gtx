@@ -36,6 +36,20 @@ func (bits *Bitmap) Sets(xs ...int) {
 	}
 }
 
+// Decode ...
+func (bits *Bitmap) Decode(s string) ([]int, error) {
+	if len(s)%2 != 0 || len(s) > 16 {
+		return nil, Errors[InvalidLengthError]
+	}
+	b, err := hex.DecodeString(s)
+	if err != nil {
+		return nil, Errors[InvalidDataError]
+	}
+	for i := 0; i < len(b); i++ {
+		bits[i] = b[i]
+	}
+	return bits.Array(), nil
+}
 // String ...
 func (bits Bitmap) String() string {
 	if bits.IsSet(1) {
