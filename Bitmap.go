@@ -36,9 +36,25 @@ func (bits *Bitmap) Sets(xs ...int) {
 	}
 }
 
+// String ...
 func (bits Bitmap) String() string {
 	if bits.IsSet(1) {
 		return strings.ToUpper(hex.EncodeToString(bits[:]))
 	}
 	return strings.ToUpper(hex.EncodeToString(bits[8:]))
+}
+
+// Array ...
+func (bits Bitmap) Array() []int {
+	var array []int
+	length := 64
+	if bits.IsSet(1) {
+		length = 128
+	}
+	for i := 1; i <= length; i++ {
+		if bits.IsSet(i) {
+			array = append(array, i)
+		}
+	}
+	return array
 }

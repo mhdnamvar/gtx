@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func assertEqual(t *testing.T, expected string, actual string) {
+func assertEqual(t *testing.T, expected interface{}, actual interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("actual: %s, expected: %s\n", actual, expected)
+		t.Errorf("actual: %v(type=%T), expected: %v(type%T)\n", actual, actual, expected, expected)
 	}
 }
 
