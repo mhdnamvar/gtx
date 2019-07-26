@@ -50,8 +50,9 @@ func (bits *Bitmap) Decode(s string) ([]int, error) {
 	}
 	return bits.Array(), nil
 }
-// String ...
-func (bits Bitmap) String() string {
+
+// Encode ...
+func (bits Bitmap) Encode() string {
 	if bits.IsSet(1) {
 		return strings.ToUpper(hex.EncodeToString(bits[:]))
 	}
