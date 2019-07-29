@@ -22,26 +22,30 @@ func Test_LLLENumeric_Encode(t *testing.T) {
 	codec := LLLENumeric{"", `Should be 103000000000000000000000000000000000000000` +
 		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true}
 	actual, err := codec.Encode(value)
-	checkEncodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 
 	expected = ASCIIToEbcdic("00512345")
 	codec = LLLENumeric{"", `Should be 00512345`, 103, false}
 	actual, err = codec.Encode(value)
-	checkEncodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }
 
 func Test_LLLENumeric_EncodeInvalidLength(t *testing.T) {
 	value := "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
 	codec := LLLENumeric{"", "Should return LLL length error", 100, false}
 	actual, err := codec.Encode(value)
-	checkEncodeError(t, actual, err, InvalidLengthError)
+	assertEqual(t, Errors[InvalidLengthError], err)
+	assertEqual(t, nil, actual)
 }
 
 func Test_LLLENumeric_EncodeInvalidFormat(t *testing.T) {
 	value := "12345ABC"
 	codec := LLLENumeric{"", "Should return nil, error", 199, false}
 	actual, err := codec.Encode(value)
-	checkEncodeError(t, actual, err, NumberFormatError)
+	assertEqual(t, Errors[NumberFormatError], err)
+	assertEqual(t, nil, actual)
 }
 
 func Test_LLLENumeric_EncodeInvalidLength2(t *testing.T) {
@@ -57,7 +61,8 @@ func Test_LLLENumeric_EncodeInvalidLength2(t *testing.T) {
 		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890`
 	codec := LLLENumeric{"", "Should return error", 999, false}
 	actual, err := codec.Encode(value)
-	checkEncodeError(t, actual, err, InvalidLengthError)
+	assertEqual(t, Errors[InvalidLengthError], err)
+	assertEqual(t, nil, actual)
 }
 
 func Test_LLLENumeric_Decode(t *testing.T) {
@@ -78,5 +83,6 @@ func Test_LLLENumeric_Decode(t *testing.T) {
 	codec := LLLENumeric{"", `Should be 000000000000000000000000000000000000000` +
 		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true}
 	actual, err := codec.Decode(value)
-	checkDecodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }

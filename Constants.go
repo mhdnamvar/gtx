@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 const (
 	// InvalidLengthError ...
 	InvalidLengthError = 1001
@@ -23,6 +25,11 @@ func NewIsoError(code int, message string) *IsoError {
 // Error ...
 func (e *IsoError) Error() string {
 	return e.message
+}
+
+// String
+func (e *IsoError) String() string {
+	return fmt.Sprintf("%d %s", e.code, e.message)
 }
 
 // Errors ...

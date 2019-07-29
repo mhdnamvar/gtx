@@ -9,7 +9,8 @@ func Test_LAChar_encode(t *testing.T) {
 	expected := []byte{0x37, 0x41, 0x42, 0x43, 0x44, 0x20, 0x20, 0x20}
 	codec := LAChar{"", "Should be '7ABCD   '", 7, true}
 	actual, err := codec.Encode(value)
-	checkEncodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }
 
 func Test_LAChar_decode(t *testing.T) {
@@ -17,5 +18,6 @@ func Test_LAChar_decode(t *testing.T) {
 	expected := "ABCD   "
 	codec := LAChar{"", "Should be 'ABCD   '", 7, true}
 	actual, err := codec.Decode(value)
-	checkDecodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }

@@ -3,7 +3,7 @@ package main
 // ASCII87 ISO 8583:1987 protocol
 var ASCII87 = []Codable{
 	&AChar{"DE000", "MESSAGE TYPE INDICATOR", 4},
-	ABitmap{"DE001", "ASCII encoded bitmap", 16},
+	&ABinary{"DE001", "ASCII encoded bitmap", 16},
 	&LLBChar{"DE002", "PRIMARY ACCOUNT NUMBER", 19, false},
 	&ANumeric{"DE003", "PROCESSING CODE", 6},
 	&ANumeric{"DE004", "AMOUNT, TRANSACTION", 12},

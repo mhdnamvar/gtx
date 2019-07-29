@@ -9,7 +9,8 @@ func Test_LLAChar_Encode(t *testing.T) {
 	expected := []byte{0x30, 0x34, 0x41, 0x42, 0x43, 0x44}
 	codec := LLAChar{"", "Should be '04ABCD'", 11, false}
 	actual, err := codec.Encode(value)
-	checkEncodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }
 
 func Test_LLAChar_EncodePad(t *testing.T) {
@@ -17,14 +18,16 @@ func Test_LLAChar_EncodePad(t *testing.T) {
 	expected := []byte("11ABCD       ")
 	codec := LLAChar{"", "Should be '11ABCD       '", 11, true}
 	actual, err := codec.Encode(value)
-	checkEncodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }
 
 func Test_LLAChar_InvalidLen(t *testing.T) {
 	value := "ABCDEFGHIJKL"
 	codec := LLAChar{"", "Should return error", 11, false}
 	actual, err := codec.Encode(value)
-	checkEncodeError(t, actual, err, InvalidLengthError)
+	assertEqual(t, Errors[InvalidLengthError], err)
+	assertEqual(t, nil, actual)
 }
 
 func Test_LLAChar_Decode(t *testing.T) {
@@ -32,14 +35,16 @@ func Test_LLAChar_Decode(t *testing.T) {
 	expected := "ABCD"
 	codec := LLAChar{"", "Should be 'ABCD'", 10, false}
 	actual, err := codec.Decode(value)
-	checkDecodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }
 
 func Test_LLAChar_DecodeInvalidLen(t *testing.T) {
 	value := []byte("10ABCD")
 	codec := LLAChar{"", "Should return error", 10, false}
 	actual, err := codec.Decode(value)
-	checkDecodeError(t, actual, err, InvalidLengthError)
+	assertEqual(t, Errors[InvalidLengthError], err)
+	assertEqual(t, nil, actual)
 }
 
 func Test_LLAChar_DecodePad(t *testing.T) {
@@ -47,5 +52,6 @@ func Test_LLAChar_DecodePad(t *testing.T) {
 	expected := "ABCD      "
 	codec := LLAChar{"", "Should be 'ABCD      '", 10, true}
 	actual, err := codec.Decode(value)
-	checkDecodeResult(t, expected, actual, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
 }
