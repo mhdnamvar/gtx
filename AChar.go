@@ -1,11 +1,7 @@
 package main
 
 // AChar ...
-type AChar struct {
-	Name        string
-	Description string
-	Length      int
-}
+type AChar Codec
 
 // Encode ...
 func (codec *AChar) Encode(s string) ([]byte, error) {
