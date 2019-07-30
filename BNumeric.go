@@ -10,6 +10,7 @@ type BNumeric struct {
 	Codec
 }
 
+// BNumericNew ...
 func BNumericNew(name string, description string, length int) *BNumeric {	
 	return &BNumeric{Codec{name, description, length, true}}
 }
