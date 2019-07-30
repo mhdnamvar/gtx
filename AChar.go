@@ -5,7 +5,8 @@ type AChar struct {
 	Codec
 }
 
-func ACharNew(name string, description string, length int) *AChar {	
+// ACharNew ...
+func ACharNew(name string, description string, length int) *AChar {
 	return &AChar{Codec{name, description, length, true}}
 }
 

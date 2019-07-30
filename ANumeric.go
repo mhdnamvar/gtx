@@ -10,7 +10,8 @@ type ANumeric struct {
 	Codec
 }
 
-func ANumericNew(name string, description string, length int) *ANumeric {	
+// ANumericNew ...
+func ANumericNew(name string, description string, length int) *ANumeric {
 	return &ANumeric{Codec{name, description, length, true}}
 }
 

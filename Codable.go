@@ -5,7 +5,7 @@ type Codec struct {
 	Name        string
 	Description string
 	Length      int
-	Padding		bool
+	Padding     bool
 }
 
 // Codable ...
@@ -21,23 +21,22 @@ type Codable interface {
 // Protocol ...
 type Protocol []Codable
 
-
-// GetName
+// GetName ...
 func (codec *Codec) GetName() string {
 	return codec.Name
 }
 
-// GetDescription
+// GetDescription ...
 func (codec *Codec) GetDescription() string {
 	return codec.Description
 }
 
-// GetLength
+// GetLength ...
 func (codec *Codec) GetLength() int {
 	return codec.Length
 }
 
-// GetPadding
+// GetPadding ...
 func (codec *Codec) GetPadding() bool {
 	return codec.Padding
 }
