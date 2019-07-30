@@ -6,9 +6,11 @@ import (
 )
 // BBinary ...
 type BBinary struct {
-	Name        string
-	Description string
-	Length      int
+	Codec
+}
+
+func BBinaryNew(name string, description string, length int) *BBinary {	
+	return &BBinary{Codec{name, description, length, true}}
 }
 
 // Encode ...

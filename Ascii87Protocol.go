@@ -3,7 +3,7 @@ package main
 // ASCII1987 ISO 8583:1987 protocol
 var ASCII1987 = Protocol{
 	ACharNew("DE000", "MESSAGE TYPE INDICATOR", 4),
-	// &ABinary{"DE001", "ASCII encoded bitmap", 16},
+	BBinaryNew("DE001", "ASCII encoded bitmap", 16),
 	// &LLBChar{"DE002", "PRIMARY ACCOUNT NUMBER", 19, false},
 	ANumericNew("DE003", "PROCESSING CODE", 6),
 	ANumericNew("DE004", "AMOUNT, TRANSACTION", 12),
@@ -54,7 +54,7 @@ var ASCII1987 = Protocol{
 	ANumericNew("DE049", "CURRENCY CODE, TRANSACTION", 3),
 	ACharNew("DE050", "CURRENCY CODE, SETTLEMENT", 3),
 	ACharNew("DE051", "CURRENCY CODE, CARDHOLDER BILLING", 3),
-	// &ABinary{"DE052", "PIN DATA", 8},
+	BBinaryNew("DE052", "PIN DATA", 8),
 	ANumericNew("DE053", "SECURITY RELATED CONTROL INFORMATION", 16),
 	// &LLBChar{"DE054", "ADDITIONAL AMOUNTS", 120, true},
 	// &LLBChar{"DE055", "RESERVED ISO", 999, true},
@@ -66,7 +66,7 @@ var ASCII1987 = Protocol{
 	// &LLBChar{"DE061", "RESERVED PRIVATE", 999, true},
 	// &LLBChar{"DE062", "RESERVED PRIVATE", 999, true},
 	// &LLBChar{"DE063", "RESERVED PRIVATE", 999, true},
-	// &ABinary{"DE064", "MESSAGE AUTHENTICATION CODE FIELD", 8},
+	BBinaryNew("DE064", "MESSAGE AUTHENTICATION CODE FIELD", 8),
 	ANumericNew("DE065", "BITMAP, EXTENDED", 1),
 	ANumericNew("DE066", "SETTLEMENT CODE", 1),
 	ANumericNew("DE067", "EXTENDED PAYMENT CODE", 2),
@@ -98,7 +98,7 @@ var ASCII1987 = Protocol{
 	ACharNew("DE093", "RESPONSE INDICATOR", 6),
 	ACharNew("DE094", "SERVICE INDICATOR", 7),
 	ACharNew("DE095", "REPLACEMENT AMOUNTS", 42),
-	// &ABinary{"DE096", "MESSAGE SECURITY CODE", 16},
+	BBinaryNew("DE096", "MESSAGE SECURITY CODE", 16),
 	ANumericNew("DE097", "AMOUNT, NET SETTLEMENT", 17),
 	// &AChar{"DE098", "PAYEE", 25, true},
 	// &LLBNumeric{"DE099", "SETTLEMENT INSTITUTION IDENT CODE", 11, false},
@@ -130,5 +130,5 @@ var ASCII1987 = Protocol{
 	// &LLBChar{"DE125", "RESERVED PRIVATE USE", 999, true},
 	// &LLBChar{"DE126", "RESERVED PRIVATE USE", 999, true},
 	// &LLBChar{"DE127", "RESERVED PRIVATE USE", 999, true},
-	// &ABinary{"DE128", "MAC 2", 8},
+	BBinaryNew("DE128", "MAC 2", 8),
 }
