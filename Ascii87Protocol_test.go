@@ -5,21 +5,19 @@ import (
 	"testing"
 )
 
-func Test_Ascii87_DE000(t *testing.T) {
-	for _, c := range ASCII1987 {
-		switch c.(type) {
-		case *AChar:
-			fmt.Printf("%-8s%-50s%-3d%-5t\n",
-				c.(*AChar).Name,
-				c.(*AChar).Description,
-				c.(*AChar).Length,
-				c.(*AChar).Padding)
-		}
+func Test_Ascii87_AChar(t *testing.T) {
+	for _, codec := range ASCII1987 {
+		fmt.Printf("%-8s%-35s%-3d%-3t\n", 
+			codec.GetName(), 
+			codec.GetDescription(),
+			codec.GetLength(),
+			codec.GetPadding())
 	}
 	fmt.Println()
 	value := "AB"
 	expected := []byte("AB  ")
-	actual, err := ASCII1987[0].Encode(value)
+	mtiCodec := ASCII1987[0]
+	actual, err := mtiCodec.Encode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
 }
