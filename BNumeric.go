@@ -7,9 +7,11 @@ import (
 
 // BNumeric ...
 type BNumeric struct {
-	Name        string
-	Description string
-	Length      int
+	Codec
+}
+
+func BNumericNew(name string, description string, length int) *BNumeric {	
+	return &BNumeric{Codec{name, description, length, true}}
 }
 
 // Encode ...
