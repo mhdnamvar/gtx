@@ -9,6 +9,7 @@ type BBinary struct {
 	Codec
 }
 
+// BBinaryNew ...
 func BBinaryNew(name string, description string, length int) *BBinary {	
 	return &BBinary{Codec{name, description, length, true}}
 }

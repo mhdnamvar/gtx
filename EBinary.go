@@ -6,9 +6,12 @@ import (
 )
 // EBinary ...
 type EBinary struct {
-	Name        string
-	Description string
-	Length      int
+	Codec
+}
+
+// EBinaryNew ...
+func EBinaryNew(name string, description string, length int) *EBinary {	
+	return &EBinary{Codec{name, description, length, true}}
 }
 
 // Encode ...
