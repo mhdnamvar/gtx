@@ -7,9 +7,11 @@ import (
 
 // ANumeric ...
 type ANumeric struct {
-	Name        string
-	Description string
-	Length      int
+	Codec
+}
+
+func ANumericNew(name string, description string, length int) *ANumeric {	
+	return &ANumeric{Codec{name, description, length, true}}
 }
 
 // Encode ...

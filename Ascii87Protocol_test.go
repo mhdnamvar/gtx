@@ -7,8 +7,9 @@ import (
 
 func Test_Ascii87_AChar(t *testing.T) {
 	for _, codec := range ASCII1987 {
-		fmt.Printf("%-8s%-35s%-3d%-3t\n", 
-			codec.GetName(), 
+		fmt.Printf("%-8s%-20T%-40s%-3d%-3t\n", 
+			codec.GetName(),
+			codec,
 			codec.GetDescription(),
 			codec.GetLength(),
 			codec.GetPadding())

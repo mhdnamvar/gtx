@@ -6,7 +6,7 @@ type AChar struct {
 }
 
 func ACharNew(name string, description string, length int) *AChar {	
-	return &AChar{Codec{name, description, length, false}}
+	return &AChar{Codec{name, description, length, true}}
 }
 
 // Encode ...
