@@ -13,6 +13,7 @@ type LLBChar struct {
 func LLBCharNew(name string, description string, length int, padding bool) *LLBChar {	
 	return &LLBChar{Codec{name, description, length, padding}}
 }
+
 // Encode ...
 func (codec *LLBChar) Encode(s string) ([]byte, error) {
 	if len(s) > codec.Length || len(s) > 99 {

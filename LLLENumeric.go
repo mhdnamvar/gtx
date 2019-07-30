@@ -7,10 +7,12 @@ import (
 
 // LLLENumeric ...
 type LLLENumeric struct {
-	Name        string
-	Description string
-	Length      int
-	Padding     bool
+	Codec
+}
+
+// LLLENumericNew ...
+func LLLENumericNew(name string, description string, length int, padding bool) *LLLENumeric {
+	return &LLLENumeric{Codec{name, description, length, padding}}
 }
 
 // Encode ...

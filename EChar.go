@@ -2,9 +2,12 @@ package main
 
 // EChar ...
 type EChar struct {
-	Name        string
-	Description string
-	Length      int
+	Codec
+}
+
+// ECharNew ...
+func ECharNew(name string, description string, length int) *EChar {	
+	return &EChar{Codec{name, description, length, true}}
 }
 
 // Encode ...

@@ -7,9 +7,12 @@ import (
 
 // ENumeric ...
 type ENumeric struct {
-	Name        string
-	Description string
-	Length      int
+	Codec
+}
+
+// ENumericNew ...
+func ENumericNew(name string, description string, length int) *ENumeric {	
+	return &ENumeric{Codec{name, description, length, true}}
 }
 
 // Encode ...

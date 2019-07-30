@@ -4,10 +4,12 @@ import "strconv"
 
 // LAChar ...
 type LAChar struct {
-	Name        string
-	Description string
-	Length      int
-	Padding     bool
+	Codec
+}
+
+// LACharNew ...
+func LACharNew(name string, description string, length int, padding bool) *LAChar {	
+	return &LAChar{Codec{name, description, length, padding}}
 }
 
 // Encode ...

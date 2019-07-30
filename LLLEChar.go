@@ -4,10 +4,12 @@ import "strconv"
 
 // LLLEChar ...
 type LLLEChar struct {
-	Name        string
-	Description string
-	Length      int
-	Padding     bool
+	Codec
+}
+
+// LLLECharNew ...
+func LLLECharNew(name string, description string, length int, padding bool) *LLLEChar {
+	return &LLLEChar{Codec{name, description, length, padding}}
 }
 
 // Encode ...

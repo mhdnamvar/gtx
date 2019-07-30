@@ -19,14 +19,14 @@ func Test_LLLANumeric_Encode(t *testing.T) {
 		0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
 		0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35}
-	codec := LLLANumeric{"", `Should be 103000000000000000000000000000000000000000` +
-		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true}
+	codec := LLLANumericNew("", `Should be 103000000000000000000000000000000000000000` +
+		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true)
 	actual, err := codec.Encode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
 
 	expected = []byte("00512345")
-	codec = LLLANumeric{"", `Should be 00512345`, 103, false}
+	codec = LLLANumericNew("", `Should be 00512345`, 103, false)
 	actual, err = codec.Encode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
@@ -34,7 +34,7 @@ func Test_LLLANumeric_Encode(t *testing.T) {
 
 func Test_LLLANumeric_EncodeInvalidLength(t *testing.T) {
 	value := "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
-	codec := LLLANumeric{"", "Should return LLL length error", 100, false}
+	codec := LLLANumericNew("", "Should return LLL length error", 100, false)
 	actual, err := codec.Encode(value)
 	assertEqual(t, Errors[InvalidLengthError], err)
 	assertEqual(t, nil, actual)
@@ -42,7 +42,7 @@ func Test_LLLANumeric_EncodeInvalidLength(t *testing.T) {
 
 func Test_LLLANumeric_EncodeInvalidFormat(t *testing.T) {
 	value := "12345ABC"
-	codec := LLLANumeric{"", "Should return nil, error", 199, false}
+	codec := LLLANumericNew("", "Should return nil, error", 199, false)
 	actual, err := codec.Encode(value)
 	assertEqual(t, Errors[NumberFormatError], err)
 	assertEqual(t, nil, actual)
@@ -59,7 +59,7 @@ func Test_LLLANumeric_EncodeInvalidLength2(t *testing.T) {
 		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
 		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890` +
 		`1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890`
-	codec := LLLANumeric{"", "Should return error", 999, false}
+	codec := LLLANumericNew("", "Should return error", 999, false)
 	actual, err := codec.Encode(value)
 	assertEqual(t, Errors[InvalidLengthError], err)
 	assertEqual(t, nil, actual)
@@ -70,8 +70,8 @@ func Test_LLLANumeric_Decode(t *testing.T) {
 		`0000000000000000000000000000000000000000000000000000000000012345`)
 	expected := `00000000000000000000000000000000000000000000000000` +
 		`00000000000000000000000000000000000000000000000012345`
-	codec := LLLANumeric{"", `Should be 000000000000000000000000000000000000000` +
-		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true}
+	codec := LLLANumericNew("", `Should be 000000000000000000000000000000000000000` +
+		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true)
 	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)

@@ -7,10 +7,12 @@ import (
 )
 // LLLBBinary ...
 type LLLBBinary struct {
-	Name        string
-	Description string
-	Length      int
-	Padding		bool
+	Codec
+}
+
+// LLLBBinaryNew ...
+func LLLBBinaryNew(name string, description string, length int, padding bool) *LLLBBinary {
+	return &LLLBBinary{Codec{name, description, length, padding}}
 }
 
 // Encode ...

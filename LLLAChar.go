@@ -6,10 +6,12 @@ import (
 
 // LLLAChar ...
 type LLLAChar struct {
-	Name        string
-	Description string
-	Length      int
-	Padding     bool
+	Codec
+}
+
+// LLLACharNew ...
+func LLLACharNew(name string, description string, length int, padding bool) *LLLAChar {
+	return &LLLAChar{Codec{name, description, length, padding}}
 }
 
 // Encode ...
