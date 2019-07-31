@@ -2,22 +2,23 @@ package main
 
 import (
 	"bytes"
-	"log"
 	"fmt"
+	"log"
 )
 
 const MaxField = 128
+
 // IsoMsg ...
 type IsoMsg struct {
 	protocol Protocol
 	bitmap   Bitmap
-	fields   [MaxField+1]*IsoField
+	fields   [MaxField + 1]*IsoField
 }
 
 // IsoMsgNew ...
 func IsoMsgNew(p Protocol) *IsoMsg {
 	bitmap := Bitmap{}
-	fields := [MaxField+1]*IsoField{}
+	fields := [MaxField + 1]*IsoField{}
 	isoMsg := &IsoMsg{p, bitmap, fields}
 	isoMsg.Set(1, bitmap.Encode())
 	return isoMsg
@@ -34,7 +35,7 @@ func (isoMsg *IsoMsg) Get(pos int) (*IsoField, error) {
 	return isoMsg.fields[pos], nil
 }
 
-// MTI
+// MTI ...
 func (isoMsg *IsoMsg) MTI() (*IsoField, error) {
 	return isoMsg.Get(0)
 }
@@ -49,30 +50,29 @@ func (isoMsg *IsoMsg) Set(pos int, s string) {
 	if pos > 1 {
 		isoMsg.bitmap.Set(pos)
 		isoMsg.fields[1].value = isoMsg.bitmap.Encode()
-	}	
+	}
 }
 
 // Clear ...
 func (isoMsg *IsoMsg) Clear(pos int) {
 	isoMsg.fields[pos] = nil
-	isoMsg.bitmap.Clear(pos)	
+	isoMsg.bitmap.Clear(pos)
 	isoMsg.fields[1].value = isoMsg.bitmap.Encode()
 }
 
 func (isoMsg *IsoMsg) String() string {
 	var buffer bytes.Buffer
-    for i, f := range isoMsg.fields {
+	for i, f := range isoMsg.fields {
 		if f != nil {
 			buffer.WriteString(fmt.Sprintf("%-6s%s\n", isoMsg.protocol[i].GetName(), f.value))
-		}		
-    }
-    return buffer.String()
+		}
+	}
+	return buffer.String()
 }
 
 // Encode ...
 func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 	var encoded []byte
-	fmt.Printf("%v\n", isoMsg.bitmap.Array())	
 	for _, i := range isoMsg.bitmap.Array() {
 		f, err := isoMsg.Get(i)
 		if err != nil {
@@ -82,9 +82,9 @@ func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-		fmt.Printf("%-3d: %X\n", i, b)
+		fmt.Printf("%03d: %X\n", i, b)
 		encoded = append(encoded, b...)
-    }
+	}
 	return encoded, nil
 }
 
