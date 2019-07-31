@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+// MaxField ...
 const MaxField = 128
 
 // IsoMsg ...
