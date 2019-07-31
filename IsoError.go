@@ -13,7 +13,9 @@ const (
 
 var (
 	// OutOfBoundIndexError ...
-	OutOfBoundIndexError = IsoErrorNew(1004, "Out of boud index error, pos should be between 0-129")
+	OutOfBoundIndexError = IsoErrorNew(1004, "Out of bound index error, pos should be between 0-128")
+	// IsoFieldNotFoundError ...
+	IsoFieldNotFoundError = IsoErrorNew(1005, "Iso field not found")
 )
 
 // IsoError ...

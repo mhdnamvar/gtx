@@ -18,6 +18,9 @@ func (bits *Bitmap) IsSet(i int) bool {
 func (bits *Bitmap) Set(i int) {
 	i--
 	bits[i/8] |= 1 << uint(7-i%8)
+	if i > 64 {
+		bits.Set(1)
+	}
 }
 
 // Clear ...
@@ -56,7 +59,7 @@ func (bits Bitmap) Encode() string {
 	if bits.IsSet(1) {
 		return strings.ToUpper(hex.EncodeToString(bits[:]))
 	}
-	return strings.ToUpper(hex.EncodeToString(bits[8:]))
+	return strings.ToUpper(hex.EncodeToString(bits[:8]))
 }
 
 // Array ...

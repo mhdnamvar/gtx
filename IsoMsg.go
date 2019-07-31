@@ -1,20 +1,40 @@
 package main
 
-import "log"
+import (
+	"log"
+)
 
+const MaxField = 128
 // IsoMsg ...
 type IsoMsg struct {
 	protocol Protocol
 	bitmap   Bitmap
-	fields   [129]*IsoField
+	fields   [MaxField+1]*IsoField
 }
 
 // IsoMsgNew ...
 func IsoMsgNew(p Protocol) *IsoMsg {
 	bitmap := Bitmap{}
-	fields := [129]*IsoField{}
-	fields[1], _ = IsoFieldNew(1, bitmap.Encode())
-	return &IsoMsg{p, bitmap, fields}
+	fields := [MaxField+1]*IsoField{}
+	isoMsg := &IsoMsg{p, bitmap, fields}
+	isoMsg.Set(1, bitmap.Encode())
+	return isoMsg
+}
+
+// Get ...
+func (isoMsg *IsoMsg) Get(pos int) (*IsoField, error) {
+	if pos < 0 || pos > MaxField {
+		return nil, OutOfBoundIndexError
+	}
+	if isoMsg.fields[pos] == nil {
+		return nil, IsoFieldNotFoundError
+	}
+	return isoMsg.fields[pos], nil
+}
+
+// MTI
+func (isoMsg *IsoMsg) MTI() (*IsoField, error) {
+	return isoMsg.Get(0)
 }
 
 // Set ...
@@ -24,14 +44,16 @@ func (isoMsg *IsoMsg) Set(pos int, s string) {
 		log.Fatal(err.Error())
 	}
 	isoMsg.fields[pos] = isoField
-	isoMsg.bitmap.Set(pos)
-	isoMsg.fields[1].value = isoMsg.bitmap.Encode()
+	if pos > 1 {
+		isoMsg.bitmap.Set(pos)
+		isoMsg.fields[1].value = isoMsg.bitmap.Encode()
+	}	
 }
 
-// UnSet ...
-func (isoMsg *IsoMsg) UnSet(pos int) {
+// Clear ...
+func (isoMsg *IsoMsg) Clear(pos int) {
 	isoMsg.fields[pos] = nil
-	isoMsg.bitmap.Clear(pos)
+	isoMsg.bitmap.Clear(pos)	
 	isoMsg.fields[1].value = isoMsg.bitmap.Encode()
 }
 

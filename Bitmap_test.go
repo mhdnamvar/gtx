@@ -4,6 +4,25 @@ import (
 	"testing"
 )
 
+func Test_Bitmap_Encode_Primary(t *testing.T) {
+	var bits Bitmap
+	bits.Set(2)
+	bits.Set(12)
+	expected := "4010000000000000"	
+	actual := bits.Encode()
+	assertEqual(t, expected, actual)
+}
+
+func Test_Bitmap_Encode_SetSecondary(t *testing.T) {
+	var bits Bitmap
+	bits.Set(2)
+	bits.Set(12)
+	bits.Set(128)
+	expected := "C0100000000000000000000000000001"	
+	actual := bits.Encode()
+	assertEqual(t, expected, actual)
+}
+
 func Test_Bitmap_Encode(t *testing.T) {
 	var bits Bitmap
 	bits.Sets(2, 3, 23, 36, 64, 65, 90, 128)
