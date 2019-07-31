@@ -2,9 +2,9 @@ package main
 
 // ASCII1987 ISO 8583:1987 protocol
 var ASCII1987 = Protocol{
-	ACharNew("DE000", "MESSAGE TYPE INDICATOR", 4),
-	BBinaryNew("DE001", "ASCII encoded bitmap", 16),
-	LLBCharNew("DE002", "PRIMARY ACCOUNT NUMBER", 19, false),
+	ANumericNew("DE000", "MESSAGE TYPE INDICATOR", 4),
+	ABinaryNew("DE001", "ASCII encoded bitmap", 16),
+	LLANumericNew("DE002", "PRIMARY ACCOUNT NUMBER", 19, false),
 	ANumericNew("DE003", "PROCESSING CODE", 6),
 	ANumericNew("DE004", "AMOUNT, TRANSACTION", 12),
 	ANumericNew("DE005", "AMOUNT, SETTLEMENT", 12),
