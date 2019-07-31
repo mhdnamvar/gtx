@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"log"
+	"fmt"
 )
 
 const MaxField = 128
@@ -55,6 +57,16 @@ func (isoMsg *IsoMsg) Clear(pos int) {
 	isoMsg.fields[pos] = nil
 	isoMsg.bitmap.Clear(pos)	
 	isoMsg.fields[1].value = isoMsg.bitmap.Encode()
+}
+
+func (isoMsg *IsoMsg) String() string {
+	var buffer bytes.Buffer
+    for i, f := range isoMsg.fields {
+		if f != nil {
+			buffer.WriteString(fmt.Sprintf("%-6s%s\n", isoMsg.protocol[i].GetName(), f.value))
+		}		
+    }
+    return buffer.String()
 }
 
 // Encode ...
