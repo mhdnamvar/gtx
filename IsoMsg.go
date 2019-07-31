@@ -70,8 +70,22 @@ func (isoMsg *IsoMsg) String() string {
 }
 
 // Encode ...
-func (isoMsg *IsoMsg) Encode(s string) ([]byte, error) {
-	return nil, nil
+func (isoMsg *IsoMsg) Encode() ([]byte, error) {
+	var encoded []byte
+	fmt.Printf("%v\n", isoMsg.bitmap.Array())	
+	for _, i := range isoMsg.bitmap.Array() {
+		f, err := isoMsg.Get(i)
+		if err != nil {
+			return nil, err
+		}
+		b, err := isoMsg.protocol[i].Encode(f.value)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Printf("%-3d: %X\n", i, b)
+		encoded = append(encoded, b...)
+    }
+	return encoded, nil
 }
 
 // Decode ...
