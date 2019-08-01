@@ -40,3 +40,8 @@ func (codec *Codec) GetLength() int {
 func (codec *Codec) GetPadding() bool {
 	return codec.Padding
 }
+
+// String ...
+func (codec *Codec) String() string {
+	return codec.Name
+}

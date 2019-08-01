@@ -2,14 +2,25 @@ package main
 
 // IsoField ...
 type IsoField struct {
-	pos   int
-	value string
+	pos   	int
+	text 	string
+	codec 	Codable
+	value	[]byte
 }
 
 // IsoFieldNew ...
-func IsoFieldNew(pos int, value string) (*IsoField, error) {
+func IsoFieldNew(pos int, text string, codec Codable) (*IsoField, error) {
 	if pos < 0 || pos > 129 {
 		return nil, OutOfBoundIndexError
 	}
-	return &IsoField{pos, value}, nil
+	value, err := codec.Encode(text)
+	if err != nil {
+		return nil, err
+	}
+	return &IsoField{pos, text, codec, value}, nil
+}
+
+// String ...
+func (isoField *IsoField) String() string {
+	return isoField.text
 }
