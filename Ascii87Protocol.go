@@ -3,7 +3,7 @@ package main
 // ASCII1987 ISO 8583:1987 protocol
 var ASCII1987 = Protocol{
 	ANumericNew("DE000", "MESSAGE TYPE INDICATOR", 4),
-	/*Length should be 16*/ABinaryNew("DE001", "ASCII encoded bitmap", 8),
+	ABinaryNew("DE001", "ASCII encoded bitmap", 16),
 	LLANumericNew("DE002", "PRIMARY ACCOUNT NUMBER", 19, false),
 	ANumericNew("DE003", "PROCESSING CODE", 6),
 	ANumericNew("DE004", "AMOUNT, TRANSACTION", 12),

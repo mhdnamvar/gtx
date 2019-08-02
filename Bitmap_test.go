@@ -9,7 +9,7 @@ func Test_Bitmap_Encode_Primary(t *testing.T) {
 	bits.Set(2)
 	bits.Set(12)
 	expected := "4010000000000000"	
-	actual := bits.Encode()
+	actual := bits.String()
 	assertEqual(t, expected, actual)
 }
 
@@ -19,7 +19,7 @@ func Test_Bitmap_Encode_SetSecondary(t *testing.T) {
 	bits.Set(12)
 	bits.Set(128)
 	expected := "C0100000000000000000000000000001"	
-	actual := bits.Encode()
+	actual := bits.String()
 	assertEqual(t, expected, actual)
 }
 
@@ -27,7 +27,7 @@ func Test_Bitmap_Encode(t *testing.T) {
 	var bits Bitmap
 	bits.Sets(2, 3, 23, 36, 64, 65, 90, 128)
 	expected := "E0000200100000018000004000000001"	
-	actual := bits.Encode()
+	actual := bits.String()
 	assertEqual(t, expected, actual)
 }
 
@@ -54,5 +54,24 @@ func Test_Bitmap_Array(t *testing.T) {
 		22, 23, 32, 33, 35, 37, 41, 42, 43, 48, 49, 51, 55, 61, 63}
 	bits.Decode(value)	
 	actual := bits.Array()
+	assertEqual(t, expected, actual)
+}
+
+func Test_Bitmap_Empty(t *testing.T) {
+	var bits Bitmap
+	bits.Set(2)
+	bits.Clear(2)
+	expected := "0000000000000000"	
+	actual := bits.String()
+	assertEqual(t, expected, actual)
+}
+
+func Test_Bitmap_Secondary(t *testing.T) {
+	var bits Bitmap
+	bits.Set(2)
+	bits.Set(12)
+	bits.Set(128)
+	expected := "C0100000000000000000000000000001"	
+	actual := bits.String()
 	assertEqual(t, expected, actual)
 }

@@ -17,11 +17,11 @@ type IsoMsg struct {
 }
 
 // IsoMsgNew ...
-func IsoMsgNew(p Protocol) *IsoMsg {
+func IsoMsgNew(mti string, p Protocol) *IsoMsg {
 	bitmap := Bitmap{}
 	fields := [MaxField + 1]*IsoField{}
 	isoMsg := &IsoMsg{p, bitmap, fields}
-	isoMsg.Set(1, bitmap.Encode())
+	isoMsg.Set(0, mti)
 	return isoMsg
 }
 
@@ -62,22 +62,25 @@ func (isoMsg *IsoMsg) MTI() (*IsoField, error) {
 
 // Set ...
 func (isoMsg *IsoMsg) Set(pos int, s string) {
-	isoField, err := IsoFieldNew(pos, s, isoMsg.protocol[pos])
-	if err != nil {
-		log.Fatal(isoMsg.protocol[pos], " ", err.Error())
+	if pos == 1 {
+		return
 	}
-	isoMsg.fields[pos] = isoField
+	f, err := IsoFieldNew(pos, s, isoMsg.protocol[pos])
+	if err != nil {
+		log.Fatal("Creating ", isoMsg.protocol[pos], " failed:", err)
+	}
+	isoMsg.fields[pos] = f
 	if pos > 1 {
 		isoMsg.bitmap.Set(pos)
-		isoMsg.fields[1].text = isoMsg.bitmap.Encode()
-	}
+		isoMsg.refresh()	
+	}	
 }
 
 // Clear ...
 func (isoMsg *IsoMsg) Clear(pos int) {
 	isoMsg.fields[pos] = nil
 	isoMsg.bitmap.Clear(pos)
-	isoMsg.fields[1].text = isoMsg.bitmap.Encode()
+	isoMsg.refresh()
 }
 
 // String ...
@@ -111,26 +114,13 @@ func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 
 // Decode ...
 func (isoMsg *IsoMsg) Decode(b []byte) error {	
-	// mti, err := isoMsg.protocol[0].Decode(b)
-	// if err != nil {
-	// 	return err
-	// }
-	// isoMsg.Set(0, mti)
-	
-	// bitmap, err := isoMsg.protocol[1].Decode(b[len(mti):])
-	// if err != nil {
-	// 	return err
-	// }
-	// isoMsg.Set(1, bitmap)
-
-	// for _, i := range isoMsg.bitmap.Array() {
-	// 	f, err := isoMsg.Get(i)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}		
-	// 	encoded = append(encoded, f.value...)
-	// 	fmt.Printf("%03d: %X\n", i, f.value)
-	// }
-
 	return nil
+}
+
+func (isoMsg *IsoMsg) refresh() {
+	b, err := IsoFieldNew(1, isoMsg.bitmap.String(), isoMsg.protocol[1])
+	if err != nil {
+		log.Fatal(isoMsg.protocol[1], " ", err)
+	}
+	isoMsg.fields[1] = b
 }

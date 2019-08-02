@@ -16,6 +16,9 @@ var (
 	OutOfBoundIndexError = IsoErrorNew(1004, "Out of bound index error, pos should be between 0-128")
 	// IsoFieldNotFoundError ...
 	IsoFieldNotFoundError = IsoErrorNew(1005, "Iso field not found")
+	// NotSupportedBitmapError ...
+	NotSupportedBitmapError = IsoErrorNew(1005, "Bitmap bigger than 2 bytes not supported")
+	
 )
 
 // IsoError ...

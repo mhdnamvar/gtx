@@ -6,18 +6,17 @@ import (
 )
 
 func Test_IsoMsg_New(t *testing.T) {
-	isoMsg := IsoMsgNew(ASCII1987)
+	isoMsg := IsoMsgNew("0100", ASCII1987)
 	f1, err := isoMsg.Get(1)
-	assertEqual(t, nil, err)
-	assertEqual(t, 1, f1.pos)
-	assertEqual(t, "0000000000000000", f1.value)
+	assertEqual(t, nil, f1)
+	assertEqual(t, IsoFieldNotFoundError, err)
 }
 
 func Test_IsoMsg_FieldNotFound(t *testing.T) {
-	isoMsg := IsoMsgNew(ASCII1987)
+	isoMsg := IsoMsgNew("0100", ASCII1987)
 	f1, err := isoMsg.Get(0)
-	assertEqual(t, nil, f1)
-	assertEqual(t, IsoFieldNotFoundError, err)
+	assertEqual(t, nil, err)
+	assertEqual(t, "0100", f1.text)
 
 	f1, err = isoMsg.Get(128)
 	assertEqual(t, nil, f1)
@@ -25,40 +24,61 @@ func Test_IsoMsg_FieldNotFound(t *testing.T) {
 }
 
 func Test_IsoMsg_InvalidIndex(t *testing.T) {
-	isoMsg := IsoMsgNew(ASCII1987)
+	isoMsg := IsoMsgNew("0100", ASCII1987)
 	f1, err := isoMsg.Get(129)
 	assertEqual(t, OutOfBoundIndexError, err)
 	assertEqual(t, nil, f1)
 }
 
 func Test_IsoMsg_MTI(t *testing.T) {
-	value := "0800"
-	isoMsg := IsoMsgNew(ASCII1987)
-	isoMsg.Set(0, value)
+	isoMsg := IsoMsgNew("0100", ASCII1987)
 	mti, err := isoMsg.MTI()
 	assertEqual(t, nil, err)
 	assertEqual(t, 0, mti.pos)
-	assertEqual(t, value, mti.value)
-	assertEqual(t, "0000000000000000", isoMsg.bitmap.Encode())
+	assertEqual(t, "0100", mti.text)
 }
 
-func Test_IsoMsg_Bitmap(t *testing.T) {
-	isoMsg := IsoMsgNew(ASCII1987)
-	isoMsg.Set(0, "0800")
+func Test_IsoMsg_AsciiBitmap(t *testing.T) {
+	isoMsg := IsoMsgNew("0500", ASCII1987)
+	isoMsg.Set(2, "6734000000000000067")
+	
+	mti, err := isoMsg.Get(0)
+	assertEqual(t, nil, err)
+	assertEqual(t, "0500", mti.text)
+
+	bitmap, err := isoMsg.Get(1)
+	assertEqual(t, nil, err)
+	assertEqual(t, "4000000000000000", bitmap.text)
+	assertEqual(t, []byte("00000000000000004000000000000000"), bitmap.value)
+
+	pan, err := isoMsg.Get(2)
+	assertEqual(t, nil, err)
+	assertEqual(t, "6734000000000000067", pan.text)
+	assertEqual(t, []byte("196734000000000000067"), pan.value)
+}
+
+func Test_IsoMsg_AsciiBitmapPrimary(t *testing.T) {
+	isoMsg := IsoMsgNew("0100", ASCII1987)
 	isoMsg.Set(2, "1234567890")
 	isoMsg.Set(12, "1234")
 	bitmap, err := isoMsg.Get(1)
 	assertEqual(t, nil, err)
-	assertEqual(t, "4010000000000000", bitmap.value)
+	assertEqual(t, []byte("00000000000000004010000000000000"), bitmap.value)
+}
 
+func Test_IsoMsg_AsciiBitmapSecondary(t *testing.T) {
+	isoMsg := IsoMsgNew("0100", ASCII1987)
+	isoMsg.Set(2, "1234567890")
+	isoMsg.Set(12, "1234")
 	isoMsg.Set(128, "2D2A98F12D2A98F1")
-	bitmap, err = isoMsg.Get(1)
+
+	bitmap, err := isoMsg.Get(1)
 	assertEqual(t, nil, err)
-	assertEqual(t, "C0100000000000000000000000000001", bitmap.value)
+	assertEqual(t, []byte("C0100000000000000000000000000001"), bitmap.value)
 }
 
 func Test_IsoMsg_Print(t *testing.T) {
-    isoMsg := IsoMsgNew(ASCII1987)
+    isoMsg := IsoMsgNew("0100", ASCII1987)
     isoMsg.Set(0, "0100")
 	isoMsg.Set(2, "6734000000000000067")
 	isoMsg.Set(3, "000000")
@@ -85,13 +105,13 @@ func Test_IsoMsg_Print(t *testing.T) {
 
 	bitmap, err := isoMsg.Get(1)
 	assertEqual(t, nil, err)
-	assertEqual(t, "F238220188A1821A0200000000000001", bitmap.value)
+	assertEqual(t, []byte("F238220188A1821A0200000000000001"), bitmap.value)
 
 	fmt.Printf("%s\n\n", isoMsg)
 }
 
 func Test_IsoMsg_Encode(t *testing.T) {
-    isoMsg := IsoMsgNew(ASCII1987)
+    isoMsg := IsoMsgNew("0100", ASCII1987)
     isoMsg.Set(0, "0100")
 	isoMsg.Set(2, "6734000000000000067")
 	isoMsg.Set(3, "000000")
@@ -122,7 +142,7 @@ func Test_IsoMsg_Encode(t *testing.T) {
 }
 
 func Test_IsoMsg_Decode(t *testing.T) {
-	isoMsg := IsoMsgNew(ASCII1987)
+	isoMsg := IsoMsgNew("0100", ASCII1987)
 	isoMsg.Set(2, "6734000000000000067")
 	isoMsg.Set(3, "000000")
 	isoMsg.Set(4, "000000000101")
@@ -152,4 +172,37 @@ func Test_IsoMsg_Decode(t *testing.T) {
     
     err = isoMsg.Decode(b)
     assertEqual(t, nil, err)
+}
+
+
+func Test_IsoMsg_AsciiFields(t *testing.T) {
+	isoMsg := IsoMsgNew("0500", ASCII1987)
+	isoMsg.Set(2, "6734000000000000067")
+	isoMsg.Set(12, "100100")
+	isoMsg.Set(128, "2D2A98F12D2A98F1")
+
+	mti, err := isoMsg.MTI()
+	assertEqual(t, nil, err)
+	assertEqual(t, "0500", mti.text)
+	assertEqual(t, []byte{0x30, 0x35, 0x30, 0x30}, mti.value)
+	
+	bitmap, err := isoMsg.Get(1)
+	assertEqual(t, nil, err)
+	assertEqual(t, "C0100000000000000000000000000001", bitmap.text)
+	assertEqual(t, []byte("C0100000000000000000000000000001"), bitmap.value)
+
+	pan, err := isoMsg.Get(2)
+	assertEqual(t, nil, err)
+	assertEqual(t, "6734000000000000067", pan.text)
+	assertEqual(t, []byte("196734000000000000067"), pan.value)
+
+	time, err := isoMsg.Get(12)
+	assertEqual(t, nil, err)
+	assertEqual(t, "100100", time.text)
+	assertEqual(t, []byte("100100"), time.value)
+
+	mac, err := isoMsg.Get(128)
+	assertEqual(t, nil, err)
+	assertEqual(t, "2D2A98F12D2A98F1", mac.text)
+	assertEqual(t, []byte("2D2A98F12D2A98F1"), mac.value)
 }

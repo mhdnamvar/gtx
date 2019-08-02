@@ -55,7 +55,7 @@ func (bits *Bitmap) Decode(s string) ([]int, error) {
 }
 
 // Encode ...
-func (bits Bitmap) Encode() string {
+func (bits *Bitmap) String() string {
 	if bits.IsSet(1) {
 		return strings.ToUpper(hex.EncodeToString(bits[:]))
 	}
@@ -63,7 +63,7 @@ func (bits Bitmap) Encode() string {
 }
 
 // Array ...
-func (bits Bitmap) Array() []int {
+func (bits *Bitmap) Array() []int {
 	var array []int
 	length := 64
 	if bits.IsSet(1) {
