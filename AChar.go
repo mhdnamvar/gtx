@@ -23,5 +23,5 @@ func (codec *AChar) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
-	return string(b), nil
+	return string(b[:codec.Length]), nil
 }

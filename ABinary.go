@@ -12,7 +12,7 @@ func ABinaryNew(name string, description string, length int) *ABinary {
 
 // Encode ...
 func (codec *ABinary) Encode(s string) ([]byte, error) {
-	if len(s)%2 != 0{
+	if len(s)%2 != 0 {
 		return nil, Errors[InvalidLengthError]
 	}
 	s = LeftPad2Len(s, "0", codec.Length*2)
