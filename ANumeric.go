@@ -29,10 +29,11 @@ func (codec *ANumeric) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
+	b = b[:codec.Length]
 	n := new(big.Int)
 	n, ok := n.SetString(string(b), 10)
 	if !ok {
 		return "", Errors[NumberFormatError]
 	}
-	return n.String(), nil
+	return LeftPad2Len(n.String(), "0", codec.Length), nil
 }

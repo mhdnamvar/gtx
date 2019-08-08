@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"encoding/hex"
 )
 
 // MaxField ...
@@ -17,11 +18,10 @@ type IsoMsg struct {
 }
 
 // IsoMsgNew ...
-func IsoMsgNew(mti string, p Protocol) *IsoMsg {
+func IsoMsgNew(p Protocol) *IsoMsg {
 	bitmap := Bitmap{}
 	fields := [MaxField + 1]*IsoField{}
 	isoMsg := &IsoMsg{p, bitmap, fields}
-	isoMsg.Set(0, mti)
 	return isoMsg
 }
 
@@ -35,29 +35,6 @@ func (isoMsg *IsoMsg) Get(pos int) (*IsoField, error) {
 	}
 	fmt.Printf("%03d: %X\n", pos, isoMsg.fields[pos].value)
 	return isoMsg.fields[pos], nil
-}
-
-// Value ...
-func (isoMsg *IsoMsg) Value(pos int) ([]byte, error) {
-	f, err := isoMsg.Get(pos)
-	if err != nil {
-		return nil, err
-	}	
-	return f.value, nil
-}
-
-// Text ...
-func (isoMsg *IsoMsg) Text(pos int) (string, error) {
-	f, err := isoMsg.Get(pos)
-	if err != nil {
-		return "", err
-	}	
-	return f.text, nil
-}
-
-// MTI ...
-func (isoMsg *IsoMsg) MTI() (*IsoField, error) {
-	return isoMsg.Get(0)
 }
 
 // Set ...
@@ -94,8 +71,8 @@ func (isoMsg *IsoMsg) String() string {
 	return buffer.String()
 }
 
-// Encode ...
-func (isoMsg *IsoMsg) Encode() ([]byte, error) {
+// Bytes ...
+func (isoMsg *IsoMsg) Bytes() ([]byte, error) {
 	var encoded []byte
 	mti, err := isoMsg.Get(0)
 	if err != nil {
@@ -111,9 +88,34 @@ func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 	}
 	return encoded, nil
 }
+// Parse ...
+func (isoMsg *IsoMsg) ParseString(s string) error {
+	b, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+	return isoMsg.Parse(b)
+}
 
-// Decode ...
-func (isoMsg *IsoMsg) Decode(b []byte) error {	
+// Parse ...
+func (isoMsg *IsoMsg) Parse(b []byte) error {
+	codecs := isoMsg.protocol
+	mti, err := codecs[0].Decode(b)
+	if err != nil {
+		fmt.Printf("%s, %X", err, mti)	
+		return err
+	}
+	isoMsg.Set(0, mti)
+	fmt.Printf("MTI=%v\n", mti)
+
+	b = b[len(mti):]
+	bitmap, err := codecs[1].Decode(b)
+	if err != nil {
+		return err
+	}
+	isoMsg.Set(1, bitmap)
+	fmt.Printf("Bitmap=%v\n", bitmap)
+
 	return nil
 }
 
