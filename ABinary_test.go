@@ -25,7 +25,7 @@ func Test_ABinary_EncodeMac2(t *testing.T) {
 func Test_ABinary_DecodeMac2(t *testing.T) {
 	value := []byte{0x32, 0x44, 0x32, 0x41, 0x39, 0x38, 0x46, 0x31, 0x32, 0x44, 0x32, 0x41, 0x39, 0x38, 0x46, 0x31}
 	expected := "2D2A98F12D2A98F1"
-	codec := ABinaryNew("", "Should be 2D2A98F12D2A98F1", 4)
+	codec := ABinaryNew("", "Should be 2D2A98F12D2A98F1", 8)
 	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
@@ -53,15 +53,6 @@ func Test_ABinary_DecodeSecondaryBitmap(t *testing.T) {
 	value := []byte("C0100000000000000000000000000001")
 	expected := "C0100000000000000000000000000001"
 	codec := ABinaryNew("", "Should be C0100000000000000000000000000001", 16)
-	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
-}
-
-func Test_ABinary_DecodeSecondaryBitmap2(t *testing.T) {
-	value := []byte("C01000000000000000000000000000011967340000000000000671001002D2A98F12D2A98F1")
-	expected := "C01000000000000000000000000000011967340000000000000671001002D2A98F12D2A98F1"
-	codec := ABinaryNew("", "Should be C01000000000000000000000000000011967340000000000000671001002D2A98F12D2A98F1", 16)
 	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)

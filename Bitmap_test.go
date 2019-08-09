@@ -75,3 +75,13 @@ func Test_Bitmap_Secondary(t *testing.T) {
 	actual := bits.String()
 	assertEqual(t, expected, actual)
 }
+
+func Test_Bitmap_DecodeString(t *testing.T) {
+	var bits Bitmap
+	value := "C0100000000000000000000000000001"
+	expected := []int{1, 2, 12, 128}
+	actual, err := bits.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)	
+}
+

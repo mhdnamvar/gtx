@@ -38,18 +38,19 @@ func (isoMsg *IsoMsg) Get(pos int) (*IsoField, error) {
 
 // Set ...
 func (isoMsg *IsoMsg) Set(pos int, s string) {
-	f, err := IsoFieldNew(pos, s, isoMsg.protocol[pos])
-	if err != nil {
-		log.Fatal("--> Creating ", isoMsg.protocol[pos], " failed. ", err)
-	}
-	isoMsg.fields[pos] = f
-
 	if pos == 1 {
 		_, err := isoMsg.bitmap.Decode(s)
 		if err != nil {
-			log.Fatal("--> Incorrect bitmap ", isoMsg.protocol[pos], err)
+			log.Fatal("Incorrect bitmap ", err)
 		}
+		return
 	}
+
+	f, err := IsoFieldNew(pos, s, isoMsg.protocol[pos])
+	if err != nil {
+		log.Fatal("Creating ", isoMsg.protocol[pos], " failed. ", err)
+	}
+	isoMsg.fields[pos] = f
 
 	if pos > 1 {
 		isoMsg.bitmap.Set(pos)
@@ -118,11 +119,14 @@ func (isoMsg *IsoMsg) Parse(b []byte) error {
 	}
 	isoMsg.Set(1, bitmap)
 
-	b = b[typeLen(codecs[1])+len(bitmap):]
+	b = b[typeLen(codecs[1])+len(bitmap):]	
 	for _, i := range isoMsg.bitmap.Array() {
+		if i == 1 {
+			continue
+		}
 		value, err := codecs[i].Decode(b)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal(i, value, err)
 			return err
 		}
 		isoMsg.Set(i, value)
