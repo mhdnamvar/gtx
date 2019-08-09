@@ -216,22 +216,37 @@ func Test_IsoMsg_AsciiFields(t *testing.T) {
 
 func Test_IsoMsg_Parse(t *testing.T) {
 	isoMsg := IsoMsgNew(ASCII1987)
-	err := isoMsg.ParseString("30353030433031303030303030303030303030303030303030303030303030303030303131393637333430303030303030303030303030363731303031303032443241393846313244324139384631")
+	err := isoMsg.ParseString("3032313046323330303030303030303030303030303030303030303030303030303030313139363733343030303030303030303030303036373030303030303030303030303030303130313038303630383031303238323335373931303031303032443241393846313244324139384631")
 	assertEqual(t, nil, err)
 	fmt.Printf("%v\n", isoMsg)
 
 	mti, err := isoMsg.Get(0)
 	assertEqual(t, nil, err)
-	assertEqual(t, "0500", mti.text)
-	assertEqual(t, []byte{0x30, 0x35, 0x30, 0x30}, mti.value)
+	assertEqual(t, "0210", mti.text)
 
 	bitmap, err := isoMsg.Get(1)
 	assertEqual(t, nil, err)
-	assertEqual(t, "C0100000000000000000000000000001", bitmap.text)
+	assertEqual(t, "F2300000000000000000000000000001", bitmap.text)
 
 	pan, err := isoMsg.Get(2)
 	assertEqual(t, nil, err)
 	assertEqual(t, "6734000000000000067", pan.text)
+
+	f3, err := isoMsg.Get(3)
+	assertEqual(t, nil, err)
+	assertEqual(t, "000000", f3.text)
+
+	f4, err := isoMsg.Get(4)
+	assertEqual(t, nil, err)
+	assertEqual(t, "000000000101", f4.text)
+
+	f7, err := isoMsg.Get(7)
+	assertEqual(t, nil, err)
+	assertEqual(t, "0806080102", f7.text)
+
+	f11, err := isoMsg.Get(11)
+	assertEqual(t, nil, err)
+	assertEqual(t, "823579", f11.text)
 
 	f12, err := isoMsg.Get(12)
 	assertEqual(t, nil, err)
