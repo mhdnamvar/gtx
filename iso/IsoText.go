@@ -28,7 +28,7 @@ const (
 	LLLVAR IsoLenType = 2
 
 	ASCII  IsoEncoding = 0
-	BINARY IsoEncoding = 1
+	BCD    IsoEncoding = 1
 	EBCDIC IsoEncoding = 2
 
 	NONE  IsoPadding = 0
@@ -37,7 +37,7 @@ const (
 )
 
 func (isoText *IsoText) DataLen(s string) ([]byte, error) {
-	length := []byte{}
+	var length []byte
 	switch isoText.Length.Type {
 	case FIXED:
 		if isoText.Padding == NONE {
@@ -66,25 +66,41 @@ func (isoText *IsoText) DataLen(s string) ([]byte, error) {
 	return length, nil
 }
 
-func (isoText *IsoText) Encode(s string) ([]byte, error) {
+func (isoText *IsoText) Pad(s string) (string, error) {
 	if isoText.Padding == LEFT {
-		s = LeftPad2Len(s, " ", isoText.Length.Value)
+		if isoText.Encoding == BCD {
+			return LeftPad2Len(s, "0", isoText.Length.Value), nil
+		} else {
+			return LeftPad2Len(s, " ", isoText.Length.Value), nil
+		}
 	} else if isoText.Padding == RIGHT {
-		s = RightPad2Len(s, " ", isoText.Length.Value)
+		if isoText.Encoding == BCD {
+			return s, InvalidPaddingError
+		}
+		return RightPad2Len(s, " ", isoText.Length.Value), nil
+	}
+	return s, nil
+
+}
+
+func (isoText *IsoText) Encode(s string) ([]byte, error) {
+	data, err := isoText.Pad(s)
+	if err != nil {
+		return nil, err
 	}
 
-	dataLen, err := isoText.DataLen(s)
+	dataLen, err := isoText.DataLen(data)
 	if err != nil {
 		return nil, err
 	}
 
 	switch isoText.Encoding {
 	case ASCII:
-		return append(dataLen, []byte(s)...), nil
-	case BINARY:
-		return append(dataLen, StrToBcd((s))...), nil
+		return append(dataLen, []byte(data)...), nil
+	case BCD:
+		return append(dataLen, StrToBcd(data)...), nil
 	case EBCDIC:
-		return append(dataLen, ASCIIToEbcdic(s)...), nil
+		return append(dataLen, AsciiToEbcdic(data)...), nil
 	default:
 		return nil, NotSupportedEncodingError
 	}

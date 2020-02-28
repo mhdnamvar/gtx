@@ -6,7 +6,7 @@ type EChar struct {
 }
 
 // ECharNew ...
-func ECharNew(name string, description string, length int) *EChar {	
+func ECharNew(name string, description string, length int) *EChar {
 	return &EChar{Codec{name, description, length, true}}
 }
 
@@ -15,7 +15,7 @@ func (codec *EChar) Encode(s string) ([]byte, error) {
 	if len(s) > codec.Length {
 		return nil, Errors[InvalidLengthError]
 	}
-	return ASCIIToEbcdic(RightPad2Len(s, " ", codec.Length)), nil
+	return AsciiToEbcdic(RightPad2Len(s, " ", codec.Length)), nil
 }
 
 // Decode ...
@@ -23,6 +23,6 @@ func (codec *EChar) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]
 	}
-	a := EbcdicToASCII(string(b))
+	a := EbcdicToAscii(string(b))
 	return string(a), nil
 }

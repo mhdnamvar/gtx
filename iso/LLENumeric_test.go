@@ -21,7 +21,7 @@ func Test_LLENumeric_EncodePad(t *testing.T) {
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
 
-	expected = ASCIIToEbcdic("09000012345")
+	expected = AsciiToEbcdic("09000012345")
 	// []byte{0xf0, 0xf9, 0xf0, 0xf0, 0xf0, 0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5}
 	codec = LLENumericNew("", "Should be 0900000012345", 9, true)
 	actual, err = codec.Encode(value)
@@ -55,7 +55,7 @@ func Test_LLENumeric_Decode(t *testing.T) {
 }
 
 func Test_LLENumeric_DecodeInvalidLen(t *testing.T) {
-	value := ASCIIToEbcdic("10123456789")
+	value := AsciiToEbcdic("10123456789")
 	codec := LLENumericNew("", "Should return error", 10, false)
 	actual, err := codec.Decode(value)
 	assertEqual(t, Errors[InvalidLengthError], err)
@@ -63,7 +63,7 @@ func Test_LLENumeric_DecodeInvalidLen(t *testing.T) {
 }
 
 func Test_LLENumeric_DecodeInvalidFormat(t *testing.T) {
-	value := ASCIIToEbcdic("1012345678lmnop456783E4B")
+	value := AsciiToEbcdic("1012345678lmnop456783E4B")
 	codec := LLENumericNew("", "Should return error", 10, false)
 	actual, err := codec.Decode(value)
 	assertEqual(t, Errors[NumberFormatError], err)
@@ -71,7 +71,7 @@ func Test_LLENumeric_DecodeInvalidFormat(t *testing.T) {
 }
 
 func Test_LLENumeric_DecodePad(t *testing.T) {
-	value := ASCIIToEbcdic("100001234567890123456783E4B")
+	value := AsciiToEbcdic("100001234567890123456783E4B")
 	expected := "0001234567"
 	codec := LLENumericNew("", "Should be 0001234567", 10, true)
 	actual, err := codec.Decode(value)

@@ -15,8 +15,9 @@ var (
 	OutOfBoundIndexError      = IsoErrorNew(1004, "Out of bound index error, pos should be between 0-128")
 	IsoFieldNotFoundError     = IsoErrorNew(1005, "Iso field not found")
 	NotSupportedBitmapError   = IsoErrorNew(1006, "Bitmap bigger than 2 bytes not supported")
-	NotSupportedEncodingError = IsoErrorNew(1007, "Message encoding not supported, it should be ASCII, BINARY or EBCDIC")
-	InvalidLengthTypeError    = IsoErrorNew(1008, "Fiels length type is not valid, it should be FIXED, LLVAR or LLLVAR")
+	NotSupportedEncodingError = IsoErrorNew(1007, "Message encoding not supported, it should be ASCII, BCD or EBCDIC")
+	InvalidLengthTypeError    = IsoErrorNew(1008, "Fields length type is not valid, it should be FIXED, LLVAR or LLLVAR")
+	InvalidPaddingError       = IsoErrorNew(1009, "Invalid padding")
 )
 
 // IsoError ...

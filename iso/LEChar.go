@@ -8,7 +8,7 @@ type LEChar struct {
 }
 
 // LECharNew ...
-func LECharNew(name string, description string, length int, padding bool) *LEChar {	
+func LECharNew(name string, description string, length int, padding bool) *LEChar {
 	return &LEChar{Codec{name, description, length, padding}}
 }
 
@@ -20,8 +20,8 @@ func (codec *LEChar) Encode(s string) ([]byte, error) {
 	if codec.Padding {
 		s = RightPad2Len(s, " ", codec.Length)
 	}
-	length := ASCIIToEbcdic(strconv.Itoa(len(s)))
-	return append(length, ASCIIToEbcdic(s)...), nil
+	length := AsciiToEbcdic(strconv.Itoa(len(s)))
+	return append(length, AsciiToEbcdic(s)...), nil
 }
 
 // Decode ...
@@ -29,7 +29,7 @@ func (codec *LEChar) Decode(b []byte) (string, error) {
 	if len(b) < 2 {
 		return "", Errors[InvalidLengthError]
 	}
-	b = EbcdicToASCII(string(b))
+	b = EbcdicToAscii(string(b))
 	length, err := strconv.Atoi(string(b[:1]))
 	if err != nil || length <= 0 {
 		return "", Errors[InvalidLengthError]

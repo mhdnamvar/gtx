@@ -28,8 +28,8 @@ func (codec *LLLENumeric) Encode(s string) ([]byte, error) {
 	if codec.Padding {
 		s = LeftPad2Len(s, "0", codec.Length)
 	}
-	length := ASCIIToEbcdic(LeftPad2Len(strconv.Itoa(len(s)), "0", 3))
-	return append(length, ASCIIToEbcdic(s)...), nil
+	length := AsciiToEbcdic(LeftPad2Len(strconv.Itoa(len(s)), "0", 3))
+	return append(length, AsciiToEbcdic(s)...), nil
 }
 
 // Decode ...
@@ -37,7 +37,7 @@ func (codec *LLLENumeric) Decode(b []byte) (string, error) {
 	if len(b) < 4 {
 		return "", Errors[InvalidLengthError]
 	}
-	b = EbcdicToASCII(string(b))
+	b = EbcdicToAscii(string(b))
 	length, err := strconv.Atoi(string(b[:3]))
 	if err != nil || length <= 0 {
 		return "", Errors[InvalidLengthError]

@@ -19,13 +19,13 @@ func Test_LLLENumeric_Encode(t *testing.T) {
 		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
 		0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0xf0,
 		0xf1, 0xf2, 0xf3, 0xf4, 0xf5}
-	codec := LLLENumericNew("", `Should be 103000000000000000000000000000000000000000` +
+	codec := LLLENumericNew("", `Should be 103000000000000000000000000000000000000000`+
 		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true)
 	actual, err := codec.Encode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
 
-	expected = ASCIIToEbcdic("00512345")
+	expected = AsciiToEbcdic("00512345")
 	codec = LLLENumericNew("", `Should be 00512345`, 103, false)
 	actual, err = codec.Encode(value)
 	assertEqual(t, nil, err)
@@ -80,7 +80,7 @@ func Test_LLLENumeric_Decode(t *testing.T) {
 		0xf1, 0xf2, 0xf3, 0xf4, 0xf5}
 	expected := `00000000000000000000000000000000000000000000000000` +
 		`00000000000000000000000000000000000000000000000012345`
-	codec := LLLENumericNew("", `Should be 000000000000000000000000000000000000000` +
+	codec := LLLENumericNew("", `Should be 000000000000000000000000000000000000000`+
 		`0000000000000000000000000000000000000000000000000000000000012345`, 103, true)
 	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
