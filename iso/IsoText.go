@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/hex"
+	"fmt"
 	"strconv"
 )
 
@@ -21,6 +23,7 @@ type IsoLength struct {
 type IsoEncoding int
 type IsoPadding int
 type IsoLenType int
+type IsoLenEncoding int
 
 const (
 	FIXED  IsoLenType = 0
@@ -28,7 +31,7 @@ const (
 	LLLVAR IsoLenType = 2
 
 	ASCII  IsoEncoding = 0
-	BCD    IsoEncoding = 1
+	BINARY IsoEncoding = 1
 	EBCDIC IsoEncoding = 2
 
 	NONE  IsoPadding = 0
@@ -37,69 +40,166 @@ const (
 )
 
 func (isoText *IsoText) DataLen(s string) ([]byte, error) {
-	var length []byte
-	switch isoText.Length.Type {
-	case FIXED:
-		if isoText.Padding == NONE {
-			if len(s) != isoText.Length.Value {
-				return nil, Errors[InvalidLengthError]
-			}
-		} else {
-			if len(s) > isoText.Length.Value {
-				return nil, Errors[InvalidLengthError]
-			}
-		}
-	case LLVAR:
-		if len(s) == 0 || len(s) > isoText.Length.Value || len(s) > 99 {
-			return nil, Errors[InvalidLengthError]
-		}
-		length = []byte(LeftPad2Len(strconv.Itoa(len(s)), "0", 2))
-	case LLLVAR:
-		if len(s) == 0 || len(s) > isoText.Length.Value || len(s) > 999 {
-			return nil, Errors[InvalidLengthError]
-		}
-		length = []byte(LeftPad2Len(strconv.Itoa(len(s)), "0", 3))
+	switch isoText.Length.Encoding {
+	case ASCII:
+		return isoText.AsciiLen(s)
+	case EBCDIC:
+		return isoText.EbcdicLen(s)
+	case BINARY:
+		return isoText.BinaryLen(s)
 	default:
 		return nil, InvalidLengthTypeError
 	}
+}
 
-	return length, nil
+func (isoText *IsoText) EbcdicLen(s string) ([]byte, error) {
+	l := len(s)
+	switch isoText.Length.Type {
+	case FIXED:
+		if isoText.Padding == NONE {
+			if l != isoText.Length.Value {
+				fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		} else {
+			if l > isoText.Length.Value {
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		}
+		return []byte{}, nil
+	case LLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 99 {
+			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
+	case LLLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 999 {
+			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
+	default:
+		fmt.Printf("Error LLLVAR: %s\n", InvalidLengthTypeError)
+		return nil, InvalidLengthTypeError
+	}
+}
+
+func (isoText *IsoText) AsciiLen(s string) ([]byte, error) {
+	l := len(s)
+	switch isoText.Length.Type {
+	case FIXED:
+		if isoText.Padding == NONE {
+			if l != isoText.Length.Value {
+				fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		} else {
+			if l > isoText.Length.Value {
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		}
+		return []byte{}, nil
+	case LLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 99 {
+			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return []byte(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
+	case LLLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 999 {
+			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return []byte(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
+	default:
+		fmt.Printf("Error LLLVAR: %s\n", InvalidLengthTypeError)
+		return nil, InvalidLengthTypeError
+	}
+}
+
+func (isoText *IsoText) BinaryLen(s string) ([]byte, error) {
+	l := len(s) / 2
+	switch isoText.Length.Type {
+	case FIXED:
+		if isoText.Padding == NONE {
+			if l != isoText.Length.Value {
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		} else {
+			if l > isoText.Length.Value {
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		}
+		return nil, nil
+	case LLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 99 {
+			fmt.Printf("Error LLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return StrToBcd(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
+	case LLLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 999 {
+			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return StrToBcd(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
+	default:
+		return nil, Errors[InvalidLengthError]
+	}
 }
 
 func (isoText *IsoText) Pad(s string) (string, error) {
+	l := isoText.Length.Value
+	padStr := " "
+	if isoText.Encoding == BINARY {
+		l = isoText.Length.Value * 2
+		padStr = "20"
+	}
 	if isoText.Padding == LEFT {
-		if isoText.Encoding == BCD {
-			return LeftPad2Len(s, "0", isoText.Length.Value), nil
-		} else {
-			return LeftPad2Len(s, " ", isoText.Length.Value), nil
-		}
+		return LeftPad2Len(s, padStr, l), nil
 	} else if isoText.Padding == RIGHT {
-		if isoText.Encoding == BCD {
-			return s, InvalidPaddingError
-		}
-		return RightPad2Len(s, " ", isoText.Length.Value), nil
+		return RightPad2Len(s, padStr, l), nil
 	}
 	return s, nil
-
 }
 
 func (isoText *IsoText) Encode(s string) ([]byte, error) {
-	data, err := isoText.Pad(s)
-	if err != nil {
-		return nil, err
+	fmt.Printf("Input: [%s]\n", s)
+	data := s
+	if isoText.Padding != NONE {
+		padding, err := isoText.Pad(s)
+		if err != nil {
+			return nil, err
+		}
+		data = padding
+		fmt.Printf("Padding: [%s]\n", data)
 	}
 
 	dataLen, err := isoText.DataLen(data)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("LenBytes: [%X]\n", dataLen)
 
 	switch isoText.Encoding {
 	case ASCII:
+		fmt.Printf("ASCII encoded: [%X]\n", append(dataLen, []byte(data)...))
 		return append(dataLen, []byte(data)...), nil
-	case BCD:
-		return append(dataLen, StrToBcd(data)...), nil
+	case BINARY:
+		b, err := hex.DecodeString(data)
+		if err != nil {
+			fmt.Printf("Error BINARY: %s\n", Errors[InvalidDataError])
+			return nil, Errors[InvalidDataError]
+		}
+		fmt.Printf("Binary encoded: [%X]\n", append(dataLen, b...))
+		return append(dataLen, b...), nil
 	case EBCDIC:
+		fmt.Printf("EBCDIC encoded: [%X]\n", append(dataLen, AsciiToEbcdic(data)...))
 		return append(dataLen, AsciiToEbcdic(data)...), nil
 	default:
 		return nil, NotSupportedEncodingError
