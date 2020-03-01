@@ -36,15 +36,6 @@ func (isoNumeric *IsoNumeric) Encode(s string) ([]byte, error) {
 		return nil, Errors[NumberFormatError]
 	}
 
-	//isoText := IsoTextNew(
-	//	isoNumeric.Encoding,
-	//	isoNumeric.Name,
-	//	isoNumeric.Desc,
-	//	isoNumeric.Length,
-	//	isoNumeric.Padding)
-	//
-	//return isoText.Encode(s)
-
 	data := s
 	if isoNumeric.Padding != NONE {
 		padding, err := isoNumeric.Pad(s)
