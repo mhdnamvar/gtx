@@ -221,27 +221,109 @@ func (codec *IsoCodec) Encode(s string) ([]byte, error) {
 
 	switch codec.Encoding {
 	case ASCII:
-		fmt.Printf("ASCII encoded: [%X]\n", append(dataLen, []byte(data)...))
-		return append(dataLen, []byte(data)...), nil
+		bytes := append(dataLen, []byte(data)...)
+		fmt.Printf("ASCII encoded: [%X]\n", bytes)
+		return bytes, nil
 	case BINARY:
 		b, err := hex.DecodeString(data)
 		if err != nil {
 			fmt.Printf("Error BINARY: %s\n", Errors[InvalidDataError])
 			return nil, Errors[InvalidDataError]
 		}
-		fmt.Printf("Binary encoded: [%X]\n", append(dataLen, b...))
-		return append(dataLen, b...), nil
+		bytes := append(dataLen, b...)
+		fmt.Printf("Binary encoded: [%X]\n", bytes)
+		return bytes, nil
 	case EBCDIC:
-		fmt.Printf("EBCDIC encoded: [%X]\n", append(dataLen, AsciiToEbcdic(data)...))
-		return append(dataLen, AsciiToEbcdic(data)...), nil
+		bytes := append(dataLen, AsciiToEbcdic(data)...)
+		fmt.Printf("EBCDIC encoded: [%X]\n", bytes)
+		return bytes, nil
 	default:
 		return nil, NotSupportedEncodingError
 	}
 }
 
 func (codec *IsoCodec) Decode(b []byte) (string, error) {
-	if len(b) < codec.Length.Value {
+	switch codec.Encoding {
+	case ASCII:
+		switch codec.Length.Encoding {
+		case ASCII:
+			switch codec.Length.Type {
+			case FIXED:
+				return decodeAscii(b, codec.Length.Value)
+			case LLVAR:
+				return decodeAsciiVar(b, 2)
+			case LLLVAR:
+				return decodeAsciiVar(b, 3)
+			default:
+				return "", InvalidLengthTypeError
+			}
+		case EBCDIC:
+			return "", nil
+		case BINARY:
+			return "", nil
+		default:
+			return "", nil
+		}
+	case EBCDIC:
+		switch codec.Length.Type {
+		case FIXED:
+			return decodeEbcdic(b, codec.Length.Value)
+		case LLVAR:
+			return decodeEbcdicVar(b, 2)
+		case LLLVAR:
+			return decodeEbcdicVar(b, 3)
+		default:
+			return "", InvalidLengthTypeError
+		}
+	case BINARY:
+		return "", nil
+	default:
+		return "", NotSupportedEncodingError
+	}
+}
+
+func decodeAscii(b []byte, fixedLen int) (string, error) {
+	if len(b) < fixedLen {
 		return "", Errors[InvalidLengthError]
 	}
-	return string(b[:codec.Length.Value]), nil
+	s := string(b[:fixedLen])
+	fmt.Printf("ASCII decoded: [%s]\n", s)
+	return s, nil
+}
+
+func decodeAsciiVar(b []byte, maxLen int) (string, error) {
+	if len(b) < maxLen+1 {
+		return "", Errors[InvalidLengthError]
+	}
+	length, err := strconv.Atoi(string(b[:3]))
+	if err != nil || length <= 0 {
+		return "", Errors[InvalidLengthError]
+	}
+	if len(b) < length+maxLen {
+		return "", Errors[InvalidLengthError]
+	}
+	return string(b[maxLen : length+maxLen]), nil
+}
+
+func decodeEbcdic(b []byte, fixedLen int) (string, error) {
+	if len(b) < fixedLen {
+		return "", Errors[InvalidLengthError]
+	}
+	a := EbcdicToAscii(string(b))
+	return string(a), nil
+}
+
+func decodeEbcdicVar(b []byte, maxLen int) (string, error) {
+	if len(b) < maxLen+1 {
+		return "", Errors[InvalidLengthError]
+	}
+	b = EbcdicToAscii(string(b))
+	length, err := strconv.Atoi(string(b[:maxLen]))
+	if err != nil || length <= 0 {
+		return "", Errors[InvalidLengthError]
+	}
+	if len(b) < length+maxLen {
+		return "", Errors[InvalidLengthError]
+	}
+	return string(b[maxLen : length+maxLen]), nil
 }
