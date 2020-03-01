@@ -28,6 +28,7 @@ func (isoNumeric *IsoNumeric) Pad(s string) (string, error) {
 }
 
 func (isoNumeric *IsoNumeric) Encode(s string) ([]byte, error) {
+	fmt.Printf("Input: [%s]\n", s)
 	n := new(big.Int)
 	n, ok := n.SetString(s, 10)
 	if !ok {
