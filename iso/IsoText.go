@@ -3,15 +3,17 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"math/big"
 	"strconv"
 )
 
 type IsoText struct {
-	Encoding IsoEncoding
-	Name     string
-	Desc     string
-	Length   *IsoLength
-	Padding  IsoPadding
+	Encoding  IsoEncoding
+	Name      string
+	Desc      string
+	Length    *IsoLength
+	Padding   IsoPadding
+	IsNumeric bool
 }
 
 type IsoLength struct {
@@ -43,7 +45,11 @@ func IsoLengthNew(encoding IsoEncoding, lenType IsoLenType, value int) *IsoLengt
 }
 
 func IsoTextNew(encoding IsoEncoding, name string, desc string, length *IsoLength, padding IsoPadding) *IsoText {
-	return &IsoText{encoding, name, desc, length, padding}
+	return &IsoText{encoding, name, desc, length, padding, false}
+}
+
+func IsoNumericNew(encoding IsoEncoding, name string, desc string, length *IsoLength, padding IsoPadding) *IsoText {
+	return &IsoText{encoding, name, desc, length, padding, true}
 }
 
 func (isoText *IsoText) DataLen(s string) ([]byte, error) {
@@ -55,40 +61,6 @@ func (isoText *IsoText) DataLen(s string) ([]byte, error) {
 	case BINARY:
 		return isoText.BinaryLen(s)
 	default:
-		return nil, InvalidLengthTypeError
-	}
-}
-
-func (isoText *IsoText) EbcdicLen(s string) ([]byte, error) {
-	l := len(s)
-	switch isoText.Length.Type {
-	case FIXED:
-		if isoText.Padding == NONE {
-			if l != isoText.Length.Value {
-				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
-				return nil, Errors[InvalidLengthError]
-			}
-		} else {
-			if l > isoText.Length.Value {
-				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
-				return nil, Errors[InvalidLengthError]
-			}
-		}
-		return []byte{}, nil
-	case LLVAR:
-		if l == 0 || l > isoText.Length.Value || l > 99 {
-			fmt.Printf("Error LLVAR: %s\n", Errors[InvalidLengthError])
-			return nil, Errors[InvalidLengthError]
-		}
-		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
-	case LLLVAR:
-		if l == 0 || l > isoText.Length.Value || l > 999 {
-			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
-			return nil, Errors[InvalidLengthError]
-		}
-		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
-	default:
-		fmt.Printf("Error: %s\n", InvalidLengthTypeError)
 		return nil, InvalidLengthTypeError
 	}
 }
@@ -121,6 +93,40 @@ func (isoText *IsoText) AsciiLen(s string) ([]byte, error) {
 			return nil, Errors[InvalidLengthError]
 		}
 		return []byte(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
+	default:
+		fmt.Printf("Error: %s\n", InvalidLengthTypeError)
+		return nil, InvalidLengthTypeError
+	}
+}
+
+func (isoText *IsoText) EbcdicLen(s string) ([]byte, error) {
+	l := len(s)
+	switch isoText.Length.Type {
+	case FIXED:
+		if isoText.Padding == NONE {
+			if l != isoText.Length.Value {
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		} else {
+			if l > isoText.Length.Value {
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
+				return nil, Errors[InvalidLengthError]
+			}
+		}
+		return []byte{}, nil
+	case LLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 99 {
+			fmt.Printf("Error LLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
+	case LLLVAR:
+		if l == 0 || l > isoText.Length.Value || l > 999 {
+			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			return nil, Errors[InvalidLengthError]
+		}
+		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
 	default:
 		fmt.Printf("Error: %s\n", InvalidLengthTypeError)
 		return nil, InvalidLengthTypeError
@@ -163,13 +169,24 @@ func (isoText *IsoText) BinaryLen(s string) ([]byte, error) {
 func (isoText *IsoText) Pad(s string) (string, error) {
 	l := isoText.Length.Value
 	padStr := " "
+	if isoText.IsNumeric {
+		padStr = "0"
+	}
+
 	if isoText.Encoding == BINARY {
 		l = isoText.Length.Value * 2
 		padStr = "20"
+		if isoText.IsNumeric {
+			padStr = "00"
+		}
 	}
+
 	if isoText.Padding == LEFT {
 		return LeftPad2Len(s, padStr, l), nil
 	} else if isoText.Padding == RIGHT {
+		if isoText.IsNumeric {
+			return s, NotSupported
+		}
 		return RightPad2Len(s, padStr, l), nil
 	}
 	return s, nil
@@ -177,6 +194,15 @@ func (isoText *IsoText) Pad(s string) (string, error) {
 
 func (isoText *IsoText) Encode(s string) ([]byte, error) {
 	fmt.Printf("Input: [%s]\n", s)
+	if isoText.IsNumeric {
+		n := new(big.Int)
+		n, ok := n.SetString(s, 10)
+		if !ok {
+			fmt.Printf("Error: Input is not  numeric: [%s]\n", s)
+			return nil, Errors[NumberFormatError]
+		}
+	}
+
 	data := s
 	if isoText.Padding != NONE {
 		padding, err := isoText.Pad(s)
