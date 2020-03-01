@@ -23,7 +23,6 @@ type IsoLength struct {
 type IsoEncoding int
 type IsoPadding int
 type IsoLenType int
-type IsoLenEncoding int
 
 const (
 	FIXED  IsoLenType = 0
@@ -38,6 +37,14 @@ const (
 	LEFT  IsoPadding = 1
 	RIGHT IsoPadding = 2
 )
+
+func IsoLengthNew(encoding IsoEncoding, lenType IsoLenType, value int) *IsoLength {
+	return &IsoLength{encoding, lenType, value}
+}
+
+func IsoTextNew(encoding IsoEncoding, name string, desc string, length *IsoLength, padding IsoPadding) *IsoText {
+	return &IsoText{encoding, name, desc, length, padding}
+}
 
 func (isoText *IsoText) DataLen(s string) ([]byte, error) {
 	switch isoText.Length.Encoding {
@@ -58,7 +65,7 @@ func (isoText *IsoText) EbcdicLen(s string) ([]byte, error) {
 	case FIXED:
 		if isoText.Padding == NONE {
 			if l != isoText.Length.Value {
-				fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
 				return nil, Errors[InvalidLengthError]
 			}
 		} else {
@@ -70,7 +77,7 @@ func (isoText *IsoText) EbcdicLen(s string) ([]byte, error) {
 		return []byte{}, nil
 	case LLVAR:
 		if l == 0 || l > isoText.Length.Value || l > 99 {
-			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			fmt.Printf("Error LLVAR: %s\n", Errors[InvalidLengthError])
 			return nil, Errors[InvalidLengthError]
 		}
 		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
@@ -81,7 +88,7 @@ func (isoText *IsoText) EbcdicLen(s string) ([]byte, error) {
 		}
 		return AsciiToEbcdic(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
 	default:
-		fmt.Printf("Error LLLVAR: %s\n", InvalidLengthTypeError)
+		fmt.Printf("Error: %s\n", InvalidLengthTypeError)
 		return nil, InvalidLengthTypeError
 	}
 }
@@ -92,7 +99,7 @@ func (isoText *IsoText) AsciiLen(s string) ([]byte, error) {
 	case FIXED:
 		if isoText.Padding == NONE {
 			if l != isoText.Length.Value {
-				fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+				fmt.Printf("Error FIXED: %s\n", Errors[InvalidLengthError])
 				return nil, Errors[InvalidLengthError]
 			}
 		} else {
@@ -104,7 +111,7 @@ func (isoText *IsoText) AsciiLen(s string) ([]byte, error) {
 		return []byte{}, nil
 	case LLVAR:
 		if l == 0 || l > isoText.Length.Value || l > 99 {
-			fmt.Printf("Error LLLVAR: %s\n", Errors[InvalidLengthError])
+			fmt.Printf("Error LLVAR: %s\n", Errors[InvalidLengthError])
 			return nil, Errors[InvalidLengthError]
 		}
 		return []byte(LeftPad2Len(strconv.Itoa(l), "0", 2)), nil
@@ -115,7 +122,7 @@ func (isoText *IsoText) AsciiLen(s string) ([]byte, error) {
 		}
 		return []byte(LeftPad2Len(strconv.Itoa(l), "0", 3)), nil
 	default:
-		fmt.Printf("Error LLLVAR: %s\n", InvalidLengthTypeError)
+		fmt.Printf("Error: %s\n", InvalidLengthTypeError)
 		return nil, InvalidLengthTypeError
 	}
 }

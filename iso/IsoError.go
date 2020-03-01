@@ -17,7 +17,7 @@ var (
 	NotSupportedBitmapError   = IsoErrorNew(1006, "Bitmap bigger than 2 bytes not supported")
 	NotSupportedEncodingError = IsoErrorNew(1007, "Message encoding not supported, it should be ASCII, BINARY or EBCDIC")
 	InvalidLengthTypeError    = IsoErrorNew(1008, "Fields length type is not valid, it should be FIXED, LLVAR or LLLVAR")
-	InvalidPaddingError       = IsoErrorNew(1009, "Invalid padding")
+	NotSupported              = IsoErrorNew(1009, "Not supported")
 )
 
 // IsoError ...
