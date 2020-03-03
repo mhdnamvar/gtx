@@ -726,3 +726,30 @@ func TestIsoNumericEncodeBinaryLLLVARRightPad(t *testing.T) {
 	assertEqual(t, NotSupported, err)
 	assertEqual(t, nil, actual)
 }
+
+func TestIsoTextDecodeAsciiFixedNoPad(t *testing.T) {
+	value := []byte{0x30, 0x33, 0x32, 0x30}
+	expected := "0320"
+	codec := IsoText(FIXED(), ASCII, 4, NoPadding)
+	actual, err := codec.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
+}
+
+func TestIsoTextDecodeAsciiFixedLeftPad(t *testing.T) {
+	value := []byte("   ABCD")
+	expected := "ABCD"
+	codec := IsoText(FIXED(), ASCII, 7, LeftPadding)
+	actual, err := codec.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
+}
+
+func TestIsoTextDecodeAsciiFixedRightPad(t *testing.T) {
+	value := []byte("ABCD   ")
+	expected := "ABCD"
+	codec := IsoText(FIXED(), ASCII, 7, RightPadding)
+	actual, err := codec.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
+}

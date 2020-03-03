@@ -87,3 +87,11 @@ func EbcdicToAscii(s string) []byte {
 	}
 	return ascii
 }
+
+func EbcdicToAsciiBytes(b []byte) []byte {
+	var ascii = make([]byte, len(b))
+	for i, v := range b {
+		ascii[i] = ebcdic2ascii[v]
+	}
+	return ascii
+}
