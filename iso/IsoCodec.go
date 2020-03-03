@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/hex"
-	"fmt"
+	"log"
 	"math/big"
 	"strconv"
+	"strings"
 )
 
 type IsoCodec struct {
@@ -221,84 +222,111 @@ func (codec *IsoCodec) doEncode(s string) ([]byte, error) {
 }
 
 func (codec *IsoCodec) Decode(b []byte) (string, error) {
-	n, err := codec.DecodeLen(b)
+	log.Printf("Input: [%X]", b)
+	bytes, n, err := codec.DecodeLen(b)
 	if err != nil {
+		log.Fatalf("Decoding length failed: %v", err)
 		return "", err
 	}
-	decode, err := codec.doDecode(b[n:])
-	fmt.Printf("value [%s]\n", decode)
-	return decode, err
+	if len(bytes) > 0 {
+		log.Printf("Len: [%X] -> %d", bytes, n)
+	} else {
+		log.Printf("Len: %d", n)
+	}
+
+	if len(b) < len(bytes)+n {
+		log.Printf("%s, %d byte(s) required", NotEnoughData.String(), len(bytes)+n)
+		return "", NotEnoughData
+	}
+	data, err := codec.doDecode(b[len(bytes) : len(bytes)+n])
+	log.Printf("data: \"%s\"", data)
+	return data, err
 }
 
 func (codec *IsoCodec) doDecode(b []byte) (string, error) {
-	fmt.Printf("decode [%X]\n", b)
 	if codec.LenCodec.Size == FixSize && len(b) != codec.Size {
 		return "", Errors[InvalidLengthError]
 	} else if len(b) > codec.Size {
 		return "", Errors[InvalidLengthError]
 	}
-	fmt.Printf("len is ok\n")
+
 	if codec.Encoding == ASCII {
 		return string(b), nil
 	} else if codec.Encoding == EBCDIC {
 		return string(EbcdicToAsciiBytes(b)), nil
 	} else if codec.Encoding == BINARY {
-		return hex.EncodeToString(b), nil
+		return strings.ToUpper(hex.EncodeToString(b)), nil
 	} else {
 		return "", NotSupportedEncodingError
 	}
 }
 
-func (codec *IsoCodec) DecodeLen(b []byte) (int, error) {
+func (codec *IsoCodec) DecodeLen(b []byte) ([]byte, int, error) {
 	if codec.LenCodec.Size == FixSize {
-		return 0, nil
+		return []byte{}, codec.Size, nil
 	}
 	var s string
+	var bytes []byte
 	if codec.LenCodec.Encoding == ASCII {
 		if codec.LenCodec.Size == LLVarSize {
-			if len(b) != LLVarSize {
-				return 0, Errors[InvalidLengthError]
+			if len(b) < LLVarSize {
+				log.Fatalf("Invalid ASCII LLVar: %X", b)
+				return bytes, 0, Errors[InvalidLengthError]
 			}
-			s = string(b)
+			bytes = b[:LLVarSize]
+			s = string(bytes)
 		} else if codec.LenCodec.Size == LLLVarSize {
-			if len(b) != LLLVarSize {
-				return 0, Errors[InvalidLengthError]
+			if len(b) < LLLVarSize {
+				log.Fatalf("Invalid ASCII LLLVar: %X", b)
+				return bytes, 0, Errors[InvalidLengthError]
 			}
-			s = string(b)
+			bytes = b[:LLLVarSize]
+			s = string(bytes)
+		} else {
+			return bytes, 0, Errors[InvalidLengthError]
 		}
-		return 0, Errors[InvalidLengthError]
 	} else if codec.LenCodec.Encoding == EBCDIC {
 		if codec.LenCodec.Size == LLVarSize {
-			if len(b) != LLVarSize {
-				return 0, Errors[InvalidLengthError]
+			if len(b) < LLVarSize {
+				log.Fatalf("Invalid EBCDIC LLVar: %X", b)
+				return bytes, 0, Errors[InvalidLengthError]
 			}
-			s = string(EbcdicToAsciiBytes(b))
+			bytes = b[:LLVarSize]
+			s = string(EbcdicToAsciiBytes(bytes))
 		} else if codec.LenCodec.Size == LLLVarSize {
-			if len(b) != LLLVarSize {
-				return 0, Errors[InvalidLengthError]
+			if len(b) < LLLVarSize {
+				log.Fatalf("Invalid EBCDIC LLLVar: %X", b)
+				return bytes, 0, Errors[InvalidLengthError]
 			}
-			s = string(EbcdicToAsciiBytes(b))
+			bytes = b[:LLLVarSize]
+			s = string(EbcdicToAsciiBytes(bytes))
+		} else {
+			return bytes, 0, Errors[InvalidLengthError]
 		}
-		return 0, Errors[InvalidLengthError]
 	} else if codec.LenCodec.Encoding == BINARY {
 		if codec.LenCodec.Size == LLVarBinarySize {
-			if len(b) != LLVarBinarySize {
-				return 0, Errors[InvalidLengthError]
+			if len(b) < LLVarBinarySize {
+				log.Fatalf("Invalid BINARY LLVar: %X", b)
+				return bytes, 0, Errors[InvalidLengthError]
 			}
-			s = string(BcdToInt(b))
+			bytes = b[:LLVarBinarySize]
+			s = string(BcdToInt(bytes))
 		} else if codec.LenCodec.Size == LLLVarBinarySize {
-			if len(b) != LLLVarBinarySize {
-				return 0, Errors[InvalidLengthError]
+			if len(b) < LLLVarBinarySize {
+				log.Fatalf("Invalid BINARY LLLVar: %X", b)
+				return bytes, 0, Errors[InvalidLengthError]
 			}
-			s = string(BcdToInt(b))
+			bytes = b[:LLLVarBinarySize]
+			s = string(BcdToInt(bytes))
 		}
 	} else {
-		return 0, NotSupportedEncodingError
+		return bytes, 0, NotSupportedEncodingError
 	}
 
 	n, err := strconv.Atoi(s)
 	if err != nil {
-		return 0, err
+		log.Fatalf("Length is not integer: %v", err)
+		return bytes, 0, err
 	}
-	return n, nil
+	return bytes, n, nil
 }

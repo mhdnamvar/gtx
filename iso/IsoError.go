@@ -18,6 +18,7 @@ var (
 	NotSupportedEncodingError = IsoErrorNew(1007, "Message encoding not supported, it should be ASCII, BINARY or EBCDIC")
 	InvalidLengthTypeError    = IsoErrorNew(1008, "Fields length type is not valid, it should be FIXED, LLVAR or LLLVAR")
 	NotSupported              = IsoErrorNew(1009, "Not supported")
+	NotEnoughData             = IsoErrorNew(1010, "Not enough data")
 )
 
 // IsoError ...
@@ -38,7 +39,7 @@ func (e *IsoError) Error() string {
 
 // String
 func (e *IsoError) String() string {
-	return fmt.Sprintf("%d %s", e.code, e.message)
+	return fmt.Sprintf("Error %d: %s", e.code, e.message)
 }
 
 // Errors ...
