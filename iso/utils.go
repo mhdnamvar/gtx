@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -115,4 +116,14 @@ func BytesToBcd(b []byte) []byte {
 		slice[i>>1] = slice[i>>1] | (b[i]-48)<<uint(step)
 	}
 	return slice
+}
+
+func Btoi(b []byte) (int, error) {
+	s := string(b)
+	n, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatalf("Btoi() failed: %v", err)
+		return 0, err
+	}
+	return n, nil
 }
