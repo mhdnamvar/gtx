@@ -1200,8 +1200,8 @@ func TestIsoNumericEncodeBinaryFixedNoPad(t *testing.T) {
 }
 
 func TestIsoNumericDecodeBinaryFixedNoPad(t *testing.T) {
-	expected := "0320"
 	value := []byte{0x03, 0x20}
+	expected := "0320"
 	codec := IsoNumeric(FIXED(), BINARY, 2, NoPadding)
 	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
@@ -1217,8 +1217,8 @@ func TestIsoNumericEncodeBinaryFixedLeftPad(t *testing.T) {
 	assertEqual(t, expected, actual)
 }
 func TestIsoNumericDecodeBinaryFixedLeftPad(t *testing.T) {
-	expected := "1234"
 	value := []byte{0x00, 0x12, 0x34}
+	expected := "001234"
 	codec := IsoNumeric(FIXED(), BINARY, 3, LeftPadding)
 	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
@@ -1242,6 +1242,15 @@ func TestIsoNumericEncodeBinaryLLVARNoPad(t *testing.T) {
 	assertEqual(t, expected, actual)
 }
 
+func TestIsoNumericDecodeBinaryLLVARNoPad(t *testing.T) {
+	value := []byte{0x02, 0x12, 0x34}
+	expected := "1234"
+	codec := IsoNumeric(LLVAR(BINARY), BINARY, 5, NoPadding)
+	actual, err := codec.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
+}
+
 func TestIsoNumericEncodeBinaryLLVARLeftPad(t *testing.T) {
 	value := "1234"
 	expected := []byte{0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x34}
@@ -1251,6 +1260,14 @@ func TestIsoNumericEncodeBinaryLLVARLeftPad(t *testing.T) {
 	assertEqual(t, expected, actual)
 }
 
+func TestIsoNumericDecodeBinaryLLVARLeftPad(t *testing.T) {
+	value := []byte{0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x34}
+	expected := "00000000001234"
+	codec := IsoNumeric(LLVAR(BINARY), BINARY, 7, LeftPadding)
+	actual, err := codec.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
+}
 func TestIsoNumericEncodeBinaryLLVARRightPad(t *testing.T) {
 	value := "1234"
 	codec := IsoNumeric(LLVAR(BINARY), BINARY, 7, RightPadding)
@@ -1287,9 +1304,37 @@ func TestIsoNumericEncodeBinaryLLLVARNoPad(t *testing.T) {
 	assertEqual(t, expected, actual)
 }
 
+func TestIsoNumericDecodeBinaryLLLVARNoPad(t *testing.T) {
+	value := []byte{
+		0x01, 0x20,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
+	}
+	expected := "0123456789012345678901234567890123456789" +
+		"0123456789012345678901234567890123456789" +
+		"0123456789012345678901234567890123456789" +
+		"0123456789012345678901234567890123456789" +
+		"0123456789012345678901234567890123456789" +
+		"0123456789012345678901234567890123456789"
+
+	codec := IsoNumeric(LLLVAR(BINARY), BINARY, 120, NoPadding)
+	actual, err := codec.Decode(value)
+	assertEqual(t, nil, err)
+	assertEqual(t, expected, actual)
+}
+
 func TestIsoNumericEncodeBinaryLLLVARLeftPad(t *testing.T) {
-	value := "01234567890123456789"
-	expected := []byte{
+	value := []byte{
 		0x01, 0x20,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1304,8 +1349,15 @@ func TestIsoNumericEncodeBinaryLLLVARLeftPad(t *testing.T) {
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 	}
+	expected := "0000000000000000000000000000000000000000" +
+		"0000000000000000000000000000000000000000" +
+		"0000000000000000000000000000000000000000" +
+		"0000000000000000000000000000000000000000" +
+		"0000000000000000000000000000000000000000" +
+		"00000000000000000000" +
+		"01234567890123456789"
 	codec := IsoNumeric(LLLVAR(BINARY), BINARY, 120, LeftPadding)
-	actual, err := codec.Encode(value)
+	actual, err := codec.Decode(value)
 	assertEqual(t, nil, err)
 	assertEqual(t, expected, actual)
 }
