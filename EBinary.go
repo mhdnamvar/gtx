@@ -27,7 +27,7 @@ func (codec *EBinary) Encode(s string) ([]byte, error) {
 	return b, nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *EBinary) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]

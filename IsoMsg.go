@@ -65,7 +65,7 @@ func (isoMsg *IsoMsg) Clear(pos int) {
 	isoMsg.refresh()
 }
 
-// String ...
+// Encode ...
 func (isoMsg *IsoMsg) String() string {
 	var buffer bytes.Buffer
 	for _, f := range isoMsg.fields {

@@ -18,7 +18,7 @@ func (codec *EChar) Encode(s string) ([]byte, error) {
 	return AsciiToEbcdic(RightPad2Len(s, " ", codec.Length)), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *EChar) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]

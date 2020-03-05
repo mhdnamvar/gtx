@@ -41,7 +41,7 @@ func (codec *Codec) GetPadding() bool {
 	return codec.Padding
 }
 
-// String ...
+// Encode ...
 func (codec *Codec) String() string {
 	return codec.Name
 }

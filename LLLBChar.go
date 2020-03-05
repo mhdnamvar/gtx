@@ -25,7 +25,7 @@ func (codec *LLLBChar) Encode(s string) ([]byte, error) {
 	return append(StrToBcd(LeftPad2Len(strconv.Itoa(len(s)), "0", 3)), []byte(s)...), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *LLLBChar) Decode(b []byte) (string, error) {
 	if len(b) < 3 {
 		return "", Errors[InvalidLengthError]

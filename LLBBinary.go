@@ -32,7 +32,7 @@ func (codec *LLBBinary) Encode(s string) ([]byte, error) {
 	return append(StrToBcd(LeftPad2Len(strconv.Itoa(len(s)/2), "0", 2)), b...), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *LLBBinary) Decode(b []byte) (string, error) {
 	if len(b) < 2 {
 		return "", Errors[InvalidLengthError]

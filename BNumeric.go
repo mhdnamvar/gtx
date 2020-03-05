@@ -28,7 +28,7 @@ func (codec *BNumeric) Encode(s string) ([]byte, error) {
 	return StrToBcd(LeftPad2Len(s, "0", codec.Length)), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *BNumeric) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length/2 {
 		return "", Errors[InvalidLengthError]

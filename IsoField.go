@@ -2,10 +2,10 @@ package main
 
 // IsoField ...
 type IsoField struct {
-	pos   	int
-	text 	string
-	codec 	Codable
-	value	[]byte
+	pos   int
+	text  string
+	codec Codable
+	value []byte
 }
 
 // IsoFieldNew ...
@@ -20,7 +20,7 @@ func IsoFieldNew(pos int, text string, codec Codable) (*IsoField, error) {
 	return &IsoField{pos, text, codec, value}, nil
 }
 
-// String ...
+// Encode ...
 func (isoField *IsoField) String() string {
 	return isoField.text
 }

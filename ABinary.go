@@ -19,7 +19,7 @@ func (codec *ABinary) Encode(s string) ([]byte, error) {
 	return []byte(s), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *ABinary) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]

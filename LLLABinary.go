@@ -27,7 +27,7 @@ func (codec *LLLABinary) Encode(s string) ([]byte, error) {
 	return append(length, []byte(s)...), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *LLLABinary) Decode(b []byte) (string, error) {
 	fmt.Printf("----len(b)---- %d\n", len(b))
 	if len(b) < 3 {

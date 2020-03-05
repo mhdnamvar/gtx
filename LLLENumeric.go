@@ -32,7 +32,7 @@ func (codec *LLLENumeric) Encode(s string) ([]byte, error) {
 	return append(length, AsciiToEbcdic(s)...), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *LLLENumeric) Decode(b []byte) (string, error) {
 	if len(b) < 4 {
 		return "", Errors[InvalidLengthError]

@@ -24,7 +24,7 @@ func (codec *ANumeric) Encode(s string) ([]byte, error) {
 	return []byte(LeftPad2Len(s, "0", codec.Length)), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *ANumeric) Decode(b []byte) (string, error) {
 	if len(b) < codec.Length {
 		return "", Errors[InvalidLengthError]

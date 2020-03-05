@@ -37,7 +37,7 @@ func (e *IsoError) Error() string {
 	return e.message
 }
 
-// String
+// Encode
 func (e *IsoError) String() string {
 	return fmt.Sprintf("Error %d: %s", e.code, e.message)
 }

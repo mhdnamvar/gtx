@@ -24,7 +24,7 @@ func (codec *LAChar) Encode(s string) ([]byte, error) {
 	return append(length, []byte(s)...), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *LAChar) Decode(b []byte) (string, error) {
 	if len(b) < 2 {
 		return "", Errors[InvalidLengthError]

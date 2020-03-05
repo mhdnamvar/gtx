@@ -31,7 +31,7 @@ func (codec *LLBNumeric) Encode(s string) ([]byte, error) {
 	return append(StrToBcd(LeftPad2Len(strconv.Itoa(len(s)), "0", 2)), StrToBcd(s)...), nil
 }
 
-// Decode ...
+// Parse ...
 func (codec *LLBNumeric) Decode(b []byte) (string, error) {
 	if len(b) < 2 {
 		return "", Errors[InvalidLengthError]
