@@ -11,7 +11,7 @@ type LLBNumeric struct {
 }
 
 // LLBNumericNew ...
-func LLBNumericNew(name string, description string, length int, padding bool) *LLBNumeric {	
+func LLBNumericNew(name string, description string, length int, padding bool) *LLBNumeric {
 	return &LLBNumeric{Codec{name, description, length, padding}}
 }
 
@@ -38,9 +38,9 @@ func (codec *LLBNumeric) Decode(b []byte) (string, error) {
 	}
 	length := BcdToInt(b[:1])
 	if length%2 != 0 {
-		length = length/2+1
+		length = length/2 + 1
 	} else {
-		length = length/2
+		length = length / 2
 	}
 	if length <= 0 || uint64(len(b)) < length+1 {
 		return "", Errors[InvalidLengthError]

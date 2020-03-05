@@ -44,7 +44,7 @@ func (bits *Bitmap) Decode(s string) ([]int, error) {
 	if len(s)%2 != 0 {
 		return nil, Errors[InvalidLengthError]
 	}
-	
+
 	b, err := hex.DecodeString(s)
 	if err != nil {
 		return nil, Errors[InvalidDataError]
@@ -52,7 +52,7 @@ func (bits *Bitmap) Decode(s string) ([]int, error) {
 	if len(b) > 16 {
 		return nil, Errors[InvalidLengthError]
 	}
-	
+
 	for i := 0; i < len(b); i++ {
 		bits[i] = b[i]
 	}

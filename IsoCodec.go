@@ -31,14 +31,14 @@ const (
 	LeftPadding  IsoPadding = 1
 	RightPadding IsoPadding = 2
 
-	// FIXED length
+	// Fixed length
 	FixSize int = 0
 
-	// LLVAR Length
+	// LLVar Length
 	LLVarSize       int = 2
 	LLVarBinarySize int = 1
 
-	// LLLVAR Length
+	// LLLVar Length
 	LLLVarSize       int = 3
 	LLLVarBinarySize int = 2
 )
@@ -51,24 +51,24 @@ func IsoNumeric(lenCodec *IsoCodec, encoding IsoEncoding, size int, padding IsoP
 	return &IsoCodec{lenCodec, encoding, size, padding, true}
 }
 
-func FIXED() *IsoCodec {
+func Fixed() *IsoCodec {
 	return &IsoCodec{}
 }
 
-func LLVAR(encoding IsoEncoding) *IsoCodec {
+func LLVar(encoding IsoEncoding) *IsoCodec {
 	size := LLVarSize
 	if encoding == BINARY {
 		size = LLVarBinarySize
 	}
-	return &IsoCodec{FIXED(), encoding, size, LeftPadding, true}
+	return &IsoCodec{Fixed(), encoding, size, LeftPadding, true}
 }
 
-func LLLVAR(encoding IsoEncoding) *IsoCodec {
+func LLLVar(encoding IsoEncoding) *IsoCodec {
 	size := LLLVarSize
 	if encoding == BINARY {
 		size = LLLVarBinarySize
 	}
-	return &IsoCodec{FIXED(), encoding, size, LeftPadding, true}
+	return &IsoCodec{Fixed(), encoding, size, LeftPadding, true}
 }
 
 func pad(codec *IsoCodec, s string) (string, error) {

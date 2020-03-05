@@ -4,13 +4,14 @@ import (
 	"encoding/hex"
 	"fmt"
 )
+
 // BBinary ...
 type BBinary struct {
 	Codec
 }
 
 // BBinaryNew ...
-func BBinaryNew(name string, description string, length int) *BBinary {	
+func BBinaryNew(name string, description string, length int) *BBinary {
 	return &BBinary{Codec{name, description, length, true}}
 }
 
@@ -23,7 +24,7 @@ func (codec *BBinary) Encode(s string) ([]byte, error) {
 	if err != nil {
 		return nil, Errors[InvalidDataError]
 	}
-	return  b, nil
+	return b, nil
 }
 
 // Decode ...

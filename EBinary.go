@@ -4,13 +4,14 @@ import (
 	"encoding/hex"
 	"fmt"
 )
+
 // EBinary ...
 type EBinary struct {
 	Codec
 }
 
 // EBinaryNew ...
-func EBinaryNew(name string, description string, length int) *EBinary {	
+func EBinaryNew(name string, description string, length int) *EBinary {
 	return &EBinary{Codec{name, description, length, true}}
 }
 
@@ -23,7 +24,7 @@ func (codec *EBinary) Encode(s string) ([]byte, error) {
 	if err != nil {
 		return nil, Errors[InvalidDataError]
 	}
-	return  b, nil
+	return b, nil
 }
 
 // Decode ...

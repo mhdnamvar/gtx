@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/hex"
-	"strconv"
 	"fmt"
+	"strconv"
 )
+
 // LLLBBinary ...
 type LLLBBinary struct {
 	Codec
@@ -27,7 +28,7 @@ func (codec *LLLBBinary) Encode(s string) ([]byte, error) {
 	b, err := hex.DecodeString(s)
 	if err != nil {
 		return nil, Errors[InvalidDataError]
-	}	
+	}
 	return append(StrToBcd(LeftPad2Len(strconv.Itoa(len(s)/2), "0", 3)), b...), nil
 }
 
@@ -38,7 +39,7 @@ func (codec *LLLBBinary) Decode(b []byte) (string, error) {
 	}
 	length := BcdToInt(b[:2])
 	if length%2 != 0 {
-		length = length+1
+		length = length + 1
 	}
 	if length <= 0 || uint64(len(b)) < length+2 {
 		return "", Errors[InvalidLengthError]

@@ -8,7 +8,7 @@ type LAChar struct {
 }
 
 // LACharNew ...
-func LACharNew(name string, description string, length int, padding bool) *LAChar {	
+func LACharNew(name string, description string, length int, padding bool) *LAChar {
 	return &LAChar{Codec{name, description, length, padding}}
 }
 

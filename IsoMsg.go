@@ -119,7 +119,7 @@ func (isoMsg *IsoMsg) Parse(b []byte) error {
 	}
 	isoMsg.Set(1, bitmap)
 
-	b = b[typeLen(codecs[1])+len(bitmap):]	
+	b = b[typeLen(codecs[1])+len(bitmap):]
 	for _, i := range isoMsg.bitmap.Array() {
 		if i == 1 {
 			continue

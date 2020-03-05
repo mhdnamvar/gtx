@@ -1,8 +1,8 @@
 package main
 
 import (
-	"strconv"
 	"fmt"
+	"strconv"
 )
 
 // LLLABinary ...
@@ -16,7 +16,7 @@ func LLLABinaryNew(name string, description string, length int, padding bool) *L
 }
 
 // Encode ...
-func (codec *LLLABinary) Encode(s string) ([]byte, error) {	
+func (codec *LLLABinary) Encode(s string) ([]byte, error) {
 	if len(s)%2 != 0 || len(s) > codec.Length {
 		return nil, Errors[InvalidLengthError]
 	}
@@ -38,8 +38,8 @@ func (codec *LLLABinary) Decode(b []byte) (string, error) {
 	if err != nil || length <= 0 {
 		return "", Errors[InvalidLengthError]
 	}
-	if len(b) < length+3 {		
+	if len(b) < length+3 {
 		return "", Errors[InvalidLengthError]
-	}	
+	}
 	return string(b[3 : length+3]), nil
 }

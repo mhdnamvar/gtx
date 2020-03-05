@@ -15,17 +15,17 @@ func assertEqual(t *testing.T, expected interface{}, actual interface{}) {
 	}
 }
 
-func assertNil(t *testing.T, i interface{}) {	
+func assertNil(t *testing.T, i interface{}) {
 	if i != nil && (reflect.ValueOf(i).Kind() != reflect.Ptr || !reflect.ValueOf(i).IsNil()) {
 		switch i.(type) {
-			case []byte:
-				if len(i.([]byte)) > 0 {
-					t.Errorf("Expected nil but found: %v(type=%T)\n", i, i)
-				}
-			case string:
-				if len(i.(string)) > 0 {
-					t.Errorf("Expected nil but found: %v(type=%T)\n", i, i)
-				}				
+		case []byte:
+			if len(i.([]byte)) > 0 {
+				t.Errorf("Expected nil but found: %v(type=%T)\n", i, i)
+			}
+		case string:
+			if len(i.(string)) > 0 {
+				t.Errorf("Expected nil but found: %v(type=%T)\n", i, i)
+			}
 		}
 	}
 }
@@ -40,8 +40,8 @@ func assertEqualError(t *testing.T, expected interface{}, actual interface{}, er
 
 func assertEqualErrorCode(t *testing.T, actual interface{}, err error, errType int) {
 	if err != nil && (actual.([]byte) == nil || actual.(string) == "") {
-		assertEqual(t, err.Error(), Errors[errType].Error())	
+		assertEqual(t, err.Error(), Errors[errType].Error())
 	} else {
-		t.Errorf("Expected error: %s", Errors[errType].Error())	
+		t.Errorf("Expected error: %s", Errors[errType].Error())
 	}
 }

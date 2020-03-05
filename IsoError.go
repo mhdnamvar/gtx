@@ -16,7 +16,7 @@ var (
 	IsoFieldNotFoundError     = IsoErrorNew(1005, "Iso field not found")
 	NotSupportedBitmapError   = IsoErrorNew(1006, "Bitmap bigger than 2 bytes not supported")
 	NotSupportedEncodingError = IsoErrorNew(1007, "Message encoding not supported, it should be ASCII, BINARY or EBCDIC")
-	InvalidLengthTypeError    = IsoErrorNew(1008, "Fields length type is not valid, it should be FIXED, LLVAR or LLLVAR")
+	InvalidLengthTypeError    = IsoErrorNew(1008, "Fields length type is not valid, it should be Fixed, LLVar or LLLVar")
 	NotSupported              = IsoErrorNew(1009, "Not supported")
 	NotEnoughData             = IsoErrorNew(1010, "Not enough data")
 )

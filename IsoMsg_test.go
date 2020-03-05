@@ -291,7 +291,7 @@ func Test_IsoMsg_Parse(t *testing.T) {
 	f49, err := isoMsg.Get(49)
 	assertEqual(t, nil, err)
 	assertEqual(t, "978", f49.text)
-	
+
 	mac, err := isoMsg.Get(128)
 	assertEqual(t, nil, err)
 	assertEqual(t, "2D2A98F12D2A98F1", mac.text)

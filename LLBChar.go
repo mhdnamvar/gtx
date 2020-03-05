@@ -10,7 +10,7 @@ type LLBChar struct {
 }
 
 // LLBCharNew ...
-func LLBCharNew(name string, description string, length int, padding bool) *LLBChar {	
+func LLBCharNew(name string, description string, length int, padding bool) *LLBChar {
 	return &LLBChar{Codec{name, description, length, padding}}
 }
 

@@ -38,9 +38,9 @@ func (codec *LLLBNumeric) Decode(b []byte) (string, error) {
 	}
 	length := BcdToInt(b[:2])
 	if length%2 != 0 {
-		length = length/2+1
+		length = length/2 + 1
 	} else {
-		length = length/2
+		length = length / 2
 	}
 	if length <= 0 || uint64(len(b)) < length+2 {
 		return "", Errors[InvalidLengthError]

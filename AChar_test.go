@@ -1,7 +1,7 @@
 package main
 
 import (
-	"testing"	
+	"testing"
 )
 
 func Test_AChar_Encode(t *testing.T) {

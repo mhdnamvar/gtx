@@ -10,7 +10,7 @@ type LLAChar struct {
 }
 
 // LLACharNew ...
-func LLACharNew(name string, description string, length int, padding bool) *LLAChar {	
+func LLACharNew(name string, description string, length int, padding bool) *LLAChar {
 	return &LLAChar{Codec{name, description, length, padding}}
 }
 
