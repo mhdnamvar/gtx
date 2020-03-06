@@ -1,11 +1,50 @@
-package iso
+package iso8583
 
-/*
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
+func TestIsoMsgNew(t *testing.T) {
+	isoMsg := IsoMsgNew()
+	isoMsg.Set(0, "0210")
+	isoMsg.Set(2, "6734000000000000067")
+	isoMsg.Set(3, "000000")
+	isoMsg.Set(4, "000000000101")
+	isoMsg.Set(7, "0806080102")
+	isoMsg.Set(11, "823579")
+	isoMsg.Set(12, "100100")
+	isoMsg.Set(13, "0806")
+	isoMsg.Set(19, "528")
+	isoMsg.Set(23, "001")
+	isoMsg.Set(32, "673005005")
+	isoMsg.Set(33, "67390100200")
+	isoMsg.Set(37, "080685700000")
+	isoMsg.Set(41, "CPOS99  ")
+	isoMsg.Set(43, "0650MAES115252800300003540")
+	isoMsg.Set(48, "MAES0115941234560407      ")
+	isoMsg.Set(49, "978")
+	isoMsg.Set(55, "5F2A0209789A031409029C01009F1A0209789F02063030323030309F03060000000000009F10201F4301AAAAAAAA000011223344045856000000000000000000000000000000009F2701809F3602F1039F37044DDF27A982025C009505F070AC9800")
+	isoMsg.Set(60, "")
+	isoMsg.Set(61, "020058800000000015  001")
+	isoMsg.Set(63, "02600000000008005283526LB    ")
+	isoMsg.Set(71, "5666")
+	isoMsg.Set(128, "2D2A98F12D2A98F1")
+	fmt.Print(isoMsg)
+}
+
+func TestIsoMsgSet(t *testing.T) {
+	isoMsg := IsoMsgNew()
+	err := isoMsg.Set(128, "2D2A98F12D2A98F1")
+	assert.Equal(t, nil, err)
+
+	err = isoMsg.Set(129, "There is no DE129")
+	assert.Equal(t, IsoFieldNotFoundError, err)
+}
+
+/*
 func Test_IsoMsg_New(t *testing.T) {
 	isoMsg := IsoMsgNew(ASCII1987)
 	isoMsg.Set(0, "0100")

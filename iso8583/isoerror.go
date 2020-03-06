@@ -1,4 +1,4 @@
-package iso
+package iso8583
 
 import "fmt"
 

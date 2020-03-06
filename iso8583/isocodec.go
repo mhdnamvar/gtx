@@ -1,4 +1,4 @@
-package iso
+package iso8583
 
 import (
 	"encoding/hex"
@@ -218,7 +218,7 @@ func doEncode(codec *IsoCodec, s string) ([]byte, error) {
 		}
 		return bytes, nil
 	} else if codec.Encoding == EBCDIC {
-		return AsciiToEbcdic(s), nil
+		return utils.AsciiToEbcdic(s), nil
 	} else {
 		return nil, NotSupportedEncodingError
 	}
@@ -245,7 +245,7 @@ func (codec *IsoCodec) Decode(b []byte) (string, error) {
 	if codec.Encoding == ASCII {
 		return string(data), nil
 	} else if codec.Encoding == EBCDIC {
-		return string(EbcdicToAsciiBytes(data)), nil
+		return string(utils.EbcdicToAsciiBytes(data)), nil
 	} else if codec.Encoding == BINARY {
 		return strings.ToUpper(hex.EncodeToString(data)), nil
 	} else {
@@ -284,7 +284,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				log.Fatalf("Invalid EBCDIC LLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
-			bytes := EbcdicToAsciiBytes(b[:LLVarSize])
+			bytes := utils.EbcdicToAsciiBytes(b[:LLVarSize])
 			i, err := utils.Btoi(bytes)
 			return bytes, i, err
 		} else if codec.LenCodec.Size == LLLVarSize {
@@ -292,7 +292,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				log.Fatalf("Invalid EBCDIC LLLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
-			bytes := EbcdicToAsciiBytes(b[:LLLVarSize])
+			bytes := utils.EbcdicToAsciiBytes(b[:LLLVarSize])
 			i, err := utils.Btoi(bytes)
 			return bytes, i, err
 		} else {

@@ -1,31 +1,52 @@
-package iso
+package iso8583
 
-/*
 import (
 	"bytes"
-	"encoding/hex"
 	"fmt"
-	"log"
 )
 
-// MaxField ...
 const MaxField = 128
 
-// IsoMsg ...
 type IsoMsg struct {
-	protocol Protocol
-	bitmap   Bitmap
-	fields   [MaxField + 1]*IsoField
+	bitmap *IsoBitmap
+	raw    []byte
+	fields map[int]string
 }
 
-// IsoMsgNew ...
-func IsoMsgNew(p Protocol) *IsoMsg {
-	bitmap := Bitmap{}
-	fields := [MaxField + 1]*IsoField{}
-	isoMsg := &IsoMsg{p, bitmap, fields}
-	return isoMsg
+func IsoMsgNew() *IsoMsg {
+	return &IsoMsg{&IsoBitmap{}, []byte{}, make(map[int]string, MaxField)}
 }
 
+func (isoMsg *IsoMsg) String() string {
+	var buffer bytes.Buffer
+	buffer.WriteString(fmt.Sprintf("DE000 %s\n", isoMsg.fields[0]))
+	fields := isoMsg.bitmap.Array()
+	for _, f := range fields {
+		buffer.WriteString(fmt.Sprintf("DE%03d %s\n", f, isoMsg.fields[f]))
+	}
+	return buffer.String()
+}
+
+func (isoMsg *IsoMsg) Set(i int, s string) error {
+	if i < 0 || i > MaxField {
+		return IsoFieldNotFoundError
+	}
+	if i != 1 {
+		isoMsg.bitmap.Set(i)
+		isoMsg.fields[1] = isoMsg.bitmap.String()
+	}
+	isoMsg.fields[i] = s
+	return nil
+}
+
+func (isoMsg *IsoMsg) Get(i int) (string, error) {
+	if i < 0 || i > MaxField {
+		return "", IsoFieldNotFoundError
+	}
+	return isoMsg.fields[i], nil
+}
+
+/*
 // Get ...
 func (isoMsg *IsoMsg) Get(pos int) (*IsoField, error) {
 	if pos < 0 || pos > MaxField {

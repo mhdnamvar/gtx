@@ -1,7 +1,9 @@
-package iso
+package iso8583
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIsoTextEncodeAsciiFixedNoPad(t *testing.T) {
@@ -9,8 +11,8 @@ func TestIsoTextEncodeAsciiFixedNoPad(t *testing.T) {
 	expected := []byte{0x30, 0x33, 0x32, 0x30}
 	codec := IsoText(Fixed(), ASCII, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiFixed(t *testing.T) {
@@ -18,8 +20,8 @@ func TestIsoTextDecodeAsciiFixed(t *testing.T) {
 	expected := "0320"
 	codec := IsoText(Fixed(), ASCII, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiFixedLeftPad(t *testing.T) {
@@ -27,8 +29,8 @@ func TestIsoTextEncodeAsciiFixedLeftPad(t *testing.T) {
 	expected := []byte("   ABCD")
 	codec := IsoText(Fixed(), ASCII, 7, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiFixedLeftPad(t *testing.T) {
@@ -36,8 +38,8 @@ func TestIsoTextDecodeAsciiFixedLeftPad(t *testing.T) {
 	expected := "   ABCD"
 	codec := IsoText(Fixed(), ASCII, 7, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiFixedRightPad(t *testing.T) {
@@ -45,8 +47,8 @@ func TestIsoTextEncodeAsciiFixedRightPad(t *testing.T) {
 	expected := []byte("ABCD   ")
 	codec := IsoText(Fixed(), ASCII, 7, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiFixedRightPad(t *testing.T) {
@@ -54,8 +56,8 @@ func TestIsoTextDecodeAsciiFixedRightPad(t *testing.T) {
 	expected := "ABCD   "
 	codec := IsoText(Fixed(), ASCII, 7, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiLLVARNoPad(t *testing.T) {
@@ -63,8 +65,8 @@ func TestIsoTextEncodeAsciiLLVARNoPad(t *testing.T) {
 	expected := []byte{0x30, 0x34, 0x41, 0x42, 0x43, 0x44}
 	codec := IsoText(LLVar(ASCII), ASCII, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiLLVARNoPad(t *testing.T) {
@@ -72,8 +74,8 @@ func TestIsoTextDecodeAsciiLLVARNoPad(t *testing.T) {
 	expected := "ABCD"
 	codec := IsoText(LLVar(ASCII), ASCII, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiLLVARLeftPad(t *testing.T) {
@@ -81,8 +83,8 @@ func TestIsoTextEncodeAsciiLLVARLeftPad(t *testing.T) {
 	expected := []byte{0x30, 0x37, 0x20, 0x20, 0x20, 0x41, 0x42, 0x43, 0x44}
 	codec := IsoText(LLVar(ASCII), ASCII, 7, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiLLVARLeftPad(t *testing.T) {
@@ -90,8 +92,8 @@ func TestIsoTextDecodeAsciiLLVARLeftPad(t *testing.T) {
 	expected := "   ABCD"
 	codec := IsoText(LLVar(ASCII), ASCII, 7, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiLLVARRightPad(t *testing.T) {
@@ -99,8 +101,8 @@ func TestIsoTextEncodeAsciiLLVARRightPad(t *testing.T) {
 	expected := []byte{0x30, 0x37, 0x41, 0x42, 0x43, 0x44, 0x20, 0x20, 0x20}
 	codec := IsoText(LLVar(ASCII), ASCII, 7, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiLLVARRightPad(t *testing.T) {
@@ -108,8 +110,8 @@ func TestIsoTextDecodeAsciiLLVARRightPad(t *testing.T) {
 	expected := "ABCD   "
 	codec := IsoText(LLVar(ASCII), ASCII, 7, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiLLLVARNoPad(t *testing.T) {
@@ -130,8 +132,8 @@ func TestIsoTextEncodeAsciiLLLVARNoPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(ASCII), ASCII, 104, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiLLLVARNoPad(t *testing.T) {
@@ -152,8 +154,8 @@ func TestIsoTextDecodeAsciiLLLVARNoPad(t *testing.T) {
 	expected := "ABCD                                                                                                    "
 	codec := IsoText(LLLVar(ASCII), ASCII, 104, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiLLLVARLeftPad(t *testing.T) {
@@ -174,8 +176,8 @@ func TestIsoTextEncodeAsciiLLLVARLeftPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(ASCII), ASCII, 104, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiLLLVARLeftPad(t *testing.T) {
@@ -196,8 +198,8 @@ func TestIsoTextDecodeAsciiLLLVARLeftPad(t *testing.T) {
 	expected := "                                                                                                    ABCD"
 	codec := IsoText(LLLVar(ASCII), ASCII, 104, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiLLLVARRightPad(t *testing.T) {
@@ -218,8 +220,8 @@ func TestIsoTextEncodeAsciiLLLVARRightPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(ASCII), ASCII, 104, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeAsciiLLLVARRightPad(t *testing.T) {
@@ -240,24 +242,24 @@ func TestIsoTextDecodeAsciiLLLVARRightPad(t *testing.T) {
 	expected := "ABCD                                                                                                    "
 	codec := IsoText(LLLVar(ASCII), ASCII, 104, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeAsciiFixedNoPadInvalidLen(t *testing.T) {
 	value := "032"
 	codec := IsoText(Fixed(), ASCII, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, Errors[InvalidLengthError], err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, Errors[InvalidLengthError], err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoTextDecodeAsciiFixedNoPadInvalidLen(t *testing.T) {
 	value := []byte{0x00, 0x03, 0x32}
 	codec := IsoText(Fixed(), ASCII, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, NotEnoughData, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotEnoughData, err)
+	assert.Equal(t, string(""), actual)
 }
 
 func TestIsoNumericEncodeAsciiFixedNoPad(t *testing.T) {
@@ -270,8 +272,8 @@ func TestIsoNumericEncodeAsciiFixedNoPad(t *testing.T) {
 	}
 	codec := IsoNumeric(Fixed(), ASCII, 40, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeAsciiFixedNoPad(t *testing.T) {
@@ -284,8 +286,8 @@ func TestIsoNumericDecodeAsciiFixedNoPad(t *testing.T) {
 	expected := "0123456789012345678901234567890123456789"
 	codec := IsoNumeric(Fixed(), ASCII, 40, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiFixedLeftPad(t *testing.T) {
@@ -293,8 +295,8 @@ func TestIsoNumericEncodeAsciiFixedLeftPad(t *testing.T) {
 	expected := []byte{0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39}
 	codec := IsoNumeric(Fixed(), ASCII, 10, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeAsciiFixedLeftPad(t *testing.T) {
@@ -302,16 +304,16 @@ func TestIsoNumericDecodeAsciiFixedLeftPad(t *testing.T) {
 	expected := "0123456789"
 	codec := IsoNumeric(Fixed(), ASCII, 10, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiFixedRightPad(t *testing.T) {
 	value := "123456789"
 	codec := IsoNumeric(Fixed(), ASCII, 10, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericDecodeAsciiFixedRightPad(t *testing.T) {
@@ -319,8 +321,8 @@ func TestIsoNumericDecodeAsciiFixedRightPad(t *testing.T) {
 	expected := "0123456789"
 	codec := IsoNumeric(Fixed(), ASCII, 10, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiLLVARNoPad(t *testing.T) {
@@ -328,8 +330,8 @@ func TestIsoNumericEncodeAsciiLLVARNoPad(t *testing.T) {
 	expected := []byte{0x31, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30}
 	codec := IsoNumeric(LLVar(ASCII), ASCII, 10, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeAsciiLLVARNoPad(t *testing.T) {
@@ -337,8 +339,8 @@ func TestIsoNumericDecodeAsciiLLVARNoPad(t *testing.T) {
 	expected := "1234567890"
 	codec := IsoNumeric(LLVar(ASCII), ASCII, 10, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiLLVARLeftPad(t *testing.T) {
@@ -346,8 +348,8 @@ func TestIsoNumericEncodeAsciiLLVARLeftPad(t *testing.T) {
 	expected := []byte{0x31, 0x30, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39}
 	codec := IsoNumeric(LLVar(ASCII), ASCII, 10, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeAsciiLLVARLeftPad(t *testing.T) {
@@ -355,16 +357,16 @@ func TestIsoNumericDecodeAsciiLLVARLeftPad(t *testing.T) {
 	expected := "0123456789"
 	codec := IsoNumeric(LLVar(ASCII), ASCII, 10, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiLLVARRightPad(t *testing.T) {
 	value := "123456789"
 	codec := IsoNumeric(LLVar(ASCII), ASCII, 10, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericEncodeAsciiLLLVARNoPad(t *testing.T) {
@@ -386,8 +388,8 @@ func TestIsoNumericEncodeAsciiLLLVARNoPad(t *testing.T) {
 	}
 	codec := IsoNumeric(LLLVar(ASCII), ASCII, 120, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeAsciiLLLVARNoPad(t *testing.T) {
@@ -409,8 +411,8 @@ func TestIsoNumericDecodeAsciiLLLVARNoPad(t *testing.T) {
 	expected := "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
 	codec := IsoNumeric(LLLVar(ASCII), ASCII, 120, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiLLLVARLeftPad(t *testing.T) {
@@ -432,8 +434,8 @@ func TestIsoNumericEncodeAsciiLLLVARLeftPad(t *testing.T) {
 	}
 	codec := IsoNumeric(LLLVar(ASCII), ASCII, 120, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeAsciiLLLVARLeftPad(t *testing.T) {
@@ -455,32 +457,32 @@ func TestIsoNumericDecodeAsciiLLLVARLeftPad(t *testing.T) {
 	expected := "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000123456789"
 	codec := IsoNumeric(LLLVar(ASCII), ASCII, 120, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeAsciiLLLVARRightPad(t *testing.T) {
 	value := "0123456789"
 	codec := IsoNumeric(LLLVar(ASCII), ASCII, 120, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericEncodeAsciiFixedNoPadInvalidLen(t *testing.T) {
 	value := "032"
 	codec := IsoNumeric(Fixed(), ASCII, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, Errors[InvalidLengthError], err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, Errors[InvalidLengthError], err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericDecodeAsciiFixedNoPadInvalidLen(t *testing.T) {
 	value := []byte{0x31, 0x32, 0x30}
 	codec := IsoNumeric(Fixed(), ASCII, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, NotEnoughData, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotEnoughData, err)
+	assert.Equal(t, string(""), actual)
 }
 
 func TestIsoTextEncodeEbcdicFixedNoPad(t *testing.T) {
@@ -488,8 +490,8 @@ func TestIsoTextEncodeEbcdicFixedNoPad(t *testing.T) {
 	expected := []byte{0xF0, 0xF3, 0xF2, 0xF0}
 	codec := IsoText(Fixed(), EBCDIC, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicFixedNoPad(t *testing.T) {
@@ -497,8 +499,8 @@ func TestIsoTextDecodeEbcdicFixedNoPad(t *testing.T) {
 	expected := "0320"
 	codec := IsoText(Fixed(), EBCDIC, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicFixedLeftPad(t *testing.T) {
@@ -506,8 +508,8 @@ func TestIsoTextEncodeEbcdicFixedLeftPad(t *testing.T) {
 	expected := []byte{0x40, 0xC1, 0xC2, 0xC3, 0xC4}
 	codec := IsoText(Fixed(), EBCDIC, 5, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicFixedLeftPad(t *testing.T) {
@@ -515,8 +517,8 @@ func TestIsoTextDecodeEbcdicFixedLeftPad(t *testing.T) {
 	expected := " ABCD"
 	codec := IsoText(Fixed(), EBCDIC, 5, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicFixedRightPad(t *testing.T) {
@@ -524,8 +526,8 @@ func TestIsoTextEncodeEbcdicFixedRightPad(t *testing.T) {
 	expected := []byte{0xC1, 0xC2, 0xC3, 0xC4, 0x40}
 	codec := IsoText(Fixed(), EBCDIC, 5, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicFixedRightPad(t *testing.T) {
@@ -533,8 +535,8 @@ func TestIsoTextDecodeEbcdicFixedRightPad(t *testing.T) {
 	expected := "ABCD "
 	codec := IsoText(Fixed(), EBCDIC, 5, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicLLVARNoPad(t *testing.T) {
@@ -542,8 +544,8 @@ func TestIsoTextEncodeEbcdicLLVARNoPad(t *testing.T) {
 	expected := []byte{0xF0, 0xF4, 0xC1, 0xC2, 0xC3, 0xC4}
 	codec := IsoText(LLVar(EBCDIC), EBCDIC, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicLLVARNoPad(t *testing.T) {
@@ -551,8 +553,8 @@ func TestIsoTextDecodeEbcdicLLVARNoPad(t *testing.T) {
 	expected := "ABCD"
 	codec := IsoText(LLVar(EBCDIC), EBCDIC, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicLLVARLeftPad(t *testing.T) {
@@ -560,8 +562,8 @@ func TestIsoTextEncodeEbcdicLLVARLeftPad(t *testing.T) {
 	expected := []byte{0xF0, 0xF7, 0x40, 0x40, 0x40, 0xC1, 0xC2, 0xC3, 0xC4}
 	codec := IsoText(LLVar(EBCDIC), EBCDIC, 7, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicLLVARLeftPad(t *testing.T) {
@@ -569,8 +571,8 @@ func TestIsoTextDecodeEbcdicLLVARLeftPad(t *testing.T) {
 	expected := "   ABCD"
 	codec := IsoText(LLVar(EBCDIC), EBCDIC, 7, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicLLVARRightPad(t *testing.T) {
@@ -578,8 +580,8 @@ func TestIsoTextEncodeEbcdicLLVARRightPad(t *testing.T) {
 	expected := []byte{0xF0, 0xF7, 0xC1, 0xC2, 0xC3, 0xC4, 0x40, 0x40, 0x40}
 	codec := IsoText(LLVar(EBCDIC), EBCDIC, 7, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicLLVARRightPad(t *testing.T) {
@@ -587,8 +589,8 @@ func TestIsoTextDecodeEbcdicLLVARRightPad(t *testing.T) {
 	expected := "ABCD   "
 	codec := IsoText(LLVar(EBCDIC), EBCDIC, 7, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicLLLVARNoPad(t *testing.T) {
@@ -609,8 +611,8 @@ func TestIsoTextEncodeEbcdicLLLVARNoPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(EBCDIC), EBCDIC, 104, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicLLLVARNoPad(t *testing.T) {
@@ -631,8 +633,8 @@ func TestIsoTextDecodeEbcdicLLLVARNoPad(t *testing.T) {
 	expected := "ABCD                                                                                                    "
 	codec := IsoText(LLLVar(EBCDIC), EBCDIC, 104, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicLLLVARLeftPad(t *testing.T) {
@@ -653,8 +655,8 @@ func TestIsoTextEncodeEbcdicLLLVARLeftPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(EBCDIC), EBCDIC, 104, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicLLLVARLeftPad(t *testing.T) {
@@ -675,8 +677,8 @@ func TestIsoTextDecodeEbcdicLLLVARLeftPad(t *testing.T) {
 	expected := "                                                                                                    ABCD"
 	codec := IsoText(LLLVar(EBCDIC), EBCDIC, 104, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicLLLVARRightPad(t *testing.T) {
@@ -697,8 +699,8 @@ func TestIsoTextEncodeEbcdicLLLVARRightPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(EBCDIC), EBCDIC, 104, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeEbcdicLLLVARRightPad(t *testing.T) {
@@ -719,24 +721,24 @@ func TestIsoTextDecodeEbcdicLLLVARRightPad(t *testing.T) {
 	expected := "ABCD                                                                                                    "
 	codec := IsoText(LLLVar(EBCDIC), EBCDIC, 104, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeEbcdicFixedNoPadInvalidLen(t *testing.T) {
 	value := "032"
 	codec := IsoText(Fixed(), EBCDIC, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, Errors[InvalidLengthError], err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, Errors[InvalidLengthError], err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoTextDecodeEbcdicFixedNoPadInvalidLen(t *testing.T) {
 	value := []byte{0xF0, 0xF1, 0xF2}
 	codec := IsoText(Fixed(), EBCDIC, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, NotEnoughData, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotEnoughData, err)
+	assert.Equal(t, string(""), actual)
 }
 
 func TestIsoNumericEncodeEbcdicFixedNoPad(t *testing.T) {
@@ -749,8 +751,8 @@ func TestIsoNumericEncodeEbcdicFixedNoPad(t *testing.T) {
 	}
 	codec := IsoNumeric(Fixed(), EBCDIC, 40, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeEbcdicFixedNoPad(t *testing.T) {
@@ -763,8 +765,8 @@ func TestIsoNumericDecodeEbcdicFixedNoPad(t *testing.T) {
 	expected := "0123456789012345678901234567890123456789"
 	codec := IsoNumeric(Fixed(), EBCDIC, 40, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeEbcdicFixedLeftPad(t *testing.T) {
@@ -772,8 +774,8 @@ func TestIsoNumericEncodeEbcdicFixedLeftPad(t *testing.T) {
 	expected := []byte{0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9}
 	codec := IsoNumeric(Fixed(), EBCDIC, 10, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeEbcdicFixedLeftPad(t *testing.T) {
@@ -781,16 +783,16 @@ func TestIsoNumericDecodeEbcdicFixedLeftPad(t *testing.T) {
 	expected := "0123456789"
 	codec := IsoNumeric(Fixed(), EBCDIC, 10, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeEbcdicFixedRightPad(t *testing.T) {
 	value := "123456789"
 	codec := IsoNumeric(Fixed(), EBCDIC, 10, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericEncodeEbcdicLLVARNoPad(t *testing.T) {
@@ -798,8 +800,8 @@ func TestIsoNumericEncodeEbcdicLLVARNoPad(t *testing.T) {
 	expected := []byte{0xF1, 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0}
 	codec := IsoNumeric(LLVar(EBCDIC), EBCDIC, 10, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeEbcdicLLVARNoPad(t *testing.T) {
@@ -807,8 +809,8 @@ func TestIsoNumericDecodeEbcdicLLVARNoPad(t *testing.T) {
 	expected := "1234567890"
 	codec := IsoNumeric(LLVar(EBCDIC), EBCDIC, 10, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeEbcdicLLVARLeftPad(t *testing.T) {
@@ -816,8 +818,8 @@ func TestIsoNumericEncodeEbcdicLLVARLeftPad(t *testing.T) {
 	expected := []byte{0xF1, 0xF0, 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9}
 	codec := IsoNumeric(LLVar(EBCDIC), EBCDIC, 10, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeEbcdicLLVARLeftPad(t *testing.T) {
@@ -825,16 +827,16 @@ func TestIsoNumericDecodeEbcdicLLVARLeftPad(t *testing.T) {
 	expected := "0123456789"
 	codec := IsoNumeric(LLVar(EBCDIC), EBCDIC, 10, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeEbcdicLLVARRightPad(t *testing.T) {
 	value := "123456789"
 	codec := IsoNumeric(LLVar(EBCDIC), EBCDIC, 10, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericEncodeEbcdicLLLVARNoPad(t *testing.T) {
@@ -856,8 +858,8 @@ func TestIsoNumericEncodeEbcdicLLLVARNoPad(t *testing.T) {
 	}
 	codec := IsoNumeric(LLLVar(EBCDIC), EBCDIC, 120, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeEbcdicLLLVARNoPad(t *testing.T) {
@@ -879,8 +881,8 @@ func TestIsoNumericDecodeEbcdicLLLVARNoPad(t *testing.T) {
 	expected := "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
 	codec := IsoNumeric(LLLVar(EBCDIC), EBCDIC, 120, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeEbcdicLLLVARLeftPad(t *testing.T) {
@@ -902,8 +904,8 @@ func TestIsoNumericEncodeEbcdicLLLVARLeftPad(t *testing.T) {
 	}
 	codec := IsoNumeric(LLLVar(EBCDIC), EBCDIC, 120, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeEbcdicLLLVARLeftPad(t *testing.T) {
@@ -925,32 +927,32 @@ func TestIsoNumericDecodeEbcdicLLLVARLeftPad(t *testing.T) {
 	expected := "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000123456789"
 	codec := IsoNumeric(LLLVar(EBCDIC), EBCDIC, 120, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeEbcdicLLLVARRightPad(t *testing.T) {
 	value := "0123456789"
 	codec := IsoNumeric(LLLVar(EBCDIC), EBCDIC, 120, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestNumericInvalidLenEbcdicEncodeFixedNoPad(t *testing.T) {
 	value := "032"
 	codec := IsoNumeric(Fixed(), EBCDIC, 4, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, Errors[InvalidLengthError], err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, Errors[InvalidLengthError], err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestNumericInvalidLenEbcdicDecodeFixedNoPad(t *testing.T) {
 	value := []byte{0x12, 0x34}
 	codec := IsoNumeric(Fixed(), EBCDIC, 4, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, NotEnoughData, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotEnoughData, err)
+	assert.Equal(t, string(""), actual)
 }
 
 func TestIsoTextEncodeBinaryFixedNoPad(t *testing.T) {
@@ -958,8 +960,8 @@ func TestIsoTextEncodeBinaryFixedNoPad(t *testing.T) {
 	expected := []byte{0x2D, 0x2A, 0x98, 0xF1, 0x2D, 0x2A, 0x98}
 	codec := IsoText(Fixed(), BINARY, 7, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryFixedNoPad(t *testing.T) {
@@ -967,8 +969,8 @@ func TestIsoTextDecodeBinaryFixedNoPad(t *testing.T) {
 	value := []byte{0x2D, 0x2A, 0x98, 0xF1, 0x2D, 0x2A, 0x98}
 	codec := IsoText(Fixed(), BINARY, 7, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryFixedLeftPad(t *testing.T) {
@@ -976,8 +978,8 @@ func TestIsoTextEncodeBinaryFixedLeftPad(t *testing.T) {
 	expected := []byte{0x20, 0x12, 0x34}
 	codec := IsoText(Fixed(), BINARY, 3, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryFixedLeftPad(t *testing.T) {
@@ -985,8 +987,8 @@ func TestIsoTextDecodeBinaryFixedLeftPad(t *testing.T) {
 	expected := "201234"
 	codec := IsoText(Fixed(), BINARY, 3, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryFixedRightPad(t *testing.T) {
@@ -994,8 +996,8 @@ func TestIsoTextEncodeBinaryFixedRightPad(t *testing.T) {
 	expected := []byte{0x2D, 0x2A, 0x98, 0xF1, 0x2D, 0x2A, 0x98, 0x20}
 	codec := IsoText(Fixed(), BINARY, 8, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryFixedRightPad(t *testing.T) {
@@ -1003,8 +1005,8 @@ func TestIsoTextDecodeBinaryFixedRightPad(t *testing.T) {
 	expected := "2D2A98F12D2A9820"
 	codec := IsoText(Fixed(), BINARY, 8, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryLLVARNoPad(t *testing.T) {
@@ -1012,8 +1014,8 @@ func TestIsoTextEncodeBinaryLLVARNoPad(t *testing.T) {
 	expected := []byte{0x02, 0x12, 0x34}
 	codec := IsoText(LLVar(BINARY), BINARY, 2, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryLLVARNoPad(t *testing.T) {
@@ -1021,8 +1023,8 @@ func TestIsoTextDecodeBinaryLLVARNoPad(t *testing.T) {
 	expected := "1234"
 	codec := IsoText(LLVar(BINARY), BINARY, 2, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryLLVARLeftPad(t *testing.T) {
@@ -1030,8 +1032,8 @@ func TestIsoTextEncodeBinaryLLVARLeftPad(t *testing.T) {
 	expected := []byte{0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x12, 0x34}
 	codec := IsoText(LLVar(BINARY), BINARY, 7, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryLLVARLeftPad(t *testing.T) {
@@ -1039,8 +1041,8 @@ func TestIsoTextDecodeBinaryLLVARLeftPad(t *testing.T) {
 	expected := "20202020201234"
 	codec := IsoText(LLVar(BINARY), BINARY, 7, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryLLVARRightPad(t *testing.T) {
@@ -1048,8 +1050,8 @@ func TestIsoTextEncodeBinaryLLVARRightPad(t *testing.T) {
 	expected := []byte{0x03, 0x12, 0x34, 0x20}
 	codec := IsoText(LLVar(BINARY), BINARY, 3, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryLLVARRightPad(t *testing.T) {
@@ -1057,8 +1059,8 @@ func TestIsoTextDecodeBinaryLLVARRightPad(t *testing.T) {
 	expected := "123420"
 	codec := IsoText(LLVar(BINARY), BINARY, 3, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryLLLVARNoPad(t *testing.T) {
@@ -1077,8 +1079,8 @@ func TestIsoTextEncodeBinaryLLLVARNoPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(BINARY), BINARY, 104, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryLLLVARNoPad(t *testing.T) {
@@ -1097,8 +1099,8 @@ func TestIsoTextDecodeBinaryLLLVARNoPad(t *testing.T) {
 		"2D2A98F1"
 	codec := IsoText(LLLVar(BINARY), BINARY, 104, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryLLLVARLeftPad(t *testing.T) {
@@ -1119,8 +1121,8 @@ func TestIsoTextEncodeBinaryLLLVARLeftPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(BINARY), BINARY, 104, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextDecodeBinaryLLLVARLeftPad(t *testing.T) {
@@ -1143,8 +1145,8 @@ func TestIsoTextDecodeBinaryLLLVARLeftPad(t *testing.T) {
 		"2D2A98F12D2A98"
 	codec := IsoText(LLLVar(BINARY), BINARY, 104, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoTextEncodeBinaryLLLVARRightPad(t *testing.T) {
@@ -1165,8 +1167,8 @@ func TestIsoTextEncodeBinaryLLLVARRightPad(t *testing.T) {
 	}
 	codec := IsoText(LLLVar(BINARY), BINARY, 104, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 func TestIsoTextDecodeBinaryLLLVARRightPad(t *testing.T) {
 	value := []byte{
@@ -1187,16 +1189,16 @@ func TestIsoTextDecodeBinaryLLLVARRightPad(t *testing.T) {
 		"20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020"
 	codec := IsoText(LLLVar(BINARY), BINARY, 104, RightPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 func TestIsoNumericEncodeBinaryFixedNoPad(t *testing.T) {
 	value := "0320"
 	expected := []byte{0x03, 0x20}
 	codec := IsoNumeric(Fixed(), BINARY, 2, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeBinaryFixedNoPad(t *testing.T) {
@@ -1204,8 +1206,8 @@ func TestIsoNumericDecodeBinaryFixedNoPad(t *testing.T) {
 	expected := "0320"
 	codec := IsoNumeric(Fixed(), BINARY, 2, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeBinaryFixedLeftPad(t *testing.T) {
@@ -1213,24 +1215,24 @@ func TestIsoNumericEncodeBinaryFixedLeftPad(t *testing.T) {
 	expected := []byte{0x00, 0x12, 0x34}
 	codec := IsoNumeric(Fixed(), BINARY, 3, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 func TestIsoNumericDecodeBinaryFixedLeftPad(t *testing.T) {
 	value := []byte{0x00, 0x12, 0x34}
 	expected := "001234"
 	codec := IsoNumeric(Fixed(), BINARY, 3, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeBinaryFixedRightPad(t *testing.T) {
 	value := "1234"
 	codec := IsoNumeric(Fixed(), BINARY, 3, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericEncodeBinaryLLVARNoPad(t *testing.T) {
@@ -1238,8 +1240,8 @@ func TestIsoNumericEncodeBinaryLLVARNoPad(t *testing.T) {
 	expected := []byte{0x02, 0x12, 0x34}
 	codec := IsoNumeric(LLVar(BINARY), BINARY, 5, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeBinaryLLVARNoPad(t *testing.T) {
@@ -1247,8 +1249,8 @@ func TestIsoNumericDecodeBinaryLLVARNoPad(t *testing.T) {
 	expected := "1234"
 	codec := IsoNumeric(LLVar(BINARY), BINARY, 5, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeBinaryLLVARLeftPad(t *testing.T) {
@@ -1256,8 +1258,8 @@ func TestIsoNumericEncodeBinaryLLVARLeftPad(t *testing.T) {
 	expected := []byte{0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x34}
 	codec := IsoNumeric(LLVar(BINARY), BINARY, 7, LeftPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeBinaryLLVARLeftPad(t *testing.T) {
@@ -1265,15 +1267,15 @@ func TestIsoNumericDecodeBinaryLLVARLeftPad(t *testing.T) {
 	expected := "00000000001234"
 	codec := IsoNumeric(LLVar(BINARY), BINARY, 7, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 func TestIsoNumericEncodeBinaryLLVARRightPad(t *testing.T) {
 	value := "1234"
 	codec := IsoNumeric(LLVar(BINARY), BINARY, 7, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
 
 func TestIsoNumericEncodeBinaryLLLVARNoPad(t *testing.T) {
@@ -1300,8 +1302,8 @@ func TestIsoNumericEncodeBinaryLLLVARNoPad(t *testing.T) {
 	}
 	codec := IsoNumeric(LLLVar(BINARY), BINARY, 120, NoPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericDecodeBinaryLLLVARNoPad(t *testing.T) {
@@ -1329,8 +1331,8 @@ func TestIsoNumericDecodeBinaryLLLVARNoPad(t *testing.T) {
 
 	codec := IsoNumeric(LLLVar(BINARY), BINARY, 120, NoPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeBinaryLLLVARLeftPad(t *testing.T) {
@@ -1358,14 +1360,14 @@ func TestIsoNumericEncodeBinaryLLLVARLeftPad(t *testing.T) {
 		"01234567890123456789"
 	codec := IsoNumeric(LLLVar(BINARY), BINARY, 120, LeftPadding)
 	actual, err := codec.Decode(value)
-	assertEqual(t, nil, err)
-	assertEqual(t, expected, actual)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
 
 func TestIsoNumericEncodeBinaryLLLVARRightPad(t *testing.T) {
 	value := "01234567890123456789"
 	codec := IsoNumeric(LLLVar(BINARY), BINARY, 120, RightPadding)
 	actual, err := codec.Encode(value)
-	assertEqual(t, NotSupported, err)
-	assertEqual(t, nil, actual)
+	assert.Equal(t, NotSupported, err)
+	assert.Equal(t, []byte(nil), actual)
 }
