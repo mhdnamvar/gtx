@@ -127,11 +127,11 @@ func checkLen(codec *IsoCodec, s string) error {
 		if codec.Encoding == BINARY {
 			l = len(s) / 2
 			if codec.LenCodec.Size == LLVarBinarySize {
-				if l == 0 || l > codec.Size || l > 99 {
+				if l > codec.Size || l > 99 {
 					return Errors[InvalidLengthError]
 				}
 			} else if codec.LenCodec.Size == LLLVarBinarySize {
-				if l == 0 || l > codec.Size || l > 999 {
+				if l > codec.Size || l > 999 {
 					return Errors[InvalidLengthError]
 				}
 			} else {
@@ -139,11 +139,11 @@ func checkLen(codec *IsoCodec, s string) error {
 			}
 		} else {
 			if codec.LenCodec.Size == LLVarSize {
-				if l == 0 || l > codec.Size || l > 99 {
+				if l > codec.Size || l > 99 {
 					return Errors[InvalidLengthError]
 				}
 			} else if codec.LenCodec.Size == LLLVarSize {
-				if l == 0 || l > codec.Size || l > 999 {
+				if l > codec.Size || l > 999 {
 					return Errors[InvalidLengthError]
 				}
 			} else {

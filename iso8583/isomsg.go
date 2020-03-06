@@ -3,6 +3,7 @@ package iso8583
 import (
 	"bytes"
 	"fmt"
+	"log"
 )
 
 const MaxField = 128
@@ -44,6 +45,29 @@ func (isoMsg *IsoMsg) Get(i int) (string, error) {
 		return "", IsoFieldNotFoundError
 	}
 	return isoMsg.fields[i], nil
+}
+
+func (isoMsg *IsoMsg) Encode(p IsoProtocol) ([]byte, error) {
+	mti, err := p[0].Encode(isoMsg.fields[0])
+	if err != nil {
+		return nil, err
+	}
+
+	bitmap, err := p[1].Encode(isoMsg.fields[1])
+	if err != nil {
+		return nil, err
+	}
+	var bytes []byte
+	fields := isoMsg.bitmap.Array()
+	for _, f := range fields {
+		encoded, err := p[f].Encode(isoMsg.fields[f])
+		if err != nil {
+			log.Println("DE:", f)
+			return nil, err
+		}
+		bytes = append(bytes, encoded...)
+	}
+	return append(append(mti, bitmap...), bytes...), nil
 }
 
 /*

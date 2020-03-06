@@ -15,7 +15,7 @@ var IsoProtocolAscii87 = IsoProtocol{
 	/* DE009 */ IsoNumeric(Fixed(), ASCII, 8, LeftPadding),
 	/* DE010 */ IsoNumeric(Fixed(), ASCII, 8, LeftPadding),
 	/* DE011 */ IsoNumeric(Fixed(), ASCII, 6, LeftPadding),
-	/* DE012 */ IsoNumeric(Fixed(), ASCII, 4, LeftPadding),
+	/* DE012 */ IsoNumeric(Fixed(), ASCII, 6, LeftPadding),
 	/* DE013 */ IsoNumeric(Fixed(), ASCII, 4, LeftPadding),
 	/* DE014 */ IsoNumeric(Fixed(), ASCII, 4, LeftPadding),
 	/* DE015 */ IsoNumeric(Fixed(), ASCII, 4, LeftPadding),
