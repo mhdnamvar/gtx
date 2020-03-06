@@ -42,6 +42,28 @@ func TestIsoMsgSet(t *testing.T) {
 
 	err = isoMsg.Set(129, "There is no DE129")
 	assert.Equal(t, IsoFieldNotFoundError, err)
+
+	err = isoMsg.Set(-1, "Wrong data element")
+	assert.Equal(t, IsoFieldNotFoundError, err)
+}
+
+func TestIsoMsgGet(t *testing.T) {
+	isoMsg := IsoMsgNew()
+	value := "2D2A98F12D2A98F1"
+	err := isoMsg.Set(128, value)
+	assert.Equal(t, nil, err)
+
+	s, err := isoMsg.Get(129)
+	assert.Equal(t, "", s)
+	assert.Equal(t, IsoFieldNotFoundError, err)
+
+	s, err = isoMsg.Get(-1)
+	assert.Equal(t, "", s)
+	assert.Equal(t, IsoFieldNotFoundError, err)
+
+	s, err = isoMsg.Get(128)
+	assert.Equal(t, s, value)
+	assert.Equal(t, err, nil)
 }
 
 /*
