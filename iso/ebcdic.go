@@ -1,4 +1,4 @@
-package main
+package iso
 
 var ebcdic2ascii = []byte{
 	'\x00', '\x01', '\x02', '\x03', '\xdc', '\x09', '\xc3', '\x7f',

@@ -1,9 +1,13 @@
-package main
+package iso
 
 import (
 	"reflect"
 	"testing"
 )
+
+/*
+	SHOULD BE REPLACED WITH https://github.com/stretchr/testify
+*/
 
 func assertEqual(t *testing.T, expected interface{}, actual interface{}) {
 	if expected == nil {

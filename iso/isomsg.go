@@ -1,5 +1,6 @@
-package main
+package iso
 
+/*
 import (
 	"bytes"
 	"encoding/hex"
@@ -156,3 +157,4 @@ func (isoMsg *IsoMsg) refresh() {
 	}
 	isoMsg.fields[1] = b
 }
+*/

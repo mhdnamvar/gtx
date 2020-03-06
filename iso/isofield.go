@@ -1,5 +1,6 @@
-package main
+package iso
 
+/*
 // IsoField ...
 type IsoField struct {
 	pos   int
@@ -24,3 +25,4 @@ func IsoFieldNew(pos int, text string, codec Codable) (*IsoField, error) {
 func (isoField *IsoField) String() string {
 	return isoField.text
 }
+*/

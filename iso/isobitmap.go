@@ -1,12 +1,14 @@
-package main
+package iso
 
 import (
 	"encoding/hex"
 	"strings"
 )
-const(
+
+const (
 	BitmapSize = 16
 )
+
 type IsoBitmap [BitmapSize]byte
 
 func (isoBitmap *IsoBitmap) Get(i int) bool {

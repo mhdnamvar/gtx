@@ -1,4 +1,4 @@
-package main
+package iso
 
 import (
 	"encoding/hex"
@@ -6,6 +6,8 @@ import (
 	"math/big"
 	"strconv"
 	"strings"
+
+	"../utils"
 )
 
 type IsoCodec struct {
@@ -89,12 +91,12 @@ func pad(codec *IsoCodec, s string) (string, error) {
 	}
 
 	if codec.Padding == LeftPadding {
-		return LeftPad2Len(s, p, size), nil
+		return utils.LeftPad2Len(s, p, size), nil
 	} else if codec.Padding == RightPadding {
 		if codec.IsNumeric {
 			return s, NotSupported
 		}
-		return RightPad2Len(s, p, size), nil
+		return utils.RightPad2Len(s, p, size), nil
 	} else {
 		return s, nil
 	}
@@ -208,7 +210,7 @@ func doEncode(codec *IsoCodec, s string) ([]byte, error) {
 		return []byte(s), nil
 	} else if codec.Encoding == BINARY {
 		if codec.IsNumeric {
-			return StrToBcd(s), nil
+			return utils.StrToBcd(s), nil
 		}
 		bytes, err := hex.DecodeString(s)
 		if err != nil {
@@ -263,7 +265,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:LLVarSize]
-			i, err := Btoi(bytes)
+			i, err := utils.Btoi(bytes)
 			return bytes, i, err
 		} else if codec.LenCodec.Size == LLLVarSize {
 			if len(b) < LLLVarSize {
@@ -271,7 +273,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:LLLVarSize]
-			i, err := Btoi(bytes)
+			i, err := utils.Btoi(bytes)
 			return bytes, i, err
 		} else {
 			return nil, 0, Errors[InvalidLengthError]
@@ -283,7 +285,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := EbcdicToAsciiBytes(b[:LLVarSize])
-			i, err := Btoi(bytes)
+			i, err := utils.Btoi(bytes)
 			return bytes, i, err
 		} else if codec.LenCodec.Size == LLLVarSize {
 			if len(b) < LLLVarSize {
@@ -291,7 +293,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := EbcdicToAsciiBytes(b[:LLLVarSize])
-			i, err := Btoi(bytes)
+			i, err := utils.Btoi(bytes)
 			return bytes, i, err
 		} else {
 			return nil, 0, Errors[InvalidLengthError]
@@ -303,7 +305,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:LLVarBinarySize]
-			n := BcdToInt(bytes)
+			n := utils.BcdToInt(bytes)
 			return bytes, int(n), nil
 		} else if codec.LenCodec.Size == LLLVarBinarySize {
 			if len(b) < LLLVarBinarySize {
@@ -311,7 +313,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:LLLVarBinarySize]
-			n := BcdToInt(bytes)
+			n := utils.BcdToInt(bytes)
 			return bytes, int(n), nil
 		}
 	} else {
