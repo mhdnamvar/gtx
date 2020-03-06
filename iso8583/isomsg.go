@@ -9,13 +9,13 @@ import (
 const MaxField = 128
 
 type IsoMsg struct {
-	bitmap *IsoBitmap
-	raw    []byte
-	fields map[int]string
+	protocol IsoProtocol
+	bitmap   *IsoBitmap
+	fields   map[int]string
 }
 
-func IsoMsgNew() *IsoMsg {
-	return &IsoMsg{&IsoBitmap{}, []byte{}, make(map[int]string, MaxField)}
+func IsoMsgNew(p IsoProtocol) *IsoMsg {
+	return &IsoMsg{p, &IsoBitmap{}, make(map[int]string, MaxField)}
 }
 
 func (isoMsg *IsoMsg) String() string {
@@ -28,16 +28,15 @@ func (isoMsg *IsoMsg) String() string {
 	return buffer.String()
 }
 
-func (isoMsg *IsoMsg) Set(i int, s string) error {
+func (isoMsg *IsoMsg) Set(i int, s string) {
 	if i < 0 || i > MaxField {
-		return IsoFieldNotFoundError
+		return
 	}
 	if i != 1 {
 		isoMsg.bitmap.Set(i)
 		isoMsg.fields[1] = isoMsg.bitmap.String()
 	}
 	isoMsg.fields[i] = s
-	return nil
 }
 
 func (isoMsg *IsoMsg) Get(i int) (string, error) {
@@ -47,27 +46,57 @@ func (isoMsg *IsoMsg) Get(i int) (string, error) {
 	return isoMsg.fields[i], nil
 }
 
-func (isoMsg *IsoMsg) Encode(p IsoProtocol) ([]byte, error) {
-	mti, err := p[0].Encode(isoMsg.fields[0])
+func (isoMsg *IsoMsg) Encode() ([]byte, error) {
+	mti, err := isoMsg.protocol[0].Encode(isoMsg.fields[0])
 	if err != nil {
 		return nil, err
 	}
 
-	bitmap, err := p[1].Encode(isoMsg.fields[1])
+	bitmap, err := isoMsg.protocol[1].Encode(isoMsg.fields[1])
 	if err != nil {
 		return nil, err
 	}
-	var bytes []byte
+
+	var b []byte
 	fields := isoMsg.bitmap.Array()
 	for _, f := range fields {
-		encoded, err := p[f].Encode(isoMsg.fields[f])
+		encoded, err := isoMsg.protocol[f].Encode(isoMsg.fields[f])
 		if err != nil {
 			log.Println("DE:", f)
 			return nil, err
 		}
-		bytes = append(bytes, encoded...)
+		b = append(b, encoded...)
 	}
-	return append(append(mti, bitmap...), bytes...), nil
+	return append(append(mti, bitmap...), b...), nil
+}
+
+func (isoMsg *IsoMsg) Decode(b []byte) error {
+	mti, n, err := isoMsg.protocol[0].Decode(b)
+	if err != nil {
+		return err
+	}
+	isoMsg.Set(0, mti)
+
+	s, n, err := isoMsg.protocol[1].Decode(b[n:])
+	if err != nil {
+		return err
+	}
+
+	err = isoMsg.bitmap.Parse(s)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	for _, f := range isoMsg.bitmap.Array() {
+		s, _, err := isoMsg.protocol[f].Decode(b[n:])
+		if err != nil {
+			log.Println("DE:", f)
+			return err
+		}
+		isoMsg.Set(f, s)
+	}
+	return nil
 }
 
 /*

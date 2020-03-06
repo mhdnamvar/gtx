@@ -224,32 +224,31 @@ func doEncode(codec *IsoCodec, s string) ([]byte, error) {
 	}
 }
 
-func (codec *IsoCodec) Decode(b []byte) (string, error) {
+func (codec *IsoCodec) Decode(b []byte) (string, int, error) {
 	bytes, n, err := decodeLen(codec, b)
 	if err != nil {
-		log.Fatal(err)
-		return "", err
+		return "", 0, err
 	}
 
 	if len(b) < len(bytes)+n {
-		return "", NotEnoughData
+		return "", 0, NotEnoughData
 	}
 
 	data := b[len(bytes) : len(bytes)+n]
 	if codec.LenCodec.Size == FixSize && len(data) != codec.Size {
-		return "", Errors[InvalidLengthError]
+		return "", 0, Errors[InvalidLengthError]
 	} else if len(data) > codec.Size {
-		return "", Errors[InvalidLengthError]
+		return "", 0, Errors[InvalidLengthError]
 	}
 
 	if codec.Encoding == ASCII {
-		return string(data), nil
+		return string(data), len(data), nil
 	} else if codec.Encoding == EBCDIC {
-		return string(utils.EbcdicToAsciiBytes(data)), nil
+		return string(utils.EbcdicToAsciiBytes(data)), len(data), nil
 	} else if codec.Encoding == BINARY {
-		return strings.ToUpper(hex.EncodeToString(data)), nil
+		return strings.ToUpper(hex.EncodeToString(data)), len(data), nil
 	} else {
-		return "", NotSupportedEncodingError
+		return "", 0, NotSupportedEncodingError
 	}
 }
 

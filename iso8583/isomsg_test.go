@@ -9,7 +9,7 @@ import (
 )
 
 func TestIsoMsgNew(t *testing.T) {
-	isoMsg := IsoMsgNew()
+	isoMsg := IsoMsgNew(IsoProtocolAscii87)
 	isoMsg.Set(0, "0210")
 	isoMsg.Set(2, "6734000000000000067")
 	isoMsg.Set(3, "000000")
@@ -34,41 +34,41 @@ func TestIsoMsgNew(t *testing.T) {
 	isoMsg.Set(71, "5666")
 	isoMsg.Set(128, "2D2A98F12D2A98F1")
 	fmt.Print(isoMsg)
-}
 
-func TestIsoMsgSet(t *testing.T) {
-	isoMsg := IsoMsgNew()
-	err := isoMsg.Set(128, "2D2A98F12D2A98F1")
-	assert.Equal(t, nil, err)
-
-	err = isoMsg.Set(129, "There is no DE129")
-	assert.Equal(t, IsoFieldNotFoundError, err)
-
-	err = isoMsg.Set(-1, "Wrong data element")
-	assert.Equal(t, IsoFieldNotFoundError, err)
+	err := isoMsg.Decode([]byte("30323130F238220188A1821A0200000000000001F238220188A1821A0200000000000001313936373334303030303030" +
+		"303030303030303637303030303030303030303030303030313031303830363038303130323832333537393130303130303038303635323830" +
+		"303130393637333030353030353131363733393031303032303030383036383537303030303043504F53393920202020202020202020202020" +
+		"202020303635304D4145533131353235323830303330303030333534303032364D414553303131353934313233343536303430372020202020" +
+		"203937383139363546324130323039373839413033313430393032394330313030394631413032303937383946303230363330333033323330" +
+		"33303330394630333036303030303030303030303030394631303230314634333031414141414141414130303030313132323333343430343538" +
+		"353630303030303030303030303030303030303030303030303030303030303030303946323730313830394633363032463130333946333730343" +
+		"44444463237413938323032354330303935303546303730414339383030303030303233303230303538383030303030303030303135202030303130" +
+		"323930323630303030303030303030383030353238333532364C4220202020353636362D2A98F12D2A98F1"))
+	assert.Equal(t, err, nil)
 }
 
 func TestIsoMsgGet(t *testing.T) {
-	isoMsg := IsoMsgNew()
+	isoMsg := IsoMsgNew(IsoProtocolAscii87)
 	value := "2D2A98F12D2A98F1"
-	err := isoMsg.Set(128, value)
-	assert.Equal(t, nil, err)
 
-	s, err := isoMsg.Get(129)
+	isoMsg.Set(128, value)
+	isoMsg.Set(129, value)
+
+	s, err := isoMsg.Get(128)
+	assert.Equal(t, s, value)
+	assert.Equal(t, err, nil)
+
+	s, err = isoMsg.Get(129)
 	assert.Equal(t, "", s)
 	assert.Equal(t, IsoFieldNotFoundError, err)
 
 	s, err = isoMsg.Get(-1)
 	assert.Equal(t, "", s)
 	assert.Equal(t, IsoFieldNotFoundError, err)
-
-	s, err = isoMsg.Get(128)
-	assert.Equal(t, s, value)
-	assert.Equal(t, err, nil)
 }
 
 func TestIsoMsgEncode(t *testing.T) {
-	isoMsg := IsoMsgNew()
+	isoMsg := IsoMsgNew(IsoProtocolAscii87)
 	isoMsg.Set(0, "0210")
 	isoMsg.Set(2, "6734000000000000067")
 	isoMsg.Set(3, "000000")
@@ -93,7 +93,7 @@ func TestIsoMsgEncode(t *testing.T) {
 	isoMsg.Set(71, "5666")
 	isoMsg.Set(128, "2D2A98F12D2A98F1")
 
-	bytes, err := isoMsg.Encode(IsoProtocolAscii87)
+	bytes, err := isoMsg.Encode()
 	assert.Equal(t, err, nil)
 	log.Printf("%X", bytes)
 }
