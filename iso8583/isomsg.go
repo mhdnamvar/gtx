@@ -2,6 +2,7 @@ package iso8583
 
 import (
 	"bytes"
+	"encoding/hex"
 	"fmt"
 	"log"
 )
@@ -20,10 +21,10 @@ func IsoMsgNew(p IsoProtocol) *IsoMsg {
 
 func (isoMsg *IsoMsg) String() string {
 	var buffer bytes.Buffer
-	buffer.WriteString(fmt.Sprintf("DE000 %s\n", isoMsg.fields[0]))
+	buffer.WriteString(fmt.Sprintf("DE000=\"%s\"\n", isoMsg.fields[0]))
 	fields := isoMsg.bitmap.Array()
 	for _, f := range fields {
-		buffer.WriteString(fmt.Sprintf("DE%03d %s\n", f, isoMsg.fields[f]))
+		buffer.WriteString(fmt.Sprintf("DE%03d=\"%s\"\n", f, isoMsg.fields[f]))
 	}
 	return buffer.String()
 }
@@ -71,16 +72,20 @@ func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 }
 
 func (isoMsg *IsoMsg) Decode(b []byte) error {
-	mti, n, err := isoMsg.protocol[0].Decode(b)
+	offset := 0
+	s, i, err := isoMsg.protocol[0].Decode(b)
 	if err != nil {
 		return err
 	}
-	isoMsg.Set(0, mti)
+	//log.Printf("DE000=\"%s\"", s)
+	isoMsg.Set(0, s)
 
-	s, n, err := isoMsg.protocol[1].Decode(b[n:])
+	offset = i
+	s, j, err := isoMsg.protocol[1].Decode(b[offset:])
 	if err != nil {
 		return err
 	}
+	//log.Printf("DE001=\"%s\"", s)
 
 	err = isoMsg.bitmap.Parse(s)
 	if err != nil {
@@ -88,15 +93,28 @@ func (isoMsg *IsoMsg) Decode(b []byte) error {
 		return err
 	}
 
+	offset = isoMsg.protocol[0].LenCodec.Size + i + isoMsg.protocol[1].LenCodec.Size + j
 	for _, f := range isoMsg.bitmap.Array() {
-		s, _, err := isoMsg.protocol[f].Decode(b[n:])
-		if err != nil {
-			log.Println("DE:", f)
-			return err
+		if f > 1 {
+			//log.Printf("offset=%d, b=%X", offset, b[offset:])
+			s, n, err := isoMsg.protocol[f].Decode(b[offset:])
+			if err != nil {
+				return err
+			}
+			//log.Printf("DE%03d=\"%s\"", f, s)
+			isoMsg.Set(f, s)
+			offset = offset + isoMsg.protocol[f].LenCodec.Size + n
 		}
-		isoMsg.Set(f, s)
 	}
 	return nil
+}
+
+func (isoMsg *IsoMsg) Parse(s string) error{
+	b, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+	return isoMsg.Decode(b)
 }
 
 /*

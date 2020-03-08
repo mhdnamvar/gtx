@@ -225,16 +225,18 @@ func doEncode(codec *IsoCodec, s string) ([]byte, error) {
 }
 
 func (codec *IsoCodec) Decode(b []byte) (string, int, error) {
-	bytes, n, err := decodeLen(codec, b)
+	l, n, err := decodeLen(codec, b)
 	if err != nil {
 		return "", 0, err
 	}
+	//log.Printf("l=%X, n=%d, err=%v", l, n, err)
 
-	if len(b) < len(bytes)+n {
+	if len(b) < len(l)+n {
 		return "", 0, NotEnoughData
 	}
 
-	data := b[len(bytes) : len(bytes)+n]
+	data := b[len(l) : len(l)+n]
+	//log.Printf("l=%d, n=%d, data=%X", l, n, data)
 	if codec.LenCodec.Size == FixSize && len(data) != codec.Size {
 		return "", 0, Errors[InvalidLengthError]
 	} else if len(data) > codec.Size {
