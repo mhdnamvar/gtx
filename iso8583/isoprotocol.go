@@ -46,7 +46,7 @@ var IsoProtocolAscii87 = IsoProtocol{
 	/* DE040 */ IsoText(Fixed(), ASCII, 3, LeftPadding),
 	/* DE041 */ IsoText(Fixed(), ASCII, 8, LeftPadding),
 	/* DE042 */ IsoText(Fixed(), ASCII, 15, LeftPadding),
-	/* DE043 */ IsoText(Fixed(), ASCII, 40, LeftPadding),
+	/* DE043 */ IsoText(Fixed(), ASCII, 40, RightPadding),
 	/* DE044 */ IsoText(LLVar(ASCII), ASCII, 25, NoPadding),
 	/* DE045 */ IsoText(LLVar(ASCII), ASCII, 76, NoPadding),
 	/* DE046 */ IsoText(LLLVar(ASCII), ASCII, 999, NoPadding),

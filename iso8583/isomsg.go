@@ -10,13 +10,12 @@ import (
 const MaxField = 128
 
 type IsoMsg struct {
-	protocol IsoProtocol
-	bitmap   *IsoBitmap
-	fields   map[int]string
+	bitmap *IsoBitmap
+	fields map[int]string
 }
 
-func IsoMsgNew(p IsoProtocol) *IsoMsg {
-	return &IsoMsg{p, &IsoBitmap{}, make(map[int]string, MaxField)}
+func IsoMsgNew() *IsoMsg {
+	return &IsoMsg{&IsoBitmap{}, make(map[int]string, MaxField)}
 }
 
 func (isoMsg *IsoMsg) String() string {
@@ -47,13 +46,13 @@ func (isoMsg *IsoMsg) Get(i int) (string, error) {
 	return isoMsg.fields[i], nil
 }
 
-func (isoMsg *IsoMsg) Encode() ([]byte, error) {
-	mti, err := isoMsg.protocol[0].Encode(isoMsg.fields[0])
+func (isoMsg *IsoMsg) Encode(p IsoProtocol) ([]byte, error) {
+	mti, err := p[0].Encode(isoMsg.fields[0])
 	if err != nil {
 		return nil, err
 	}
 
-	bitmap, err := isoMsg.protocol[1].Encode(isoMsg.fields[1])
+	bitmap, err := p[1].Encode(isoMsg.fields[1])
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +60,7 @@ func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 	var b []byte
 	fields := isoMsg.bitmap.Array()
 	for _, f := range fields {
-		encoded, err := isoMsg.protocol[f].Encode(isoMsg.fields[f])
+		encoded, err := p[f].Encode(isoMsg.fields[f])
 		if err != nil {
 			log.Println("DE:", f)
 			return nil, err
@@ -71,9 +70,9 @@ func (isoMsg *IsoMsg) Encode() ([]byte, error) {
 	return append(append(mti, bitmap...), b...), nil
 }
 
-func (isoMsg *IsoMsg) Decode(b []byte) error {
+func (isoMsg *IsoMsg) Decode(p IsoProtocol, b []byte) error {
 	offset := 0
-	s, i, err := isoMsg.protocol[0].Decode(b)
+	s, i, err := p[0].Decode(b)
 	if err != nil {
 		return err
 	}
@@ -81,7 +80,7 @@ func (isoMsg *IsoMsg) Decode(b []byte) error {
 	isoMsg.Set(0, s)
 
 	offset = i
-	s, j, err := isoMsg.protocol[1].Decode(b[offset:])
+	s, j, err := p[1].Decode(b[offset:])
 	if err != nil {
 		return err
 	}
@@ -93,28 +92,28 @@ func (isoMsg *IsoMsg) Decode(b []byte) error {
 		return err
 	}
 
-	offset = isoMsg.protocol[0].LenCodec.Size + i + isoMsg.protocol[1].LenCodec.Size + j
+	offset = p[0].LenCodec.Size + i + p[1].LenCodec.Size + j
 	for _, f := range isoMsg.bitmap.Array() {
 		if f > 1 {
 			//log.Printf("offset=%d, b=%X", offset, b[offset:])
-			s, n, err := isoMsg.protocol[f].Decode(b[offset:])
+			s, n, err := p[f].Decode(b[offset:])
 			if err != nil {
 				return err
 			}
 			//log.Printf("DE%03d=\"%s\"", f, s)
 			isoMsg.Set(f, s)
-			offset = offset + isoMsg.protocol[f].LenCodec.Size + n
+			offset = offset + p[f].LenCodec.Size + n
 		}
 	}
 	return nil
 }
 
-func (isoMsg *IsoMsg) Parse(s string) error{
+func (isoMsg *IsoMsg) Parse(p IsoProtocol, s string) error {
 	b, err := hex.DecodeString(s)
 	if err != nil {
 		return err
 	}
-	return isoMsg.Decode(b)
+	return isoMsg.Decode(p, b)
 }
 
 /*
