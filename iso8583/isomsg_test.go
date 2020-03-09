@@ -39,14 +39,17 @@ func TestIsoMsgNew(t *testing.T) {
 
 func TestIsoMsgGet(t *testing.T) {
 	isoMsg := IsoMsgNew()
-	value := "2D2A98F12D2A98F1"
+	isoMsg.Set(0, "320")
+	isoMsg.Set(128, "2D2A98F12D2A98F1")
+	isoMsg.Set(129, "1234")
 
-	isoMsg.Set(128, value)
-	isoMsg.Set(129, value)
+	s, err := isoMsg.Get(0)
+	assert.Equal(t, "320", s)
+	assert.Equal(t, nil, err)
 
-	s, err := isoMsg.Get(128)
-	assert.Equal(t, s, value)
-	assert.Equal(t, err, nil)
+	s, err = isoMsg.Get(128)
+	assert.Equal(t, "2D2A98F12D2A98F1", s)
+	assert.Equal(t, nil, err)
 
 	s, err = isoMsg.Get(129)
 	assert.Equal(t, "", s)
@@ -59,7 +62,7 @@ func TestIsoMsgGet(t *testing.T) {
 
 func TestIsoMsgEncode(t *testing.T) {
 	isoMsg := IsoMsgNew()
-	isoMsg.Set(0, "0210")
+	isoMsg.Set(0, "210")
 	isoMsg.Set(2, "6734000000000000067")
 	isoMsg.Set(3, "000000")
 	isoMsg.Set(4, "000000000101")
