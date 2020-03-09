@@ -18,6 +18,7 @@ type IsoCodec struct {
 	IsNumeric bool
 }
 
+type IsoProtocol []*IsoCodec
 type IsoEncoding int
 type IsoPadding int
 

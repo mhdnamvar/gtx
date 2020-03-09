@@ -32,7 +32,7 @@ func TestIsoMsgGet(t *testing.T) {
 
 func TestIsoMsgEncode(t *testing.T) {
 	isoMsg := sampleIsoMsg()
-	bytes, err := isoMsg.Encode(IsoProtocolAscii87)
+	bytes, err := isoMsg.Encode(Ascii87)
 	assert.Equal(t, err, nil)
 	log.Printf("%X", bytes)
 }
@@ -64,7 +64,7 @@ func TestIsoMsgParse(t *testing.T) {
 		"35363636" + // 71
 		"2D2A98F12D2A98F1" // 128
 
-	err := isoMsg.Parse(IsoProtocolAscii87, s)
+	err := isoMsg.Parse(Ascii87, s)
 	assert.Equal(t, err, nil)
 
 	mti, err := isoMsg.Get(0)
@@ -196,7 +196,7 @@ func sampleIsoMsg() *IsoMsg {
 	return isoMsg
 }
 func TestIsoMsgDump(t *testing.T) {
-	s, err := sampleIsoMsg().Dump(IsoProtocolAscii87)
+	s, err := sampleIsoMsg().Dump(Ascii87)
 	assert.Equal(t, nil, err)
 	log.Printf("\n%s\n", s)
 }

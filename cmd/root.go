@@ -1,22 +1,8 @@
-/*
-Copyright © 2020 NAME HERE <EMAIL ADDRESS>
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 package cmd
 
 import (
 	"fmt"
+	"github.com/fsnotify/fsnotify"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -26,16 +12,11 @@ import (
 
 var cfgFile string
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gtx",
-	Short: "GTX is a transaction management system using Go",
-	Long: `GTX supports different kind of ISO 8583 implementations and can be used as acquirer, issuer or message adaptor. 
-You can use it to convert cryptograms or just create an echo server`,
+	Short: "GTX is a transaction management system in Go",
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -70,9 +51,6 @@ func initConfig() {
 		// 	os.Exit(1)
 		// }
 
-		// // Search config in home directory with name ".gtx" (without extension).
-		// viper.AddConfigPath(home)
-		// viper.SetConfigName("gtx")
 		viper.SetConfigName("gtx")       // name of config file (without extension)
 		viper.SetConfigType("yaml")      // REQUIRED if the config file does not have the extension in the name
 		viper.AddConfigPath("/etc/gtx/") // path to look for the config file in
@@ -91,4 +69,9 @@ func initConfig() {
 			fmt.Println("Using config file:", viper.ConfigFileUsed())
 		}
 	}
+
+	viper.WatchConfig()
+	viper.OnConfigChange(func(e fsnotify.Event) {
+		fmt.Println("Config file changed:", e.Name)
+	})
 }
