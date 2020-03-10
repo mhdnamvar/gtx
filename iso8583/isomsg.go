@@ -46,13 +46,13 @@ func (isoMsg *IsoMsg) Get(i int) (string, error) {
 	return isoMsg.fields[i], nil
 }
 
-func (isoMsg *IsoMsg) Encode(p IsoProtocol) ([]byte, error) {
-	mti, err := p[0].Encode(isoMsg.fields[0])
+func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
+	mti, err := isoSpec[0].Encode(isoMsg.fields[0])
 	if err != nil {
 		return nil, err
 	}
 
-	bitmap, err := p[1].Encode(isoMsg.fields[1])
+	bitmap, err := isoSpec[1].Encode(isoMsg.fields[1])
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (isoMsg *IsoMsg) Encode(p IsoProtocol) ([]byte, error) {
 	var b []byte
 	fields := isoMsg.bitmap.Array()
 	for _, f := range fields {
-		encoded, err := p[f].Encode(isoMsg.fields[f])
+		encoded, err := isoSpec[f].Encode(isoMsg.fields[f])
 		if err != nil {
 			log.Println("DE:", f)
 			return nil, err
@@ -70,9 +70,9 @@ func (isoMsg *IsoMsg) Encode(p IsoProtocol) ([]byte, error) {
 	return append(append(mti, bitmap...), b...), nil
 }
 
-func (isoMsg *IsoMsg) Decode(p IsoProtocol, b []byte) error {
+func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 	offset := 0
-	s, i, err := p[0].Decode(b)
+	s, i, err := isoSpec[0].Decode(b)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func (isoMsg *IsoMsg) Decode(p IsoProtocol, b []byte) error {
 	isoMsg.Set(0, s)
 
 	offset = i
-	s, j, err := p[1].Decode(b[offset:])
+	s, j, err := isoSpec[1].Decode(b[offset:])
 	if err != nil {
 		return err
 	}
@@ -92,32 +92,32 @@ func (isoMsg *IsoMsg) Decode(p IsoProtocol, b []byte) error {
 		return err
 	}
 
-	offset = p[0].LenCodec.Size + i + p[1].LenCodec.Size + j
+	offset = isoSpec[0].LenCodec.Size + i + isoSpec[1].LenCodec.Size + j
 	for _, f := range isoMsg.bitmap.Array() {
 		if f > 1 {
 			//log.Printf("offset=%d, b=%X", offset, b[offset:])
-			s, n, err := p[f].Decode(b[offset:])
+			s, n, err := isoSpec[f].Decode(b[offset:])
 			if err != nil {
 				return err
 			}
 			//log.Printf("DE%03d=\"%s\"", f, s)
 			isoMsg.Set(f, s)
-			offset = offset + p[f].LenCodec.Size + n
+			offset = offset + isoSpec[f].LenCodec.Size + n
 		}
 	}
 	return nil
 }
 
-func (isoMsg *IsoMsg) Parse(p IsoProtocol, s string) error {
+func (isoMsg *IsoMsg) Parse(isoSpec IsoSpec, s string) error {
 	b, err := hex.DecodeString(s)
 	if err != nil {
 		return err
 	}
-	return isoMsg.Decode(p, b)
+	return isoMsg.Decode(isoSpec, b)
 }
 
-func (isoMsg *IsoMsg) Dump(p IsoProtocol) (string, error) {
-	enc, err := isoMsg.Encode(p)
+func (isoMsg *IsoMsg) Dump(isoSpec IsoSpec) (string, error) {
+	enc, err := isoMsg.Encode(isoSpec)
 	if err != nil {
 		return "", err
 	}
