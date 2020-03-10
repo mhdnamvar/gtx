@@ -18,7 +18,7 @@ func IsoMsgNew() *IsoMsg {
 	return &IsoMsg{&IsoBitmap{}, make(map[int]string, MaxField)}
 }
 
-func (isoMsg *IsoMsg) String() string {
+func (isoMsg IsoMsg) String() string {
 	var buffer bytes.Buffer
 	buffer.WriteString(fmt.Sprintf("DE000=\"%s\"\n", isoMsg.fields[0]))
 	fields := isoMsg.bitmap.Array()

@@ -37,6 +37,7 @@ func (isoBitmap *IsoBitmap) Set(xs ...int) {
 		set(isoBitmap, x)
 	}
 }
+
 func (isoBitmap *IsoBitmap) Clear(xs ...int) {
 	for _, x := range xs {
 		clear(isoBitmap, x)
