@@ -69,7 +69,7 @@ func (isoField *IsoField) String() string {
 	if strings.ToLower(isoField.Pad) == "true" {
 		paddingType = "IsoLeftPad"
 	} else if strings.ToLower(isoField.Pad) == "false" {
-		paddingType = "IsoNotPad"
+		paddingType = "IsoNoPad"
 	} else {
 		if lenType == "IsoFixed" && encodingType != "IsoBinary" {
 			if contentType == "IsoNumeric" {
