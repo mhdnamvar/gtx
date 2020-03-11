@@ -8,13 +8,13 @@ import (
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Show GTX version",
+	Short: "Shows gtx version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("GTX version 1.0")
+		fmt.Println("gtx version 1.0")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(versionCmd)
-	serveCmd.AddCommand(versionCmd)
+	runCmd.AddCommand(versionCmd)
 }
