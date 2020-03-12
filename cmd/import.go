@@ -42,7 +42,7 @@ func (isoField *IsoField) String() string {
 	paddingType := "IsoNoPad"
 
 	// Encoding
-	if strings.Contains(isoField.Class, "IFB") {
+	if strings.Contains(isoField.Class, "IFB") || strings.Contains(isoField.Class, "BITMAP") || strings.Contains(isoField.Class, "BINARY") {
 		encodingType = "IsoBinary"
 		// Length
 		if strings.Contains(isoField.Class, "LLL") {
@@ -57,6 +57,16 @@ func (isoField *IsoField) String() string {
 			lenType = "IsoLLLE"
 		} else if strings.Contains(isoField.Class, "LL") {
 			lenType = "IsoLLE"
+		}
+	} else {
+		// Length
+		// if strings.Contains(isoField.Class, "BITMAP") || strings.Contains(isoField.Class, "BINARY") {
+		// 	length *= 2
+		// }
+		if strings.Contains(isoField.Class, "LLL") {
+			lenType = "IsoLLLA"
+		} else if strings.Contains(isoField.Class, "LL") {
+			lenType = "IsoLLA"
 		}
 	}
 
