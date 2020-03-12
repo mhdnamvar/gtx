@@ -49,11 +49,13 @@ func (isoMsg *IsoMsg) Get(i int) (string, error) {
 func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 	mti, err := isoSpec[0].Encode(isoMsg.fields[0])
 	if err != nil {
+		log.Fatal("Error in encoding DE000")
 		return nil, err
 	}
 
 	bitmap, err := isoSpec[1].Encode(isoMsg.fields[1])
 	if err != nil {
+		log.Fatalf("Error in encoding DE001: [%s], %v", isoMsg.fields[1], err)
 		return nil, err
 	}
 
@@ -62,7 +64,7 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 	for _, f := range fields {
 		encoded, err := isoSpec[f].Encode(isoMsg.fields[f])
 		if err != nil {
-			log.Println("DE:", f)
+			log.Fatalf("Error in encoding DE%03d(%s), %v", f, isoMsg.fields[f], err)
 			return nil, err
 		}
 		b = append(b, encoded...)
@@ -74,33 +76,35 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 	offset := 0
 	s, i, err := isoSpec[0].Decode(b)
 	if err != nil {
+		log.Fatal("Error in decoding DE000")
 		return err
 	}
-	//log.Printf("DE000=\"%s\"", s)
 	isoMsg.Set(0, s)
+	log.Printf("DE%03d=%s", 0, s)
 
 	offset = i
 	s, j, err := isoSpec[1].Decode(b[offset:])
 	if err != nil {
+		log.Fatal("Error in decoding DE001")
 		return err
 	}
-	//log.Printf("DE001=\"%s\"", s)
 
 	err = isoMsg.bitmap.Parse(s)
 	if err != nil {
-		log.Println(err)
+		log.Fatalf("Error in parsing bitmap: %v", err)
 		return err
 	}
+	log.Printf("DE%03d=%s", 1, s)
 
 	offset = isoSpec[0].LenCodec.Size + i + isoSpec[1].LenCodec.Size + j
 	for _, f := range isoMsg.bitmap.Array() {
 		if f > 1 {
-			//log.Printf("offset=%d, b=%X", offset, b[offset:])
 			s, n, err := isoSpec[f].Decode(b[offset:])
 			if err != nil {
+				log.Fatalf("Error in decoding DE%03d", f)
 				return err
 			}
-			//log.Printf("DE%03d=\"%s\"", f, s)
+			log.Printf("DE%03d=%s", f, s)
 			isoMsg.Set(f, s)
 			offset = offset + isoSpec[f].LenCodec.Size + n
 		}
@@ -111,6 +115,7 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 func (isoMsg *IsoMsg) Parse(isoSpec IsoSpec, s string) error {
 	b, err := hex.DecodeString(s)
 	if err != nil {
+		log.Fatalf("Error in parsing, %v", err)
 		return err
 	}
 	return isoMsg.Decode(isoSpec, b)

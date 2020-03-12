@@ -2,6 +2,7 @@ package iso8583
 
 import (
 	"encoding/hex"
+	"log"
 	"strings"
 )
 
@@ -65,6 +66,7 @@ func (isoBitmap *IsoBitmap) Parse(s string) error {
 
 	b, err := hex.DecodeString(s)
 	if err != nil {
+		log.Printf("s=%s, b=%x", s, b)
 		return Errors[InvalidDataError]
 	}
 	if len(b) > BitmapSize {
