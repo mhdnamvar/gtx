@@ -61,6 +61,7 @@ func (isoBitmap *IsoBitmap) Clear(xs ...int) {
 
 func (isoBitmap *IsoBitmap) Parse(s string) error {
 	if len(s)%2 != 0 {
+		log.Fatal("bitmap length is wrong")
 		return Errors[InvalidLengthError]
 	}
 

@@ -41,7 +41,7 @@ func TestIsoMsgEncode(t *testing.T) {
 func TestIsoMsgParse(t *testing.T) {
 	isoMsg := IsoMsgNew()
 	s := "30323130" +
-		"F238220188A1821A0200000000000001" +
+		"4632333832323031383841313832314130323030303030303030303030303031" +
 		"3139" + "36373334303030303030303030303030303637" +
 		"303030303030" +
 		"303030303030303030313031" +
@@ -63,7 +63,7 @@ func TestIsoMsgParse(t *testing.T) {
 		"303233" + "3032303035383830303030303030303031352020303031" + // 61
 		"303239" + "30323630303030303030303030383030353238333532364c4220202020" + // 63
 		"35363636" + // 71
-		"2D2A98F12D2A98F1" // 128
+		"32443241393846313244324139384631" // 128
 
 	err := isoMsg.Parse(Ascii87, s)
 	assert.Equal(t, err, nil)
@@ -202,10 +202,10 @@ func TestIsoMsgParseAscii87(t *testing.T) {
 	isoMsg := IsoMsgNew()
 	err := isoMsg.Parse(Ascii87, s)
 	assert.Equal(t, nil, err)
-	fmt.Println(isoMsg)
 }
 
 func TestIsoMsgDump(t *testing.T) {
-	_, err := sampleIsoMsg().Dump(Ascii87)
+	s, err := sampleIsoMsg().Dump(Ascii87)
 	assert.Equal(t, nil, err)
+	fmt.Println(s)
 }

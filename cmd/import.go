@@ -29,69 +29,41 @@ type IsoPackager struct {
 var (
 	protocol string
 	force    bool
+	folder   bool
+	output   bool
+	isoMap   map[string]string
 )
 
 func (isoField *IsoField) String() string {
 	length, err := strconv.Atoi(isoField.Length)
 	if err != nil {
 		log.Fatal(err)
+		return ""
 	}
-	contentType := "IsoText"
-	lenType := "IsoFixed"
-	encodingType := "IsoAscii"
-	paddingType := "IsoNoPad"
-
-	// Encoding
-	if strings.Contains(isoField.Class, "IFB") || strings.Contains(isoField.Class, "BITMAP") || strings.Contains(isoField.Class, "BINARY") {
-		encodingType = "IsoBinary"
-		// Length
-		if strings.Contains(isoField.Class, "LLL") {
-			lenType = "IsoLLLB"
-		} else if strings.Contains(isoField.Class, "LL") {
-			lenType = "IsoLLB"
-		}
-	} else if strings.Contains(isoField.Class, "IFE") {
-		encodingType = "IsoEbcdic"
-		// Length
-		if strings.Contains(isoField.Class, "LLL") {
-			lenType = "IsoLLLE"
-		} else if strings.Contains(isoField.Class, "LL") {
-			lenType = "IsoLLE"
-		}
+	id := fmt.Sprintf("DE%03s", isoField.Id)
+	if isoField.Class == "org.jpos.iso.IFA_BITMAP" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length*2, "IsoText", "IsoNoPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_LLNUM" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoAscii", length, "IsoNumeric", "IsoNoPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_LLCHAR" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoAscii", length, "IsoText", "IsoNoPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_BINARY" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length*2, "IsoText", "IsoNoPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_NUMERIC" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoNumeric", "IsoLeftPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_AMOUNT" {
+		// Not correct - Amout field should be defined
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoText", "IsoNoPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_LLLCHAR" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoAscii", length, "IsoText", "IsoNoPad")
+	} else if isoField.Class == "org.jpos.iso.IF_CHAR" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoText", "IsoRightPad")
+	} else if isoField.Class == "org.jpos.iso.IFA_LLLLBINARY" {
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else {
-		// Length
-		// if strings.Contains(isoField.Class, "BITMAP") || strings.Contains(isoField.Class, "BINARY") {
-		// 	length *= 2
-		// }
-		if strings.Contains(isoField.Class, "LLL") {
-			lenType = "IsoLLLA"
-		} else if strings.Contains(isoField.Class, "LL") {
-			lenType = "IsoLLA"
-		}
+		log.Fatalf("IsoField class type %s not defined", isoField.Class)
+		return ""
 	}
-
-	// ContentType
-	if strings.Contains(isoField.Class, "NUMERIC") || strings.Contains(isoField.Class, "NUM") {
-		contentType = "IsoNumeric"
-	}
-
-	// Padding
-	if strings.ToLower(isoField.Pad) == "true" {
-		paddingType = "IsoLeftPad"
-	} else if strings.ToLower(isoField.Pad) == "false" {
-		paddingType = "IsoNoPad"
-	} else {
-		if lenType == "IsoFixed" && encodingType != "IsoBinary" {
-			if contentType == "IsoNumeric" {
-				paddingType = "IsoLeftPad"
-			} else {
-				paddingType = "IsoRightPad"
-			}
-		}
-	}
-
-	return fmt.Sprintf("&IsoCodec{\"DE%03s\", \"%s\", %s, %s, %d, %s, %s}",
-		isoField.Id, isoField.Name, lenType, encodingType, length, contentType, paddingType)
 }
 
 func (isoPackager *IsoPackager) String() string {
@@ -116,20 +88,25 @@ e.g. gtx import --protocol protocol-iso87binary.xml Binary87`,
 
 func init() {
 	rootCmd.AddCommand(importCmd)
-	importCmd.Flags().StringVarP(&protocol, "protocol", "p", "", "Import jpos protocol.")
-	importCmd.Flags().BoolVarP(&force, "force", "f", false, "Overwrite protocol if exists.")
+	importCmd.Flags().StringVarP(&protocol, "protocol", "p", "", "Import jpos XML protocol")
+	importCmd.Flags().BoolVarP(&force, "force", "f", false, "Overwrite existing protocol otherwise create it")
+	importCmd.Flags().BoolVarP(&folder, "find-types", "t", false, "Find iso types from jpos xml protocol files. You need to specify the protocols directory")
+	importCmd.Flags().BoolVarP(&output, "find-types-output", "o", false, "Extracted iso types file name")
+
+	isoMap = make(map[string]string)
 }
 
 func checkFlags(cmd *cobra.Command, args []string) {
 	if protocol != "" {
 		importProtocol(cmd, args)
+	} else if folder {
+		findIsoTypes(cmd, args)
 	} else {
 		cmd.Usage()
 	}
 }
 
 func importProtocol(cmd *cobra.Command, args []string) {
-
 	if len(args) < 1 {
 		log.Println(args)
 		cmd.Usage()
@@ -170,4 +147,58 @@ func create(isoPackager IsoPackager, fileName string) {
 	defer f.Close()
 	_, err = f.WriteString(isoPackager.String())
 	log.Println("The protocol imported successfully.")
+}
+
+func findIsoTypes(cmd *cobra.Command, args []string) {
+	noOfArgs := 1
+	if folder && output {
+		noOfArgs = 2
+	}
+
+	if len(args) < noOfArgs {
+		log.Println(args)
+		cmd.Usage()
+		os.Exit(1)
+	}
+
+	files, err := ioutil.ReadDir(args[0])
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+		fileName := fmt.Sprintf("%s/%s", args[0], f.Name())
+		log.Printf("check %s...", fileName)
+		xmlFile, err := os.Open(fileName)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer xmlFile.Close()
+
+		b, _ := ioutil.ReadAll(xmlFile)
+		var isoPackager IsoPackager
+		isoPackager.Name = f.Name()
+		xml.Unmarshal(b, &isoPackager)
+
+		for _, f := range isoPackager.IsoFields {
+			isoMap[f.Class] = f.Class
+		}
+	}
+
+	if output {
+		f, err := os.Create(args[1])
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer f.Close()
+		for _, s := range isoMap {
+			_, err = f.WriteString(s)
+			_, err = f.WriteString("\r\n")
+		}
+		log.Printf("Result: %d jpos type(s) found, for more details check %s", len(isoMap), args[1])
+	} else {
+		for _, s := range isoMap {
+			fmt.Println(s)
+		}
+	}
 }

@@ -80,19 +80,19 @@ func pad(codec *IsoCodec, s string) (string, error) {
 func (codec *IsoCodec) Encode(s string) ([]byte, error) {
 	str, err := pad(codec, s)
 	if err != nil {
-		log.Fatalf("Padding error during encoding \"%s\", %v", s, err)
+		log.Printf("Padding error during encoding \"%s\", %v", s, err)
 		return nil, err
 	}
 
 	length, err := encodeLen(codec, s, str)
 	if err != nil {
-		log.Fatalf("Encoding length error, \"%s\", %v", str, err)
+		log.Printf("Encoding length error, \"%s\", %v", str, err)
 		return nil, err
 	}
 
 	value, err := doEncode(codec, str)
 	if err != nil {
-		log.Fatalf("Encoding error, \"%s\", %v", str, err)
+		log.Printf("Encoding error, \"%s\", %v", str, err)
 		return nil, err
 	}
 
@@ -106,31 +106,31 @@ func checkLen(codec *IsoCodec, s string) error {
 			l = len(s) / 2
 			if codec.LenCodec.Size == IsoLLB.Size {
 				if l > codec.Size || l > 99 {
-					log.Fatalf("Invalid LLVar for [%s], it should be less than %d and less that 99", s, codec.Size)
+					log.Printf("Invalid LLVar for [%s], it should be less than %d and less that 99", s, codec.Size)
 					return Errors[InvalidLengthError]
 				}
 			} else if codec.LenCodec.Size == IsoLLLB.Size {
 				if l > codec.Size || l > 999 {
-					log.Fatalf("Invalid LLLVar for [%s], it should be less than %d and less that 999", s, codec.Size)
+					log.Printf("Invalid LLLVar for [%s], it should be less than %d and less that 999", s, codec.Size)
 					return Errors[InvalidLengthError]
 				}
 			} else {
-				log.Fatalf("Invalid variable length type for [%s]", s)
+				log.Printf("Invalid variable length type for [%s]", s)
 				return Errors[InvalidLengthError]
 			}
 		} else {
 			if codec.LenCodec.Size == IsoLLA.Size || codec.LenCodec.Size == IsoLLE.Size {
 				if l > codec.Size || l > 99 {
-					log.Fatalf("Invalid LLVar for [%s], it should be less than %d and less that 99", s, codec.Size)
+					log.Printf("Invalid LLVar for [%s], it should be less than %d and less that 99", s, codec.Size)
 					return Errors[InvalidLengthError]
 				}
 			} else if codec.LenCodec.Size == IsoLLLA.Size || codec.LenCodec.Size == IsoLLLE.Size {
 				if l > codec.Size || l > 999 {
-					log.Fatalf("Invalid LLLVar for [%s], it should be less than %d and less that 999", s, codec.Size)
+					log.Printf("Invalid LLLVar for [%s], it should be less than %d and less that 999", s, codec.Size)
 					return Errors[InvalidLengthError]
 				}
 			} else {
-				log.Fatalf("Invalid variable length type for [%s]", s)
+				log.Printf("Invalid variable length type for [%s]", s)
 				return Errors[InvalidLengthError]
 			}
 		}
@@ -244,17 +244,15 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 	if codec.LenCodec.Encoding == IsoAscii {
 		if codec.LenCodec.Size == IsoLLA.Size {
 			if len(b) < IsoLLA.Size {
-				log.Fatalf("Invalid IsoAscii LLVar: %X", b)
+				log.Printf("Invalid IsoAscii LLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:IsoLLA.Size]
-			log.Println("b=", bytes)
 			i, err := utils.Btoi(bytes)
-			log.Println("i=", i)
 			return bytes, i, err
 		} else if codec.LenCodec.Size == IsoLLLA.Size {
 			if len(b) < IsoLLLA.Size {
-				log.Fatalf("Invalid IsoAscii LLLVar: %X", b)
+				log.Printf("Invalid IsoAscii LLLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:IsoLLLA.Size]
@@ -266,7 +264,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 	} else if codec.LenCodec.Encoding == IsoEbcdic {
 		if codec.LenCodec.Size == IsoLLE.Size {
 			if len(b) < IsoLLE.Size {
-				log.Fatalf("Invalid IsoEbcdic LLVar: %X", b)
+				log.Printf("Invalid IsoEbcdic LLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := utils.EbcdicToAsciiBytes(b[:IsoLLE.Size])
@@ -274,7 +272,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 			return bytes, i, err
 		} else if codec.LenCodec.Size == IsoLLLE.Size {
 			if len(b) < IsoLLLE.Size {
-				log.Fatalf("Invalid IsoEbcdic LLLVar: %X", b)
+				log.Printf("Invalid IsoEbcdic LLLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := utils.EbcdicToAsciiBytes(b[:IsoLLLE.Size])
@@ -286,7 +284,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 	} else if codec.LenCodec.Encoding == IsoBinary {
 		if codec.LenCodec.Size == IsoLLB.Size {
 			if len(b) < IsoLLB.Size {
-				log.Fatalf("Invalid IsoBinary LLVar: %X", b)
+				log.Printf("Invalid IsoBinary LLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:IsoLLB.Size]
@@ -294,7 +292,7 @@ func decodeLen(codec *IsoCodec, b []byte) ([]byte, int, error) {
 			return bytes, int(n), nil
 		} else if codec.LenCodec.Size == IsoLLLB.Size {
 			if len(b) < IsoLLLB.Size {
-				log.Fatalf("Invalid IsoBinary LLLVar: %X", b)
+				log.Printf("Invalid IsoBinary LLLVar: %X", b)
 				return nil, 0, Errors[InvalidLengthError]
 			}
 			bytes := b[:IsoLLLB.Size]
