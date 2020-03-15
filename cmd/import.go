@@ -102,14 +102,14 @@ func checkFlags(cmd *cobra.Command, args []string) {
 	} else if folder {
 		findIsoTypes(cmd, args)
 	} else {
-		cmd.Usage()
+		_ = cmd.Usage()
 	}
 }
 
 func importProtocol(cmd *cobra.Command, args []string) {
 	if len(args) < 1 {
 		log.Println(args)
-		cmd.Usage()
+		_ = cmd.Usage()
 		os.Exit(1)
 	}
 	log.Println("Importing jpos protocol", protocol)
@@ -122,7 +122,7 @@ func importProtocol(cmd *cobra.Command, args []string) {
 	b, _ := ioutil.ReadAll(xmlFile)
 	var isoPackager IsoPackager
 	isoPackager.Name = args[0]
-	xml.Unmarshal(b, &isoPackager)
+	_ = xml.Unmarshal(b, &isoPackager)
 
 	fileName := fmt.Sprintf("iso8583/%s.go", strings.ToLower(isoPackager.Name))
 	if _, err := os.Stat(fileName); err == nil {
@@ -157,7 +157,7 @@ func findIsoTypes(cmd *cobra.Command, args []string) {
 
 	if len(args) < noOfArgs {
 		log.Println(args)
-		cmd.Usage()
+		_ = cmd.Usage()
 		os.Exit(1)
 	}
 
@@ -173,16 +173,16 @@ func findIsoTypes(cmd *cobra.Command, args []string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		defer xmlFile.Close()
 
 		b, _ := ioutil.ReadAll(xmlFile)
 		var isoPackager IsoPackager
 		isoPackager.Name = f.Name()
-		xml.Unmarshal(b, &isoPackager)
+		_ = xml.Unmarshal(b, &isoPackager)
 
 		for _, f := range isoPackager.IsoFields {
 			isoMap[f.Class] = f.Class
 		}
+		xmlFile.Close()
 	}
 
 	if output {
