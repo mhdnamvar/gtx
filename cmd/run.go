@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"net"
 	"strconv"
@@ -39,43 +38,31 @@ func checkRunFlags(cmd *cobra.Command, args []string) {
 func echoServer(cmd *cobra.Command, args []string) {
 	server, err := net.Listen("tcp", ":"+strconv.Itoa(port))
 	if server == nil {
-		log.Panicf("couldn't start listening: %v", err)
-	} else {
-		log.Print("gtx is listening on " + strconv.Itoa(port))
+		log.Fatalf("couldn't start listening: %v", err)
 	}
-	connections := acceptConnections(server)
-	for {
-		go handleConn(<-connections)
-	}
-}
 
-func acceptConnections(listener net.Listener) chan net.Conn {
-	ch := make(chan net.Conn)
-	i := 0
-	go func() {
-		for {
-			client, err := listener.Accept()
-			if client == nil {
-				log.Panicf("couldn't accept: %v", err)
+	log.Printf("gtx is listening on %s", strconv.Itoa(port))
+	for {
+		client, err := server.Accept()
+		if client == nil {
+			log.Fatalf("couldn't accept: %v", err)
+		}
+		go func(c net.Conn) {
+			log.Printf("%v connected", c.RemoteAddr())
+			b := bufio.NewReader(c)
+			for {
+				line, err := b.ReadBytes('\n')
+				if err != nil {
+					log.Printf("%v disconnected", c.RemoteAddr())
+					return
+				}
+				log.Print(string(line))
+				_, err = c.Write(append([]byte("echo@gtx: "), line...))
+				if err != nil {
+					log.Print(err)
+					return
+				}
 			}
-			i++
-			fmt.Printf("%d: %v <-> %v\n", i, client.LocalAddr(), client.RemoteAddr())
-			ch <- client
-		}
-	}()
-	return ch
-}
-
-func handleConn(client net.Conn) {
-	b := bufio.NewReader(client)
-	for {
-		line, err := b.ReadBytes('\n')
-		if err != nil {
-			log.Fatal(err)
-		}
-		_, err = client.Write(append([]byte("echo@gtx: "), line...))
-		if err != nil {
-			log.Fatal(err)
-		}
+		}(client)
 	}
 }

@@ -20,3 +20,5 @@
 ### Go Patch ###
 /vendor/
 /Godeps/
+
+gtx
