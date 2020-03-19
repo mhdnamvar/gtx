@@ -62,6 +62,9 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 	var b []byte
 	fields := isoMsg.bitmap.Array()
 	for _, f := range fields {
+		if f == 1 { // skip the bitmap
+			continue
+		}
 		encoded, err := isoSpec[f].Encode(isoMsg.fields[f])
 		if err != nil {
 			log.Fatalf("Error in encoding DE%03d(%s), %v", f, isoMsg.fields[f], err)

@@ -96,26 +96,26 @@ func (isoField *IsoField) String() string {
 		//TODO: Should be revised, not sure about LLLL encoding!
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_BITMAP" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length*2, "IsoText", "IsoNoPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLNUM" {
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLLNUM" {
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoAscii", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_BINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length*2, "IsoText", "IsoNoPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_NUMERIC" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoNumeric", "IsoLeftPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length/2, "IsoNumeric", "IsoLeftPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_AMOUNT" {
 		// TODO: Amount field should be defined
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoLeftPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_CHAR" {
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLHCHAR" {
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoAscii", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLBINARY" {
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_LLLBINARY" {
@@ -131,7 +131,11 @@ func (isoField *IsoField) String() string {
 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
 	} else if isoField.Class == "org.jpos.iso.IFB_FLLNUM" {
 		//TODO: Right pad with F, padding should be defined
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoRightPad")
+		l := length
+		if length%2 != 0 {
+			l = l/2 + 1
+		}
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", l, "IsoNumeric", "IsoRightPad")
 	} else {
 		log.Fatalf("IsoField type %s not supported!", isoField.Class)
 		return ""

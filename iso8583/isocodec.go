@@ -46,6 +46,8 @@ var (
 	IsoLLLA  *IsoCodec = &IsoCodec{"LLLA", "ASCII variable length, max 999", IsoFixed, IsoAscii, 3, IsoNumeric, IsoLeftPad}
 	IsoLLLE  *IsoCodec = &IsoCodec{"LLLE", "EBCDIC variable length, max 999", IsoFixed, IsoEbcdic, 3, IsoNumeric, IsoLeftPad}
 	IsoLLLB  *IsoCodec = &IsoCodec{"LLLB", "Binary variable length, max 999", IsoFixed, IsoBinary, 2, IsoNumeric, IsoLeftPad}
+	// IsoLA should be defined -> length is 1 byte ascii
+	// IsoLE should be defined -> length is 1 byte ebcdic
 )
 
 func pad(codec *IsoCodec, s string) (string, error) {
@@ -141,11 +143,16 @@ func checkLen(codec *IsoCodec, s string) error {
 			l = len(s) / 2
 		}
 		if codec.Padding == IsoNoPad {
-			if l != codec.Size {
-				return Errors[InvalidLengthError]
+			log.Println("WARNING: This should be changed!!, bitmap can be 8 or 16 bytes")
+			if codec.Name != "DE001" {
+				if l != codec.Size {
+					log.Printf("Invalid fixed len: %d, size:%d", l, codec.Size)
+					return Errors[InvalidLengthError]
+				}
 			}
 		} else {
 			if l > codec.Size {
+				log.Println("Invalid fixed len:", l)
 				return Errors[InvalidLengthError]
 			}
 		}

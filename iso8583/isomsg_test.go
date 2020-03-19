@@ -31,7 +31,7 @@ func TestIsoMsgGet(t *testing.T) {
 	assert.Equal(t, IsoFieldNotFoundError, err)
 }
 
-func TestIsoMsgEncode(t *testing.T) {
+func TestIsoMsgEncodeAscii(t *testing.T) {
 	isoMsg := sampleIsoMsg()
 	bytes, err := isoMsg.Encode(Ascii87)
 	assert.Equal(t, err, nil)
@@ -208,4 +208,21 @@ func TestIsoMsgDump(t *testing.T) {
 	s, err := sampleIsoMsg().Dump(Ascii87)
 	assert.Equal(t, nil, err)
 	fmt.Println(s)
+}
+
+func TestIsoMsgEncodeBinary(t *testing.T) {
+	isoMsg := IsoMsgNew()
+	isoMsg.Set(0, "0210")
+	isoMsg.Set(2, "6734000000000000067") //TODO: This field has encoding issue - IFB_FLLNUM
+	isoMsg.Set(3, "000000")
+	isoMsg.Set(28, "1234")      //TODO: This field has encoding issue - IFB_AMOUNT
+	isoMsg.Set(32, "673005005") //TODO: This field has encoding issue - IFB_LLNUM
+	isoMsg.Set(34, "1234ABCD")
+	isoMsg.Set(36, "1234ABCD")
+	isoMsg.Set(37, "0806857")
+	isoMsg.Set(47, "1234ABCD")
+	isoMsg.Set(128, "2D2A98F12D2A98F1")
+	bytes, err := isoMsg.Encode(Binary87)
+	assert.Equal(t, err, nil)
+	log.Printf("%X", bytes)
 }
