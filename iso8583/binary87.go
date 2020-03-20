@@ -3,7 +3,7 @@ package iso8583
 var Binary87 = IsoSpec{
 	&IsoCodec{"DE000", "MESSAGE TYPE INDICATOR", IsoFixed, IsoBinary, 2, IsoNumeric, IsoLeftPad},
 	&IsoCodec{"DE001", "BIT MAP", IsoFixed, IsoBinary, 16, IsoText, IsoNoPad},
-	&IsoCodec{"DE002", "PAN - PRIMARY ACCOUNT NUMBER", IsoLLB, IsoBinary, 10, IsoNumeric, IsoRightPad},
+	&IsoCodec{"DE002", "PAN - PRIMARY ACCOUNT NUMBER", IsoLLB, IsoBinary, 10, IsoNumeric, IsoNoPad},
 	&IsoCodec{"DE003", "PROCESSING CODE", IsoFixed, IsoBinary, 3, IsoNumeric, IsoLeftPad},
 	&IsoCodec{"DE004", "AMOUNT, TRANSACTION", IsoFixed, IsoBinary, 6, IsoNumeric, IsoLeftPad},
 	&IsoCodec{"DE005", "AMOUNT, SETTLEMENT", IsoFixed, IsoBinary, 6, IsoNumeric, IsoLeftPad},
@@ -36,7 +36,7 @@ var Binary87 = IsoSpec{
 	&IsoCodec{"DE032", "ACQUIRING INSTITUTION IDENT CODE", IsoLLB, IsoBinary, 11, IsoNumeric, IsoNoPad},
 	&IsoCodec{"DE033", "FORWARDING INSTITUTION IDENT CODE", IsoLLB, IsoBinary, 11, IsoNumeric, IsoNoPad},
 	&IsoCodec{"DE034", "PAN EXTENDED", IsoLLB, IsoAscii, 28, IsoText, IsoNoPad},
-	&IsoCodec{"DE035", "TRACK 2 DATA", IsoLLB, IsoBinary, 19, IsoNumeric, IsoRightPad},
+	&IsoCodec{"DE035", "TRACK 2 DATA", IsoLLB, IsoBinary, 19, IsoNumeric, IsoNoPad},
 	&IsoCodec{"DE036", "TRACK 3 DATA", IsoLLLB, IsoAscii, 104, IsoText, IsoNoPad},
 	&IsoCodec{"DE037", "RETRIEVAL REFERENCE NUMBER", IsoFixed, IsoAscii, 12, IsoText, IsoRightPad},
 	&IsoCodec{"DE038", "AUTHORIZATION IDENTIFICATION RESPONSE", IsoFixed, IsoAscii, 6, IsoText, IsoRightPad},

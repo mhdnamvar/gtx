@@ -135,7 +135,7 @@ func (isoField *IsoField) String() string {
 		if length%2 != 0 {
 			l = l/2 + 1
 		}
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", l, "IsoNumeric", "IsoRightPad")
+		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", l, "IsoNumeric", "IsoNoPad")
 	} else {
 		log.Fatalf("IsoField type %s not supported!", isoField.Class)
 		return ""
