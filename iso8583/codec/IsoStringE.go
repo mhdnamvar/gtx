@@ -11,7 +11,8 @@ type IsoStringE struct {
 	Encoding    IsoEncoding
 	PaddingType IsoPadding
 	PaddingStr  string
-	Size        int
+	MinLen      int
+	MaxLen      int
 }
 
 func NewIsoStringE(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoStringE {
@@ -21,51 +22,58 @@ func NewIsoStringE(id string, label string, padding IsoPadding, paddingStr strin
 		Encoding:    IsoEncodingE,
 		PaddingType: padding,
 		PaddingStr:  paddingStr,
-		Size:        size,
+		MinLen:      size,
+		MaxLen:      size,
 	}
 }
 
 func DefaultIsoStringE(size int) *IsoStringE {
 	return &IsoStringE{
-		Id:          "",
-		Label:       "",
 		Encoding:    IsoEncodingE,
 		PaddingType: IsoNoPadding,
 		PaddingStr:  " ",
-		Size:        size,
+		MinLen:      size,
+		MaxLen:      size,
 	}
 }
 
 func (codec *IsoStringE) Encode(s string) ([]byte, error) {
-	// Do padding if required
 	s, err := codec.Pad(s)
 	if err != nil {
 		return nil, err
 	}
 
-	// Check length
-	if codec.PaddingType == IsoNoPadding && len(s) != codec.Size {
-		return nil, iso8583.Errors[iso8583.InvalidLengthError]
+	err = codec.Check(s)
+	if err != nil {
+		return nil, err
 	}
-	if len(s) > codec.Size {
-		return nil, iso8583.Errors[iso8583.InvalidLengthError]
-	}
+
 	return utils.AsciiToEbcdic(s), nil
 }
 
 func (codec *IsoStringE) Pad(s string) (string, error) {
 	if codec.PaddingType == IsoLeftPadding {
-		return utils.LeftPad2Len(s, codec.PaddingStr, codec.Size), nil
+		return utils.LeftPad2Len(s, codec.PaddingStr, codec.MaxLen), nil
 	} else if codec.PaddingType == IsoRightPadding {
-		return utils.RightPad2Len(s, codec.PaddingStr, codec.Size), nil
+		return utils.RightPad2Len(s, codec.PaddingStr, codec.MaxLen), nil
 	}
 	return s, nil
 }
 
 func (codec *IsoStringE) Decode(b []byte) (string, int, error) {
-	if len(b) < codec.Size {
+	if len(b) < codec.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
-	data := b[:codec.Size]
+	data := b[:codec.MaxLen]
 	return string(utils.EbcdicToAsciiBytes(data)), len(data), nil
+}
+
+func (codec *IsoStringE) Check(s string) error {
+	if codec.PaddingType == IsoNoPadding && (len(s) < codec.MinLen || len(s) > codec.MaxLen) {
+		return iso8583.Errors[iso8583.InvalidLengthError]
+	}
+	if len(s) > codec.MaxLen {
+		return iso8583.Errors[iso8583.InvalidLengthError]
+	}
+	return nil
 }

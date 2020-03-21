@@ -3,7 +3,7 @@ package codec
 type IsoCodec interface {
 	Encode(string) ([]byte, error)
 	Decode([]byte) (string, int, error)
-	Pad(string) (string, error)
+	Check(string) error
 }
 
 type IsoPadding int
