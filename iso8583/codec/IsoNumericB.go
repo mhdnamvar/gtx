@@ -3,10 +3,12 @@ package codec
 import (
 	"../../iso8583"
 	"../../utils"
+	"encoding/hex"
 	"math/big"
+	"strings"
 )
 
-type IsoNumericA struct {
+type IsoNumericB struct {
 	Id          string
 	Label       string
 	Encoding    IsoEncoding
@@ -15,29 +17,29 @@ type IsoNumericA struct {
 	Size        int
 }
 
-func NewIsoNumericA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoNumericA {
-	return &IsoNumericA{
+func NewIsoNumericB(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoNumericB {
+	return &IsoNumericB{
 		Id:          id,
 		Label:       label,
-		Encoding:    IsoEncodingA,
+		Encoding:    IsoEncodingB,
 		PaddingType: padding,
 		PaddingStr:  paddingStr,
 		Size:        size,
 	}
 }
 
-func DefaultIsoNumericA(size int) *IsoNumericA {
-	return &IsoNumericA{
+func DefaultIsoNumericB(size int) *IsoNumericB {
+	return &IsoNumericB{
 		Id:          "",
 		Label:       "",
-		Encoding:    IsoEncodingA,
+		Encoding:    IsoEncodingB,
 		PaddingType: IsoNoPadding,
-		PaddingStr:  "0",
+		PaddingStr:  "00",
 		Size:        size,
 	}
 }
 
-func (codec *IsoNumericA) Encode(s string) ([]byte, error) {
+func (codec *IsoNumericB) Encode(s string) ([]byte, error) {
 	// Do padding if required
 	s, err := codec.Pad(s)
 	if err != nil {
@@ -45,10 +47,10 @@ func (codec *IsoNumericA) Encode(s string) ([]byte, error) {
 	}
 
 	// Check length
-	if codec.PaddingType == IsoNoPadding && len(s) != codec.Size {
+	if codec.PaddingType == IsoNoPadding && len(s) != codec.Size*2 {
 		return nil, iso8583.Errors[iso8583.InvalidLengthError]
 	}
-	if len(s) > codec.Size {
+	if len(s) > codec.Size*2 {
 		return nil, iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
@@ -59,22 +61,22 @@ func (codec *IsoNumericA) Encode(s string) ([]byte, error) {
 		return nil, iso8583.Errors[iso8583.NumberFormatError]
 	}
 
-	return []byte(s), nil
+	return utils.StrToBcd(s), nil
 }
 
-func (codec *IsoNumericA) Pad(s string) (string, error) {
+func (codec *IsoNumericB) Pad(s string) (string, error) {
 	if codec.PaddingType == IsoLeftPadding {
-		return utils.LeftPad2Len(s, codec.PaddingStr, codec.Size), nil
+		return utils.LeftPad2Len(s, codec.PaddingStr, codec.Size*2), nil
 	} else if codec.PaddingType == IsoRightPadding {
-		return utils.RightPad2Len(s, codec.PaddingStr, codec.Size), nil
+		return utils.RightPad2Len(s, codec.PaddingStr, codec.Size*2), nil
 	}
 	return s, nil
 }
 
-func (codec *IsoNumericA) Decode(b []byte) (string, int, error) {
+func (codec *IsoNumericB) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Size {
 		return "", 0, iso8583.NotEnoughData
 	}
 	data := b[:codec.Size]
-	return string(data), len(data), nil
+	return strings.ToUpper(hex.EncodeToString(data)), len(data), nil
 }

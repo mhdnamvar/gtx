@@ -6,7 +6,7 @@ import (
 	"math/big"
 )
 
-type IsoNumericA struct {
+type IsoNumericE struct {
 	Id          string
 	Label       string
 	Encoding    IsoEncoding
@@ -15,29 +15,29 @@ type IsoNumericA struct {
 	Size        int
 }
 
-func NewIsoNumericA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoNumericA {
-	return &IsoNumericA{
+func NewIsoNumericE(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoNumericE {
+	return &IsoNumericE{
 		Id:          id,
 		Label:       label,
-		Encoding:    IsoEncodingA,
+		Encoding:    IsoEncodingE,
 		PaddingType: padding,
 		PaddingStr:  paddingStr,
 		Size:        size,
 	}
 }
 
-func DefaultIsoNumericA(size int) *IsoNumericA {
-	return &IsoNumericA{
+func DefaultIsoNumericE(size int) *IsoNumericE {
+	return &IsoNumericE{
 		Id:          "",
 		Label:       "",
-		Encoding:    IsoEncodingA,
+		Encoding:    IsoEncodingE,
 		PaddingType: IsoNoPadding,
 		PaddingStr:  "0",
 		Size:        size,
 	}
 }
 
-func (codec *IsoNumericA) Encode(s string) ([]byte, error) {
+func (codec *IsoNumericE) Encode(s string) ([]byte, error) {
 	// Do padding if required
 	s, err := codec.Pad(s)
 	if err != nil {
@@ -59,10 +59,10 @@ func (codec *IsoNumericA) Encode(s string) ([]byte, error) {
 		return nil, iso8583.Errors[iso8583.NumberFormatError]
 	}
 
-	return []byte(s), nil
+	return utils.AsciiToEbcdic(s), nil
 }
 
-func (codec *IsoNumericA) Pad(s string) (string, error) {
+func (codec *IsoNumericE) Pad(s string) (string, error) {
 	if codec.PaddingType == IsoLeftPadding {
 		return utils.LeftPad2Len(s, codec.PaddingStr, codec.Size), nil
 	} else if codec.PaddingType == IsoRightPadding {
@@ -71,10 +71,10 @@ func (codec *IsoNumericA) Pad(s string) (string, error) {
 	return s, nil
 }
 
-func (codec *IsoNumericA) Decode(b []byte) (string, int, error) {
+func (codec *IsoNumericE) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Size {
 		return "", 0, iso8583.NotEnoughData
 	}
 	data := b[:codec.Size]
-	return string(data), len(data), nil
+	return string(utils.EbcdicToAsciiBytes(data)), len(data), nil
 }
