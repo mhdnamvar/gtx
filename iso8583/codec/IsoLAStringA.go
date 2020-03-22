@@ -2,8 +2,9 @@ package codec
 
 import (
 	"../../iso8583"
-	"../../utils"
 	"fmt"
+	"log"
+	"strconv"
 )
 
 type IsoLAStringA struct {
@@ -42,17 +43,18 @@ func (codec *IsoLAStringA) Encode(s string) ([]byte, error) {
 		return nil, err
 	}
 
-	l, err := codec.Len.Encode(fmt.Sprintf("%d", len(s)))
-	if err != nil {
-		fmt.Println("==> 2")
-		return nil, err
-	}
-
 	b, err := codec.Data.Encode(s)
 	if err != nil {
 		fmt.Println("==> 3")
 		return nil, err
 	}
+
+	l, err := codec.Len.Encode(fmt.Sprintf("%d", len(b)))
+	if err != nil {
+		fmt.Println("==> 2")
+		return nil, err
+	}
+
 	fmt.Printf("%x %x", l, b)
 	return append(l, b...), nil
 }
@@ -63,12 +65,19 @@ func (codec *IsoLAStringA) Decode(b []byte) (string, int, error) {
 	}
 
 	bytes := b[:codec.Len.MaxLen]
-	i, err := utils.Btoi(bytes)
+	s, n, err := codec.Len.Decode(bytes)
 	if err != nil {
 		return "", 0, err
 	}
 
-	data := b[:i]
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		log.Println("Invalid IsoLAStringA data")
+		return "", 0, iso8583.Errors[iso8583.InvalidDataError]
+	}
+
+	fmt.Println(n, i)
+	data := b[n : n+i]
 	return string(data), len(data), nil
 }
 
