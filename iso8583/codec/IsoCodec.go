@@ -18,4 +18,8 @@ const (
 	IsoEncodingA IsoEncoding = 0
 	IsoEncodingE IsoEncoding = 1
 	IsoEncodingB IsoEncoding = 2
+
+	LVar   = 9
+	LLVar  = 99
+	LLLVar = 999
 )

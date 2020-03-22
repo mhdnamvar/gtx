@@ -6,18 +6,18 @@ import (
 	"strconv"
 )
 
-type IsoLAStringA struct {
+type IsoLANumericA struct {
 	Len  *IsoNumericA
-	Data *IsoStringA
+	Data *IsoNumericA
 }
 
-func NewIsoLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoLAStringA {
+func NewIsoLANumericA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoLANumericA {
 	if size > LVar {
 		panic(iso8583.InvalidLengthError)
 	}
-	return &IsoLAStringA{
+	return &IsoLANumericA{
 		DefaultIsoNumericA(1),
-		&IsoStringA{
+		&IsoNumericA{
 			Id:          id,
 			Label:       label,
 			Encoding:    IsoEncodingA,
@@ -29,42 +29,38 @@ func NewIsoLAStringA(id string, label string, padding IsoPadding, paddingStr str
 	}
 }
 
-func DefaultIsoLAStringA(size int) *IsoLAStringA {
+func DefaultIsoLANumericA(size int) *IsoLANumericA {
 	if size > LVar {
 		panic(iso8583.InvalidLengthError)
 	}
-	isoStringA := DefaultIsoStringA(size)
-	isoStringA.MinLen = 0
-	return &IsoLAStringA{
+	isoNumericA := DefaultIsoNumericA(size)
+	isoNumericA.MinLen = 0
+	return &IsoLANumericA{
 		DefaultIsoNumericA(1),
-		isoStringA,
+		isoNumericA,
 	}
 }
 
-func (codec *IsoLAStringA) Encode(s string) ([]byte, error) {
+func (codec *IsoLANumericA) Encode(s string) ([]byte, error) {
 	err := codec.Check(s)
 	if err != nil {
-		fmt.Println("==> 1")
 		return nil, err
 	}
 
 	b, err := codec.Data.Encode(s)
 	if err != nil {
-		fmt.Println("==> 3")
 		return nil, err
 	}
 
 	l, err := codec.Len.Encode(fmt.Sprintf("%d", len(b)))
 	if err != nil {
-		fmt.Println("==> 2")
 		return nil, err
 	}
 
-	fmt.Printf("%x %x", l, b)
 	return append(l, b...), nil
 }
 
-func (codec *IsoLAStringA) Decode(b []byte) (string, int, error) {
+func (codec *IsoLANumericA) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Len.MaxLen+codec.Data.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -88,7 +84,7 @@ func (codec *IsoLAStringA) Decode(b []byte) (string, int, error) {
 	return string(data), len(data), nil
 }
 
-func (codec *IsoLAStringA) Check(s string) error {
+func (codec *IsoLANumericA) Check(s string) error {
 	if codec.Data.PaddingType == IsoNoPadding &&
 		(len(s) < codec.Data.MaxLen || len(s) > codec.Data.MaxLen) {
 		return iso8583.Errors[iso8583.InvalidLengthError]
