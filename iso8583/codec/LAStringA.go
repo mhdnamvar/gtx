@@ -6,21 +6,21 @@ import (
 	"strconv"
 )
 
-type IsoLAStringA struct {
-	Len  *IsoNumericA
-	Data *IsoStringA
+type LAStringA struct {
+	Len  *NumericA
+	Data *StringA
 }
 
-func NewIsoLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoLAStringA {
-	if size > LVar {
+func NewIsoLAStringA(id string, label string, padding Padding, paddingStr string, size int) *LAStringA {
+	if size > LVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	return &IsoLAStringA{
-		DefaultIsoNumericA(1),
-		&IsoStringA{
+	return &LAStringA{
+		DefaultNumericA(LVarA.Size),
+		&StringA{
 			Id:          id,
 			Label:       label,
-			Encoding:    IsoEncodingA,
+			Encoding:    EncodingA,
 			PaddingType: padding,
 			PaddingStr:  paddingStr,
 			MinLen:      0,
@@ -29,19 +29,19 @@ func NewIsoLAStringA(id string, label string, padding IsoPadding, paddingStr str
 	}
 }
 
-func DefaultIsoLAStringA(size int) *IsoLAStringA {
-	if size > LVar {
+func DefaultLAStringA(size int) *LAStringA {
+	if size > LVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	isoStringA := DefaultIsoStringA(size)
+	isoStringA := DefaultStringA(size)
 	isoStringA.MinLen = 0
-	return &IsoLAStringA{
-		DefaultIsoNumericA(1),
+	return &LAStringA{
+		DefaultNumericA(LVarA.Size),
 		isoStringA,
 	}
 }
 
-func (codec *IsoLAStringA) Encode(s string) ([]byte, error) {
+func (codec *LAStringA) Encode(s string) ([]byte, error) {
 	err := codec.Check(s)
 	if err != nil {
 		fmt.Println("==> 1")
@@ -64,7 +64,7 @@ func (codec *IsoLAStringA) Encode(s string) ([]byte, error) {
 	return append(l, b...), nil
 }
 
-func (codec *IsoLAStringA) Decode(b []byte) (string, int, error) {
+func (codec *LAStringA) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Len.MaxLen+codec.Data.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -88,13 +88,13 @@ func (codec *IsoLAStringA) Decode(b []byte) (string, int, error) {
 	return string(data), len(data), nil
 }
 
-func (codec *IsoLAStringA) Check(s string) error {
-	if codec.Data.PaddingType == IsoNoPadding &&
+func (codec *LAStringA) Check(s string) error {
+	if codec.Data.PaddingType == NoPadding &&
 		(len(s) < codec.Data.MaxLen || len(s) > codec.Data.MaxLen) {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
-	if len(s) > codec.Data.MaxLen || len(s) > LVar {
+	if len(s) > codec.Data.MaxLen || len(s) > LVarA.MaxValue {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 

@@ -6,21 +6,21 @@ import (
 	"strconv"
 )
 
-type IsoLANumericA struct {
-	Len  *IsoNumericA
-	Data *IsoNumericA
+type LLANumericA struct {
+	Len  *NumericA
+	Data *NumericA
 }
 
-func NewIsoLANumericA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoLANumericA {
-	if size > LVar {
+func NewLLANumericA(id string, label string, padding Padding, paddingStr string, size int) *LLANumericA {
+	if size > LLVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	return &IsoLANumericA{
-		DefaultIsoNumericA(1),
-		&IsoNumericA{
+	return &LLANumericA{
+		DefaultNumericA(LLVarA.Size),
+		&NumericA{
 			Id:          id,
 			Label:       label,
-			Encoding:    IsoEncodingA,
+			Encoding:    EncodingA,
 			PaddingType: padding,
 			PaddingStr:  paddingStr,
 			MinLen:      0,
@@ -29,19 +29,19 @@ func NewIsoLANumericA(id string, label string, padding IsoPadding, paddingStr st
 	}
 }
 
-func DefaultIsoLANumericA(size int) *IsoLANumericA {
-	if size > LVar {
+func DefaultLLANumericA(size int) *LLANumericA {
+	if size > LLVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	isoNumericA := DefaultIsoNumericA(size)
+	isoNumericA := DefaultNumericA(size)
 	isoNumericA.MinLen = 0
-	return &IsoLANumericA{
-		DefaultIsoNumericA(1),
+	return &LLANumericA{
+		DefaultNumericA(LLVarA.Size),
 		isoNumericA,
 	}
 }
 
-func (codec *IsoLANumericA) Encode(s string) ([]byte, error) {
+func (codec *LLANumericA) Encode(s string) ([]byte, error) {
 	err := codec.Check(s)
 	if err != nil {
 		return nil, err
@@ -60,7 +60,7 @@ func (codec *IsoLANumericA) Encode(s string) ([]byte, error) {
 	return append(l, b...), nil
 }
 
-func (codec *IsoLANumericA) Decode(b []byte) (string, int, error) {
+func (codec *LLANumericA) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Len.MaxLen+codec.Data.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -84,13 +84,13 @@ func (codec *IsoLANumericA) Decode(b []byte) (string, int, error) {
 	return string(data), len(data), nil
 }
 
-func (codec *IsoLANumericA) Check(s string) error {
-	if codec.Data.PaddingType == IsoNoPadding &&
+func (codec *LLANumericA) Check(s string) error {
+	if codec.Data.PaddingType == NoPadding &&
 		(len(s) < codec.Data.MaxLen || len(s) > codec.Data.MaxLen) {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
-	if len(s) > codec.Data.MaxLen || len(s) > LVar {
+	if len(s) > codec.Data.MaxLen || len(s) > LLVarA.MaxValue {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 

@@ -5,21 +5,21 @@ import (
 	"../../utils"
 )
 
-type IsoStringA struct {
+type StringA struct {
 	Id          string
 	Label       string
-	Encoding    IsoEncoding
-	PaddingType IsoPadding
+	Encoding    Encoding
+	PaddingType Padding
 	PaddingStr  string
 	MinLen      int
 	MaxLen      int
 }
 
-func NewIsoStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *IsoStringA {
-	return &IsoStringA{
+func NewStringA(id string, label string, padding Padding, paddingStr string, size int) *StringA {
+	return &StringA{
 		Id:          id,
 		Label:       label,
-		Encoding:    IsoEncodingA,
+		Encoding:    EncodingA,
 		PaddingType: padding,
 		PaddingStr:  paddingStr,
 		MinLen:      size,
@@ -27,17 +27,17 @@ func NewIsoStringA(id string, label string, padding IsoPadding, paddingStr strin
 	}
 }
 
-func DefaultIsoStringA(size int) *IsoStringA {
-	return &IsoStringA{
-		Encoding:    IsoEncodingA,
-		PaddingType: IsoNoPadding,
+func DefaultStringA(size int) *StringA {
+	return &StringA{
+		Encoding:    EncodingA,
+		PaddingType: NoPadding,
 		PaddingStr:  " ",
 		MinLen:      size,
 		MaxLen:      size,
 	}
 }
 
-func (codec *IsoStringA) Encode(s string) ([]byte, error) {
+func (codec *StringA) Encode(s string) ([]byte, error) {
 	s, err := codec.Pad(s)
 	if err != nil {
 		return nil, err
@@ -51,16 +51,16 @@ func (codec *IsoStringA) Encode(s string) ([]byte, error) {
 	return []byte(s), nil
 }
 
-func (codec *IsoStringA) Pad(s string) (string, error) {
-	if codec.PaddingType == IsoLeftPadding {
+func (codec *StringA) Pad(s string) (string, error) {
+	if codec.PaddingType == LeftPadding {
 		return utils.LeftPad2Len(s, codec.PaddingStr, codec.MaxLen), nil
-	} else if codec.PaddingType == IsoRightPadding {
+	} else if codec.PaddingType == RightPadding {
 		return utils.RightPad2Len(s, codec.PaddingStr, codec.MaxLen), nil
 	}
 	return s, nil
 }
 
-func (codec *IsoStringA) Decode(b []byte) (string, int, error) {
+func (codec *StringA) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -68,8 +68,8 @@ func (codec *IsoStringA) Decode(b []byte) (string, int, error) {
 	return string(data), len(data), nil
 }
 
-func (codec *IsoStringA) Check(s string) error {
-	if codec.PaddingType == IsoNoPadding && (len(s) < codec.MinLen || len(s) > codec.MaxLen) {
+func (codec *StringA) Check(s string) error {
+	if codec.PaddingType == NoPadding && (len(s) < codec.MinLen || len(s) > codec.MaxLen) {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 	if len(s) > codec.MaxLen {

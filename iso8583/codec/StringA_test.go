@@ -13,7 +13,7 @@ func TestIsoStringA_Encode(t *testing.T) {
 		0x60, 0x7E, 0x21, 0x23, 0x24, 0x25, 0x5E, 0x2A, 0x28, 0x29, 0x5F, 0x2B, 0x2D, 0x3D,
 		0x20, 0x20, 0x41, 0x42, 0x43, 0x44,
 	}
-	codec := DefaultIsoStringA(30)
+	codec := DefaultStringA(30)
 	actual, err := codec.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -22,8 +22,8 @@ func TestIsoStringA_Encode(t *testing.T) {
 func TestIsoStringA_Encode_LeftPad(t *testing.T) {
 	value := "ABCD"
 	expected := []byte("   ABCD")
-	codec := DefaultIsoStringA(7)
-	codec.PaddingType = IsoLeftPadding
+	codec := DefaultStringA(7)
+	codec.PaddingType = LeftPadding
 	actual, err := codec.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -32,8 +32,8 @@ func TestIsoStringA_Encode_LeftPad(t *testing.T) {
 func TestIsoStringA_Encode_RightPad(t *testing.T) {
 	value := "ABCD"
 	expected := []byte("ABCD      ")
-	codec := DefaultIsoStringA(10)
-	codec.PaddingType = IsoRightPadding
+	codec := DefaultStringA(10)
+	codec.PaddingType = RightPadding
 	actual, err := codec.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -41,12 +41,12 @@ func TestIsoStringA_Encode_RightPad(t *testing.T) {
 
 func TestIsoStringA_Encode_InvalidLen(t *testing.T) {
 	value := "iso8583"
-	codec := DefaultIsoStringA(10)
+	codec := DefaultStringA(10)
 	actual, err := codec.Encode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidLengthError], err)
 	assert.Equal(t, []byte(nil), actual)
 
-	codec = DefaultIsoStringA(5)
+	codec = DefaultStringA(5)
 	actual, err = codec.Encode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidLengthError], err)
 	assert.Equal(t, []byte(nil), actual)
@@ -59,7 +59,7 @@ func TestIsoStringA_Decode(t *testing.T) {
 		0x20, 0x20, 0x41, 0x42, 0x43, 0x44,
 	}
 	expected := "0123456789`~!#$%^*()_+-=  ABCD"
-	codec := DefaultIsoStringA(30)
+	codec := DefaultStringA(30)
 	actual, _, err := codec.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -71,7 +71,7 @@ func TestIsoStringA_Decode_InvalidLen(t *testing.T) {
 		0x60, 0x7E, 0x21, 0x23, 0x24, 0x25, 0x5E, 0x2A, 0x28, 0x29, 0x5F, 0x2B, 0x2D, 0x3D,
 		0x20, 0x20, 0x41, 0x42, 0x43, 0x44,
 	}
-	codec := DefaultIsoStringA(31)
+	codec := DefaultStringA(31)
 	actual, _, err := codec.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
@@ -80,8 +80,8 @@ func TestIsoStringA_Decode_InvalidLen(t *testing.T) {
 func TestIsoStringA_Decode_LeftPad(t *testing.T) {
 	value := []byte("   ABCDE01234--extra data--")
 	expected := "   ABCDE01234"
-	codec := DefaultIsoStringA(13)
-	codec.PaddingType = IsoLeftPadding
+	codec := DefaultStringA(13)
+	codec.PaddingType = LeftPadding
 	actual, _, err := codec.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -89,8 +89,8 @@ func TestIsoStringA_Decode_LeftPad(t *testing.T) {
 
 func TestIsoStringA_Decode_LeftPad_InvalidLen(t *testing.T) {
 	value := []byte("   ABCDE10")
-	codec := DefaultIsoStringA(11)
-	codec.PaddingType = IsoLeftPadding
+	codec := DefaultStringA(11)
+	codec.PaddingType = LeftPadding
 	actual, _, err := codec.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
@@ -98,8 +98,8 @@ func TestIsoStringA_Decode_LeftPad_InvalidLen(t *testing.T) {
 
 func TestIsoStringA_Decode_RightPad_InvalidLen(t *testing.T) {
 	value := []byte("ABCDE10   ")
-	codec := DefaultIsoStringA(11)
-	codec.PaddingType = IsoRightPadding
+	codec := DefaultStringA(11)
+	codec.PaddingType = RightPadding
 	actual, _, err := codec.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)

@@ -1,25 +1,41 @@
 package codec
 
-type IsoCodec interface {
+type Codec interface {
 	Encode(string) ([]byte, error)
 	Decode([]byte) (string, int, error)
 	Check(string) error
 }
 
-type IsoPadding int
-type IsoContentType int
-type IsoEncoding int
+type VarLen struct {
+	Size     int
+	MaxValue int
+}
+
+type Padding int
+type ContentType int
+type Encoding int
 
 const (
-	IsoNoPadding    IsoPadding = 0
-	IsoLeftPadding  IsoPadding = 1
-	IsoRightPadding IsoPadding = 2
+	NoPadding    Padding = 0
+	LeftPadding  Padding = 1
+	RightPadding Padding = 2
 
-	IsoEncodingA IsoEncoding = 0
-	IsoEncodingE IsoEncoding = 1
-	IsoEncodingB IsoEncoding = 2
+	EncodingA Encoding = 0
+	EncodingE Encoding = 1
+	EncodingB Encoding = 2
+)
 
-	LVar   = 9
-	LLVar  = 99
-	LLLVar = 999
+var (
+	LVarA VarLen = VarLen{
+		Size:     1,
+		MaxValue: 9,
+	}
+	LLVarA VarLen = VarLen{
+		Size:     2,
+		MaxValue: 99,
+	}
+	LLLVarA VarLen = VarLen{
+		Size:     3,
+		MaxValue: 99,
+	}
 )
