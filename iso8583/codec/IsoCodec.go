@@ -36,6 +36,6 @@ var (
 	}
 	LLLVarA VarLen = VarLen{
 		Size:     3,
-		MaxValue: 99,
+		MaxValue: 999,
 	}
 )
