@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-type IsoStringB struct {
+type StringB struct {
 	Id          string
 	Label       string
 	Encoding    Encoding
@@ -17,8 +17,8 @@ type IsoStringB struct {
 	MaxLen      int
 }
 
-func NewIsoStringB(id string, label string, padding Padding, paddingStr string, size int) *IsoStringB {
-	return &IsoStringB{
+func NewStringB(id string, label string, padding Padding, paddingStr string, size int) *StringB {
+	return &StringB{
 		Id:          id,
 		Label:       label,
 		Encoding:    EncodingB,
@@ -29,8 +29,8 @@ func NewIsoStringB(id string, label string, padding Padding, paddingStr string, 
 	}
 }
 
-func DefaultIsoStringB(size int) *IsoStringB {
-	return &IsoStringB{
+func DefaultStringB(size int) *StringB {
+	return &StringB{
 		Encoding:    EncodingB,
 		PaddingType: NoPadding,
 		PaddingStr:  "20",
@@ -39,7 +39,7 @@ func DefaultIsoStringB(size int) *IsoStringB {
 	}
 }
 
-func (codec *IsoStringB) Encode(s string) ([]byte, error) {
+func (codec *StringB) Encode(s string) ([]byte, error) {
 	s, err := codec.Pad(s)
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (codec *IsoStringB) Encode(s string) ([]byte, error) {
 	return b, nil
 }
 
-func (codec *IsoStringB) Pad(s string) (string, error) {
+func (codec *StringB) Pad(s string) (string, error) {
 	if codec.PaddingType == LeftPadding {
 		return utils.LeftPad2Len(s, codec.PaddingStr, codec.MaxLen*2), nil
 	} else if codec.PaddingType == RightPadding {
@@ -67,7 +67,7 @@ func (codec *IsoStringB) Pad(s string) (string, error) {
 	return s, nil
 }
 
-func (codec *IsoStringB) Decode(b []byte) (string, int, error) {
+func (codec *StringB) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -75,7 +75,7 @@ func (codec *IsoStringB) Decode(b []byte) (string, int, error) {
 	return strings.ToUpper(hex.EncodeToString(data)), len(data), nil
 }
 
-func (codec *IsoStringB) Check(s string) error {
+func (codec *StringB) Check(s string) error {
 	if codec.PaddingType == NoPadding && (len(s) < codec.MinLen*2 || len(s) > codec.MaxLen*2) {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
