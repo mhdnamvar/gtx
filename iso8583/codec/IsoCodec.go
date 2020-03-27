@@ -40,6 +40,14 @@ var (
 	}
 	LVarB VarLen = VarLen{
 		Size:     1,
+		MaxValue: 9,
+	}
+	LLVarB VarLen = VarLen{
+		Size:     1,
 		MaxValue: 99,
+	}
+	LLLVarB VarLen = VarLen{
+		Size:     2,
+		MaxValue: 999,
 	}
 )

@@ -99,7 +99,7 @@ func (codec *LBNumericB) Check(s string) error {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
-	if len(s) > codec.Data.MaxLen*2 || len(s) > LVarB.MaxValue {
+	if len(s) > codec.Data.MaxLen*2 {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
