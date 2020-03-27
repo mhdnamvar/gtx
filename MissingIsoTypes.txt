@@ -1,0 +1,4 @@
+org.jpos.iso.IFA_FLLNUM
+org.jpos.iso.IFEB_LLNUM
+org.jpos.iso.IFA_FLLCHAR
+org.jpos.iso.IFB_AMOUNT2003
