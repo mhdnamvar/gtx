@@ -76,7 +76,7 @@ func TestLLANumericA_Decode_LeftPad(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLLANumericA_Decode_LeftPad_InvalidLen(t *testing.T) {
+func TestLLANumericA_Decode_LeftPad_InvalidData(t *testing.T) {
 	value := []byte{0x41, 0x20, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42}
 	codec := DefaultLLANumericA(10)
 	codec.Data.PaddingType = LeftPadding
@@ -85,7 +85,7 @@ func TestLLANumericA_Decode_LeftPad_InvalidLen(t *testing.T) {
 	assert.Equal(t, "", actual)
 }
 
-func TestLLANumericA_Decode_RightPad_InvalidLen(t *testing.T) {
+func TestLLANumericA_Decode_RightPad_InvalidData(t *testing.T) {
 	value := []byte{0x41, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42, 0x20, 0x20}
 	codec := DefaultLLANumericA(10)
 	codec.Data.PaddingType = RightPadding

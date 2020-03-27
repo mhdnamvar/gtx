@@ -156,7 +156,7 @@ func TestLLLANumericA_Decode_LeftPad(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLLLANumericA_Decode_LeftPad_InvalidLen(t *testing.T) {
+func TestLLLANumericA_Decode_LeftPad_InvalidData(t *testing.T) {
 	value := []byte{
 		0x41, 0x30, 0x30,
 		0x30, 0x30,
@@ -178,7 +178,7 @@ func TestLLLANumericA_Decode_LeftPad_InvalidLen(t *testing.T) {
 	assert.Equal(t, "", actual)
 }
 
-func TestLLLANumericA_Decode_RightPad_InvalidLen(t *testing.T) {
+func TestLLLANumericA_Decode_RightPad_InvalidData(t *testing.T) {
 	value := []byte{
 		0x41, 0x30, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,

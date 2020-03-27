@@ -38,4 +38,8 @@ var (
 		Size:     3,
 		MaxValue: 999,
 	}
+	LVarB VarLen = VarLen{
+		Size:     1,
+		MaxValue: 99,
+	}
 )
