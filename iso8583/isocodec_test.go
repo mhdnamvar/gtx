@@ -1335,7 +1335,7 @@ func TestIsoNumericDecodeBinaryLLLVARNoPad(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestIsoNumericEncodeBinaryLLLVARLeftPad(t *testing.T) {
+func TestIsoNumericDecodeBinaryLLLVARLeftPad(t *testing.T) {
 	value := []byte{
 		0x01, 0x20,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
