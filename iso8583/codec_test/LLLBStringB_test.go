@@ -1,7 +1,8 @@
-package codec
+package codec_test
 
 import (
 	"../../iso8583"
+	"../codec"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -28,8 +29,8 @@ func TestLLLBStringB_Encode(t *testing.T) {
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 	}
-	codec := DefaultLLLBStringB(120)
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLBStringB(120)
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 
@@ -38,8 +39,8 @@ func TestLLLBStringB_Encode(t *testing.T) {
 		0x00, 0x10,
 		0xB1, 0x2D, 0x9F, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 	}
-	codec = DefaultLLLBStringB(10)
-	actual, err = codec.Encode(value)
+	c = codec.DefaultLLLBStringB(10)
+	actual, err = c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -61,9 +62,9 @@ func TestLLLBStringB_Encode_LeftPad(t *testing.T) {
 		0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
 		0xD1, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x5E,
 	}
-	codec := DefaultLLLBStringB(120)
-	codec.Data.PaddingType = LeftPadding
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLBStringB(120)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -85,17 +86,17 @@ func TestLLLBStringB_Encode_RightPad(t *testing.T) {
 		0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
 		0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
 	}
-	codec := DefaultLLLBStringB(120)
-	codec.Data.PaddingType = RightPadding
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLBStringB(120)
+	c.Data.PaddingType = codec.RightPadding
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
 func TestLLLBStringB_Encode_InvalidLen(t *testing.T) {
 	value := "A23456789D"
-	codec := DefaultLLLBStringB(100)
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLBStringB(100)
+	actual, err := c.Encode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidLengthError], err)
 	assert.Equal(t, []byte(nil), actual)
 }
@@ -122,8 +123,8 @@ func TestLLLBStringB_Decode(t *testing.T) {
 		"0123456789012345678901234567890123456789" +
 		"0123456789012345678901234567890123456789" +
 		"01234567890123456789012345678901234567E3"
-	codec := DefaultLLLBStringB(120)
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLBStringB(120)
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -144,14 +145,14 @@ func TestLLLBStringB_Decode_InvalidLen(t *testing.T) {
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0xE3,
 	}
-	codec := DefaultLLLBStringB(121)
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLBStringB(121)
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
 
 	value = []byte{0x31, 0x30, 0x31, 0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0xE3}
-	codec = DefaultLLLBStringB(100)
-	actual, _, err = codec.Decode(value)
+	c = codec.DefaultLLLBStringB(100)
+	actual, _, err = c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
 }
@@ -179,9 +180,9 @@ func TestLLLBStringB_Decode_LeftPad(t *testing.T) {
 		"2020202020202020202020202020202020202020" +
 		"20202020202020202020" +
 		"012345678901234567E3"
-	codec := DefaultLLLBStringB(120)
-	codec.Data.PaddingType = LeftPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLBStringB(120)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -202,9 +203,9 @@ func TestLLLBStringB_Decode_LeftPad_InvalidData(t *testing.T) {
 		0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 	}
-	codec := DefaultLLLBStringB(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLBStringB(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
 }
@@ -225,9 +226,9 @@ func TestLLLBStringB_Decode_RightPad_InvalidData(t *testing.T) {
 		0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
 		0x01, 0x23, 0x45, 0x67, 0x89, 0x01, 0x23, 0x45, 0x67, 0x89,
 	}
-	codec := DefaultLLLBStringB(102)
-	codec.Data.PaddingType = RightPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLBStringB(102)
+	c.Data.PaddingType = codec.RightPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
 }

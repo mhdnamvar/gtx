@@ -1,7 +1,8 @@
-package codec
+package codec_test
 
 import (
 	"../../iso8583"
+	"../codec"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -22,8 +23,8 @@ func TestLLLENumericE_Encode(t *testing.T) {
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 	}
-	codec := DefaultLLLENumericE(100)
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLENumericE(100)
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -45,9 +46,9 @@ func TestLLLENumericE_Encode_LeftPad(t *testing.T) {
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 	}
-	codec := DefaultLLLENumericE(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLENumericE(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -69,17 +70,17 @@ func TestLLLENumericE_Encode_RightPad(t *testing.T) {
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 		0xF0, 0xF0,
 	}
-	codec := DefaultLLLENumericE(102)
-	codec.Data.PaddingType = RightPadding
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLENumericE(102)
+	c.Data.PaddingType = codec.RightPadding
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
 func TestLLLENumericE_Encode_InvalidLen(t *testing.T) {
 	value := "1234567890"
-	codec := DefaultLLLENumericE(100)
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLENumericE(100)
+	actual, err := c.Encode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidLengthError], err)
 	assert.Equal(t, []byte(nil), actual)
 }
@@ -100,8 +101,8 @@ func TestLLLENumericE_Decode(t *testing.T) {
 	}
 	expected := "12345678901234567890123456789012345678901234567890" +
 		"12345678901234567890123456789012345678901234567890"
-	codec := DefaultLLLENumericE(100)
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLENumericE(100)
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -119,14 +120,14 @@ func TestLLLENumericE_Decode_InvalidLen(t *testing.T) {
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 	}
-	codec := DefaultLLLENumericE(101)
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLENumericE(101)
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
 
 	value = []byte{0xF1, 0xF0, 0xF1, 0xF0, 0xF3, 0xF4, 0xF5}
-	codec = DefaultLLLENumericE(100)
-	actual, _, err = codec.Decode(value)
+	c = codec.DefaultLLLENumericE(100)
+	actual, _, err = c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
 }
@@ -149,9 +150,9 @@ func TestLLLENumericE_Decode_LeftPad(t *testing.T) {
 	expected := "00" +
 		"12345678901234567890123456789012345678901234567890" +
 		"12345678901234567890123456789012345678901234567890"
-	codec := DefaultLLLENumericE(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLENumericE(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -171,9 +172,9 @@ func TestLLLENumericE_Decode_LeftPad_InvalidData(t *testing.T) {
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 	}
-	codec := DefaultLLLENumericE(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLENumericE(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
 }
@@ -193,9 +194,9 @@ func TestLLLENumericE_Decode_RightPad_InvalidData(t *testing.T) {
 		0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xF0,
 		0xF0, 0xF0,
 	}
-	codec := DefaultLLLENumericE(102)
-	codec.Data.PaddingType = RightPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLENumericE(102)
+	c.Data.PaddingType = codec.RightPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
 }

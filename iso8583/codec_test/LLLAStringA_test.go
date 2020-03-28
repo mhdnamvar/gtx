@@ -1,7 +1,8 @@
-package codec
+package codec_test
 
 import (
 	"../../iso8583"
+	"../codec"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -22,8 +23,8 @@ func TestLLLAStringA_Encode(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x41,
 	}
-	codec := DefaultLLLAStringA(100)
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLAStringA(100)
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -45,9 +46,9 @@ func TestLLLAStringA_Encode_LeftPad(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x41,
 	}
-	codec := DefaultLLLAStringA(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLAStringA(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -69,17 +70,17 @@ func TestLLLAStringA_Encode_RightPad(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x41,
 		0x20, 0x20,
 	}
-	codec := DefaultLLLAStringA(102)
-	codec.Data.PaddingType = RightPadding
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLAStringA(102)
+	c.Data.PaddingType = codec.RightPadding
+	actual, err := c.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
 func TestLLLAStringA_Encode_InvalidLen(t *testing.T) {
 	value := "123456789A"
-	codec := DefaultLLLAStringA(100)
-	actual, err := codec.Encode(value)
+	c := codec.DefaultLLLAStringA(100)
+	actual, err := c.Encode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidLengthError], err)
 	assert.Equal(t, []byte(nil), actual)
 }
@@ -100,8 +101,8 @@ func TestLLLAStringA_Decode(t *testing.T) {
 	}
 	expected := "B2345678901234567890123456789012345678901234567890" +
 		"1234567890123456789012345678901234567890123456789A"
-	codec := DefaultLLLAStringA(100)
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLAStringA(100)
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -119,14 +120,14 @@ func TestLLLAStringA_Decode_InvalidLen(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42, 0x43,
 	}
-	codec := DefaultLLLAStringA(101)
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLAStringA(101)
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
 
 	value = []byte{0x31, 0x30, 0x31, 0x30, 0x33, 0x41, 0x42}
-	codec = DefaultLLLAStringA(100)
-	actual, _, err = codec.Decode(value)
+	c = codec.DefaultLLLAStringA(100)
+	actual, _, err = c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
 }
@@ -149,9 +150,9 @@ func TestLLLAStringA_Decode_LeftPad(t *testing.T) {
 	expected := "  " +
 		"12345678901234567890123456789012345678901234567890" +
 		"123456789012345678901234567890123456789012345678AB"
-	codec := DefaultLLLAStringA(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLAStringA(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
@@ -171,9 +172,9 @@ func TestLLLAStringA_Decode_LeftPad_InvalidData(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x41, 0x42,
 	}
-	codec := DefaultLLLAStringA(102)
-	codec.Data.PaddingType = LeftPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLAStringA(102)
+	c.Data.PaddingType = codec.LeftPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
 }
@@ -193,9 +194,9 @@ func TestLLLAStringA_Decode_RightPad_InvalidData(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x41, 0x42,
 		0x20, 0x20,
 	}
-	codec := DefaultLLLAStringA(102)
-	codec.Data.PaddingType = RightPadding
-	actual, _, err := codec.Decode(value)
+	c := codec.DefaultLLLAStringA(102)
+	c.Data.PaddingType = codec.RightPadding
+	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
 }
