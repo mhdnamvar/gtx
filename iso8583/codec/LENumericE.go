@@ -7,18 +7,18 @@ import (
 	"strconv"
 )
 
-type LEStringE struct {
+type LENumericE struct {
 	Len  *NumericE
-	Data *StringE
+	Data *NumericE
 }
 
-func NewLEStringE(id string, label string, padding Padding, paddingStr string, size int) *LEStringE {
+func NewLENumericE(id string, label string, padding Padding, paddingStr string, size int) *LENumericE {
 	if size > LVarE.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	return &LEStringE{
+	return &LENumericE{
 		DefaultNumericE(LVarE.Size),
-		&StringE{
+		&NumericE{
 			Id:          id,
 			Label:       label,
 			Encoding:    EncodingE,
@@ -30,42 +30,38 @@ func NewLEStringE(id string, label string, padding Padding, paddingStr string, s
 	}
 }
 
-func DefaultLEStringE(size int) *LEStringE {
+func DefaultLENumericE(size int) *LENumericE {
 	if size > LVarE.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	data := DefaultStringE(size)
+	data := DefaultNumericE(size)
 	data.MinLen = 0
-	return &LEStringE{
+	return &LENumericE{
 		DefaultNumericE(LVarE.Size),
 		data,
 	}
 }
 
-func (codec *LEStringE) Encode(s string) ([]byte, error) {
+func (codec *LENumericE) Encode(s string) ([]byte, error) {
 	err := codec.Check(s)
 	if err != nil {
-		fmt.Println("==> 1")
 		return nil, err
 	}
 
 	b, err := codec.Data.Encode(s)
 	if err != nil {
-		fmt.Println("==> 3")
 		return nil, err
 	}
 
 	l, err := codec.Len.Encode(fmt.Sprintf("%d", len(b)))
 	if err != nil {
-		fmt.Println("==> 2")
 		return nil, err
 	}
 
-	fmt.Printf("%x %x", l, b)
 	return append(l, b...), nil
 }
 
-func (codec *LEStringE) Decode(b []byte) (string, int, error) {
+func (codec *LENumericE) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Len.MaxLen+codec.Data.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -89,13 +85,13 @@ func (codec *LEStringE) Decode(b []byte) (string, int, error) {
 	return string(utils.EbcdicToAsciiBytes(data)), len(data), nil
 }
 
-func (codec *LEStringE) Check(s string) error {
+func (codec *LENumericE) Check(s string) error {
 	if codec.Data.PaddingType == NoPadding &&
 		(len(s) < codec.Data.MaxLen || len(s) > codec.Data.MaxLen) {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
-	if len(s) > codec.Data.MaxLen || len(s) > LVarE.MaxValue {
+	if len(s) > codec.Data.MaxLen {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
