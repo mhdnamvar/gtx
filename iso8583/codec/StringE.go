@@ -27,7 +27,7 @@ func NewStringE(id string, label string, padding Padding, paddingStr string, siz
 	}
 }
 
-func DefaultIsoStringE(size int) *StringE {
+func DefaultStringE(size int) *StringE {
 	return &StringE{
 		Encoding:    EncodingE,
 		PaddingType: NoPadding,

@@ -2,22 +2,23 @@ package codec
 
 import (
 	"../../iso8583"
+	"../../utils"
 	"fmt"
 	"strconv"
 )
 
-type LAStringA struct {
-	Len  *NumericA
-	Data *StringA
+type LEStringE struct {
+	Len  *NumericE
+	Data *StringE
 }
 
-func NewLAStringA(id string, label string, padding Padding, paddingStr string, size int) *LAStringA {
+func NewLEStringE(id string, label string, padding Padding, paddingStr string, size int) *LEStringE {
 	if size > LVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	return &LAStringA{
-		DefaultNumericA(LVarA.Size),
-		&StringA{
+	return &LEStringE{
+		DefaultNumericE(LVarA.Size),
+		&StringE{
 			Id:          id,
 			Label:       label,
 			Encoding:    EncodingA,
@@ -29,19 +30,19 @@ func NewLAStringA(id string, label string, padding Padding, paddingStr string, s
 	}
 }
 
-func DefaultLAStringA(size int) *LAStringA {
+func DefaultLEStringE(size int) *LEStringE {
 	if size > LVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
-	data := DefaultStringA(size)
+	data := DefaultStringE(size)
 	data.MinLen = 0
-	return &LAStringA{
-		DefaultNumericA(LVarA.Size),
+	return &LEStringE{
+		DefaultNumericE(LVarA.Size),
 		data,
 	}
 }
 
-func (codec *LAStringA) Encode(s string) ([]byte, error) {
+func (codec *LEStringE) Encode(s string) ([]byte, error) {
 	err := codec.Check(s)
 	if err != nil {
 		fmt.Println("==> 1")
@@ -64,7 +65,7 @@ func (codec *LAStringA) Encode(s string) ([]byte, error) {
 	return append(l, b...), nil
 }
 
-func (codec *LAStringA) Decode(b []byte) (string, int, error) {
+func (codec *LEStringE) Decode(b []byte) (string, int, error) {
 	if len(b) < codec.Len.MaxLen+codec.Data.MaxLen {
 		return "", 0, iso8583.NotEnoughData
 	}
@@ -85,10 +86,10 @@ func (codec *LAStringA) Decode(b []byte) (string, int, error) {
 	}
 
 	data := b[n : n+i]
-	return string(data), len(data), nil
+	return string(utils.EbcdicToAsciiBytes(data)), len(data), nil
 }
 
-func (codec *LAStringA) Check(s string) error {
+func (codec *LEStringE) Check(s string) error {
 	if codec.Data.PaddingType == NoPadding &&
 		(len(s) < codec.Data.MaxLen || len(s) > codec.Data.MaxLen) {
 		return iso8583.Errors[iso8583.InvalidLengthError]

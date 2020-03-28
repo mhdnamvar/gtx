@@ -38,6 +38,18 @@ var (
 		Size:     3,
 		MaxValue: 999,
 	}
+	LVarE VarLen = VarLen{
+		Size:     1,
+		MaxValue: 9,
+	}
+	LLVarE VarLen = VarLen{
+		Size:     2,
+		MaxValue: 99,
+	}
+	LLLVarE VarLen = VarLen{
+		Size:     3,
+		MaxValue: 999,
+	}
 	LVarB VarLen = VarLen{
 		Size:     1,
 		MaxValue: 9,
