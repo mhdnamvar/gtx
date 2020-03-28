@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestLLAStringA_Encode_1(t *testing.T) {
+func TestLLAStringA_Encode(t *testing.T) {
 	value := "1234567890A"
 	expected := []byte{0x31, 0x31, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30, 0x41}
 	codec := DefaultLLAStringA(11)
@@ -15,7 +15,7 @@ func TestLLAStringA_Encode_1(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLLAStringA_Encode_LeftPad_1(t *testing.T) {
+func TestLLAStringA_Encode_LeftPad(t *testing.T) {
 	value := "12345678A"
 	expected := []byte{0x31, 0x31, 0x20, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x41}
 	codec := DefaultLLAStringA(11)
