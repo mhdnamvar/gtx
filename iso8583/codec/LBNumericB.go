@@ -13,7 +13,7 @@ type LBNumericB struct {
 	Data *NumericB
 }
 
-func NewLBNumericB(id string, label string, padding Padding, paddingStr string, size int) *LBNumericB {
+func NewLBNumericB(id string, label string, padding IsoPadding, paddingStr string, size int) *LBNumericB {
 	if size > LVarB.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
@@ -104,4 +104,8 @@ func (codec *LBNumericB) Check(s string) error {
 	}
 
 	return nil
+}
+
+func (codec *LBNumericB) LenSize() int {
+	return LVarB.Size
 }

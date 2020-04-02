@@ -10,14 +10,14 @@ import (
 type StringB struct {
 	Id          string
 	Label       string
-	Encoding    Encoding
-	PaddingType Padding
+	Encoding    IsoEncoding
+	PaddingType IsoPadding
 	PaddingStr  string
 	MinLen      int
 	MaxLen      int
 }
 
-func NewStringB(id string, label string, padding Padding, paddingStr string, size int) *StringB {
+func NewStringB(id string, label string, padding IsoPadding, paddingStr string, size int) *StringB {
 	return &StringB{
 		Id:          id,
 		Label:       label,
@@ -83,4 +83,8 @@ func (codec *StringB) Check(s string) error {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 	return nil
+}
+
+func (codec *StringB) LenSize() int {
+	return 0
 }

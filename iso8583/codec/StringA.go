@@ -8,14 +8,14 @@ import (
 type StringA struct {
 	Id          string
 	Label       string
-	Encoding    Encoding
-	PaddingType Padding
+	Encoding    IsoEncoding
+	PaddingType IsoPadding
 	PaddingStr  string
 	MinLen      int
 	MaxLen      int
 }
 
-func NewStringA(id string, label string, padding Padding, paddingStr string, size int) *StringA {
+func NewStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *StringA {
 	return &StringA{
 		Id:          id,
 		Label:       label,
@@ -76,4 +76,8 @@ func (codec *StringA) Check(s string) error {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 	return nil
+}
+
+func (codec *StringA) LenSize() int {
+	return 0
 }

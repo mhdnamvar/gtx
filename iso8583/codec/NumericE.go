@@ -9,14 +9,14 @@ import (
 type NumericE struct {
 	Id          string
 	Label       string
-	Encoding    Encoding
-	PaddingType Padding
+	Encoding    IsoEncoding
+	PaddingType IsoPadding
 	PaddingStr  string
 	MinLen      int
 	MaxLen      int
 }
 
-func NewNumericE(id string, label string, padding Padding, paddingStr string, size int) *NumericE {
+func NewNumericE(id string, label string, padding IsoPadding, paddingStr string, size int) *NumericE {
 	return &NumericE{
 		Id:          id,
 		Label:       label,
@@ -84,4 +84,8 @@ func (codec *NumericE) Check(s string) error {
 		return iso8583.Errors[iso8583.NumberFormatError]
 	}
 	return nil
+}
+
+func (codec *NumericE) LenSize() int {
+	return 0
 }

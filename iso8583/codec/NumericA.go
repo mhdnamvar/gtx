@@ -10,14 +10,14 @@ import (
 type NumericA struct {
 	Id          string
 	Label       string
-	Encoding    Encoding
-	PaddingType Padding
+	Encoding    IsoEncoding
+	PaddingType IsoPadding
 	PaddingStr  string
 	MinLen      int
 	MaxLen      int
 }
 
-func NewNumericA(id string, label string, padding Padding, paddingStr string, size int) *NumericA {
+func NewNumericA(id string, label string, padding IsoPadding, paddingStr string, size int) *NumericA {
 	return &NumericA{
 		Id:          id,
 		Label:       label,
@@ -87,4 +87,8 @@ func (codec *NumericA) Check(s string) error {
 		return iso8583.Errors[iso8583.NumberFormatError]
 	}
 	return nil
+}
+
+func (codec *NumericA) LenSize() int {
+	return 0
 }

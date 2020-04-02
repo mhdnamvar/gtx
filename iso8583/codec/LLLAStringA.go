@@ -11,7 +11,7 @@ type LLLAStringA struct {
 	Data *StringA
 }
 
-func NewIsoLLLAStringA(id string, label string, padding Padding, paddingStr string, size int) *LLLAStringA {
+func NewIsoLLLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *LLLAStringA {
 	if size > LLLVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
@@ -99,4 +99,8 @@ func (codec *LLLAStringA) Check(s string) error {
 	}
 
 	return nil
+}
+
+func (codec *LLLAStringA) LenSize() int {
+	return LLLVarA.Size
 }

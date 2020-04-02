@@ -11,7 +11,7 @@ type LLANumericA struct {
 	Data *NumericA
 }
 
-func NewLLANumericA(id string, label string, padding Padding, paddingStr string, size int) *LLANumericA {
+func NewLLANumericA(id string, label string, padding IsoPadding, paddingStr string, size int) *LLANumericA {
 	if size > LLVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
@@ -95,4 +95,8 @@ func (codec *LLANumericA) Check(s string) error {
 	}
 
 	return nil
+}
+
+func (codec *LLANumericA) LenSize() int {
+	return LLVarA.Size
 }

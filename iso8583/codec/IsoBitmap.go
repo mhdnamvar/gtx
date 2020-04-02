@@ -1,24 +1,25 @@
 package codec
 
 import (
-	"../../iso8583"
 	"encoding/hex"
 	"log"
 	"strings"
+
+	"../../iso8583"
 )
 
 const (
 	BitmapSize = 16
 )
 
-type Bitmap [BitmapSize]byte
+type IsoBitmap [BitmapSize]byte
 
-func (bitmap *Bitmap) Get(i int) bool {
+func (isoBitmap *IsoBitmap) Get(i int) bool {
 	i--
-	return bitmap[i/8]&(1<<uint(7-i%8)) != 0
+	return isoBitmap[i/8]&(1<<uint(7-i%8)) != 0
 }
 
-func set(bitmap *Bitmap, i int) {
+func set(bitmap *IsoBitmap, i int) {
 	i--
 	bitmap[i/8] |= 1 << uint(7-i%8)
 	if i > 64 {
@@ -26,27 +27,27 @@ func set(bitmap *Bitmap, i int) {
 	}
 }
 
-func clear(isoBitmap *Bitmap, i int) {
+func clear(isoBitmap *IsoBitmap, i int) {
 	i--
 	isoBitmap[i/8] &^= 1 << uint(7-i%8)
 }
 
-func (bitmap *Bitmap) Set(xs ...int) {
+func (isoBitmap *IsoBitmap) Set(xs ...int) {
 	for _, x := range xs {
 		if x > 64 {
-			set(bitmap, 1)
+			set(isoBitmap, 1)
 		}
-		set(bitmap, x)
+		set(isoBitmap, x)
 	}
 }
 
-func (bitmap *Bitmap) Clear(xs ...int) {
+func (isoBitmap *IsoBitmap) Clear(xs ...int) {
 	for _, x := range xs {
-		clear(bitmap, x)
+		clear(isoBitmap, x)
 	}
 
 	found := false
-	for _, x := range bitmap.Array() {
+	for _, x := range isoBitmap.Array() {
 		if x > 64 {
 			found = true
 			break
@@ -54,15 +55,15 @@ func (bitmap *Bitmap) Clear(xs ...int) {
 	}
 
 	if found {
-		set(bitmap, 1)
+		set(isoBitmap, 1)
 	} else {
-		clear(bitmap, 1)
+		clear(isoBitmap, 1)
 	}
 }
 
-func (bitmap *Bitmap) Parse(s string) error {
+func (isoBitmap *IsoBitmap) Parse(s string) error {
 	if len(s)%2 != 0 {
-		log.Fatal("bitmap length is wrong")
+		log.Fatal("isoBitmap length is wrong")
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
 
@@ -76,27 +77,27 @@ func (bitmap *Bitmap) Parse(s string) error {
 	}
 
 	for i := 0; i < len(b); i++ {
-		bitmap[i] = b[i]
+		isoBitmap[i] = b[i]
 	}
 
 	return nil
 }
 
-func (bitmap *Bitmap) String() string {
-	if bitmap.Get(1) {
-		return strings.ToUpper(hex.EncodeToString(bitmap[:]))
+func (isoBitmap *IsoBitmap) String() string {
+	if isoBitmap.Get(1) {
+		return strings.ToUpper(hex.EncodeToString(isoBitmap[:]))
 	}
-	return strings.ToUpper(hex.EncodeToString(bitmap[:8]))
+	return strings.ToUpper(hex.EncodeToString(isoBitmap[:8]))
 }
 
-func (bitmap *Bitmap) Array() []int {
+func (isoBitmap *IsoBitmap) Array() []int {
 	var array []int
 	length := 64
-	if bitmap.Get(1) {
+	if isoBitmap.Get(1) {
 		length = 128
 	}
 	for i := 1; i <= length; i++ {
-		if bitmap.Get(i) {
+		if isoBitmap.Get(i) {
 			array = append(array, i)
 		}
 	}

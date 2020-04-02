@@ -12,7 +12,7 @@ type LEStringE struct {
 	Data *StringE
 }
 
-func NewLEStringE(id string, label string, padding Padding, paddingStr string, size int) *LEStringE {
+func NewLEStringE(id string, label string, padding IsoPadding, paddingStr string, size int) *LEStringE {
 	if size > LVarE.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
@@ -100,4 +100,8 @@ func (codec *LEStringE) Check(s string) error {
 	}
 
 	return nil
+}
+
+func (codec *LEStringE) LenSize() int {
+	return LVarE.Size
 }

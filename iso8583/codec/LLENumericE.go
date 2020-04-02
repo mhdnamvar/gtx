@@ -12,7 +12,7 @@ type LLENumericE struct {
 	Data *NumericE
 }
 
-func NewLLENumericE(id string, label string, padding Padding, paddingStr string, size int) *LLENumericE {
+func NewLLENumericE(id string, label string, padding IsoPadding, paddingStr string, size int) *LLENumericE {
 	if size > LLVarE.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
@@ -96,4 +96,8 @@ func (codec *LLENumericE) Check(s string) error {
 	}
 
 	return nil
+}
+
+func (codec *LLENumericE) LenSize() int {
+	return LLVarE.Size
 }
