@@ -1,9 +1,10 @@
 package codec
 
 import (
-	"../../iso8583"
 	"fmt"
 	"strconv"
+
+	"../../iso8583"
 )
 
 type LLAStringA struct {
@@ -11,7 +12,7 @@ type LLAStringA struct {
 	Data *StringA
 }
 
-func NewIsoLLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *LLAStringA {
+func NewLLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *LLAStringA {
 	if size > LLVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}

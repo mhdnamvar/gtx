@@ -1,10 +1,11 @@
 package codec_test
 
 import (
+	"testing"
+
 	"../../iso8583"
 	"../codec"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestLLLAStringA_Encode(t *testing.T) {
@@ -78,7 +79,8 @@ func TestLLLAStringA_Encode_RightPad(t *testing.T) {
 }
 
 func TestLLLAStringA_Encode_InvalidLen(t *testing.T) {
-	value := "123456789A"
+	value := "123456789A123456789A123456789A123456789A12345" +
+		"6789A123456789A123456789A123456789A123456789A123456789A123456789A"
 	c := codec.DefaultLLLAStringA(100)
 	actual, err := c.Encode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidLengthError], err)
@@ -118,9 +120,9 @@ func TestLLLAStringA_Decode_InvalidLen(t *testing.T) {
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
 		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
-		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42, 0x43,
+		0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42,
 	}
-	c := codec.DefaultLLLAStringA(101)
+	c := codec.DefaultLLLAStringA(100)
 	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.NotEnoughData, err)
 	assert.Equal(t, "", actual)
@@ -199,4 +201,21 @@ func TestLLLAStringA_Decode_RightPad_InvalidData(t *testing.T) {
 	actual, _, err := c.Decode(value)
 	assert.Equal(t, iso8583.Errors[iso8583.InvalidDataError], err)
 	assert.Equal(t, "", actual)
+}
+
+func TestLLLAStringA_F48(t *testing.T) {
+	value := "MAES0115941234560407      "
+	expected := []byte{
+		0x30, 0x32, 0x36,
+		0x4D, 0x41, 0x45, 0x53, 0x30, 0x31, 0x31, 0x35, 0x39, 0x34, 0x31, 0x32, 0x33, 0x34, 0x35,
+		0x36, 0x30, 0x34, 0x30, 0x37, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	}
+	c := codec.DefaultLLLAStringA(999)
+	actual, err := c.Encode(value)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+
+	v, _, err := c.Decode(expected)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, value, v)
 }

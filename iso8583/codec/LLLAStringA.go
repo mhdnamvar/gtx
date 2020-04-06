@@ -1,9 +1,10 @@
 package codec
 
 import (
-	"../../iso8583"
 	"fmt"
 	"strconv"
+
+	"../../iso8583"
 )
 
 type LLLAStringA struct {
@@ -11,7 +12,7 @@ type LLLAStringA struct {
 	Data *StringA
 }
 
-func NewIsoLLLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *LLLAStringA {
+func NewLLLAStringA(id string, label string, padding IsoPadding, paddingStr string, size int) *LLLAStringA {
 	if size > LLLVarA.MaxValue {
 		panic(iso8583.InvalidLengthError)
 	}
@@ -60,15 +61,10 @@ func (codec *LLLAStringA) Encode(s string) ([]byte, error) {
 		return nil, err
 	}
 
-	fmt.Printf("%x %x", l, b)
 	return append(l, b...), nil
 }
 
 func (codec *LLLAStringA) Decode(b []byte) (string, int, error) {
-	if len(b) < codec.Len.MaxLen+codec.Data.MaxLen {
-		return "", 0, iso8583.NotEnoughData
-	}
-
 	bytes := b[:codec.Len.MaxLen]
 	s, n, err := codec.Len.Decode(bytes)
 	if err != nil {
@@ -89,15 +85,9 @@ func (codec *LLLAStringA) Decode(b []byte) (string, int, error) {
 }
 
 func (codec *LLLAStringA) Check(s string) error {
-	if codec.Data.PaddingType == NoPadding &&
-		(len(s) < codec.Data.MaxLen || len(s) > codec.Data.MaxLen) {
+	if len(s) > codec.Data.MaxLen {
 		return iso8583.Errors[iso8583.InvalidLengthError]
 	}
-
-	if len(s) > codec.Data.MaxLen || len(s) > LLLVarA.MaxValue {
-		return iso8583.Errors[iso8583.InvalidLengthError]
-	}
-
 	return nil
 }
 

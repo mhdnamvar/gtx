@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"../iso8583/codec"
 	"github.com/spf13/cobra"
 )
 
@@ -26,6 +27,13 @@ type IsoPackager struct {
 	IsoFields []IsoField `xml:"isofield"`
 }
 
+type CodecInfo struct {
+	Name       string
+	Padding    string
+	PaddingStr string
+	Factor     int
+}
+
 var (
 	protocol          string
 	force             bool
@@ -33,7 +41,7 @@ var (
 	output            bool
 	scanTypesMissing  bool
 	isoMap            map[string]string
-	supportedIsoTypes map[string]bool
+	supportedIsoTypes map[string]CodecInfo
 )
 
 func (isoField *IsoField) String() string {
@@ -42,109 +50,24 @@ func (isoField *IsoField) String() string {
 		log.Fatal(err)
 		return ""
 	}
-	id := fmt.Sprintf("DE%03s", isoField.Id)
-	if isoField.Class == "org.jpos.iso.IFA_BITMAP" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length*2, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLNUM" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoAscii", length, "IsoNumeric", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLLNUM" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoAscii", length, "IsoNumeric", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoAscii", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_BINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length*2, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_NUMERIC" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoNumeric", "IsoLeftPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_AMOUNT" {
-		// TODO: Amount field should be defined
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoAscii", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IF_CHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoText", "IsoRightPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLLBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFA_LLLLBINARY" {
-		//TODO: Should be revised, not sure about LLLL encoding!
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_BITMAP" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length*2, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_LLNUM" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLE", "IsoEbcdic", length, "IsoNumeric", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_LLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLE", "IsoEbcdic", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_BINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length*2, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_NUMERIC" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoNumeric", "IsoLeftPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_AMOUNT" {
-		// TODO: Amount field should be defined
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_CHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IF_ECHAR" { //deprecated type use IFE_CHAR instead
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_LLLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoEbcdic", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_LLBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_LLLBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFE_LLLLBINARY" {
-		//TODO: Should be revised, not sure about LLLL encoding!
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_BITMAP" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLNUM" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLLNUM" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoAscii", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_BINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_NUMERIC" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length/2, "IsoNumeric", "IsoLeftPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_AMOUNT" {
-		// TODO: Amount field should be defined
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoLeftPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_CHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLHCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLLCHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoAscii", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLLBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLLLBINARY" {
-		//TODO: Should be revised, not sure about LLLL encoding!
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLHECHAR" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoEbcdic", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLHBINARY" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_LLHNUM" {
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
-	} else if isoField.Class == "org.jpos.iso.IFB_FLLNUM" {
-		//TODO: Right pad with F, padding should be defined
-		l := length
-		if length%2 != 0 {
-			l = l/2 + 1
-		}
-		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", l, "IsoNumeric", "IsoNoPad")
-	} else {
-		log.Fatalf("IsoField type %s not supported!", isoField.Class)
+
+	codecInfo, found := supportedIsoTypes[isoField.Class]
+	if !found {
+		log.Fatalf("%s %v", isoField.Class, codec.NotSupported)
 		return ""
 	}
+
+	if codecInfo.Factor != 0 {
+		length *= codecInfo.Factor
+	}
+
+	return fmt.Sprintf("New%s(\"DE%03s\", \"%s\", %s, \"%s\", %d)", codecInfo.Name, isoField.Id, isoField.Name,
+		codecInfo.Padding, codecInfo.PaddingStr, length)
 }
 
 func (isoPackager *IsoPackager) String() string {
 	var buffer bytes.Buffer
-	buffer.WriteString("package iso8583\n\n")
+	buffer.WriteString("package codec\n\n")
 	buffer.WriteString(fmt.Sprintf("var %s = IsoSpec{\n", isoPackager.Name))
 	for _, f := range isoPackager.IsoFields {
 		buffer.WriteString(fmt.Sprintf("\t%v,\n", &f))
@@ -164,56 +87,66 @@ e.g. gtx import --protocol protocol-iso87binary.xml Binary87`,
 
 func init() {
 	rootCmd.AddCommand(importCmd)
-	importCmd.Flags().StringVarP(&protocol, "protocol", "p", "", "Import jpos XML protocol")
+	importCmd.Flags().StringVarP(&protocol, "protocol", "p", "", "Import jpos protocol")
 	importCmd.Flags().BoolVarP(&force, "force", "f", false, "Overwrite existing protocol if exists")
-	importCmd.Flags().BoolVarP(&scanTypes, "scan-types", "s", false, "Find iso types from jpos xml protocol files")
+	importCmd.Flags().BoolVarP(&scanTypes, "scan-types", "s", false, "Find iso types from jpos protocol files")
 	importCmd.Flags().BoolVarP(&scanTypesMissing, "scan-types-missing", "m", false, "Find only missing iso types")
 	importCmd.Flags().BoolVarP(&output, "scan-types-output", "o", false, "Write iso types to specific file")
 
 	isoMap = make(map[string]string)
-	supportedIsoTypes = make(map[string]bool)
-	supportedIsoTypes["org.jpos.iso.IFA_BITMAP"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLLNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLCHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_BINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_NUMERIC"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_AMOUNT"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLLCHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IF_CHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFA_LLLLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_BITMAP"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_LLNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_LLCHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_BINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_NUMERIC"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_AMOUNT"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_CHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IF_ECHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_LLLCHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_LLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_LLLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFE_LLLLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_BITMAP"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLLNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLCHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_BINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_NUMERIC"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_AMOUNT"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_CHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLLCHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLLLBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLHECHAR"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLHBINARY"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLHNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_FLLNUM"] = true
-	supportedIsoTypes["org.jpos.iso.IFB_LLHCHAR"] = true
+	supportedIsoTypes = make(map[string]CodecInfo)
 
+	// ASCII
+	supportedIsoTypes["org.jpos.iso.IFA_BITMAP"] = CodecInfo{"StringA", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFA_BINARY"] = CodecInfo{"StringA", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IF_CHAR"] = CodecInfo{"StringA", "RightPadding", " ", 1}
+	supportedIsoTypes["org.jpos.iso.IFA_LLCHAR"] = CodecInfo{"LLAStringA", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFA_LLBINARY"] = CodecInfo{"LLAStringA", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFA_LLLCHAR"] = CodecInfo{"LLLAStringA", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFA_LLLBINARY"] = CodecInfo{"LLLAStringA", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFA_NUMERIC"] = CodecInfo{"NumericA", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFA_LLNUM"] = CodecInfo{"LLANumericA", "NoPadding", "0", 1}
+	supportedIsoTypes["org.jpos.iso.IFA_LLLNUM"] = CodecInfo{"LLLANumericA", "NoPadding", "0", 1}
+	//todo: should be changed to Amout type
+	supportedIsoTypes["org.jpos.iso.IFA_AMOUNT"] = CodecInfo{"StringA", "NoPadding", "", 1}
+	// supportedIsoTypes["org.jpos.iso.IFA_LLLLBINARY"] = ""
+
+	// EBCDIC
+	supportedIsoTypes["org.jpos.iso.IFE_BITMAP"] = CodecInfo{"StringE", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFE_LLNUM"] = CodecInfo{"LLENumericE", "NoPadding", "0", 1}
+	supportedIsoTypes["org.jpos.iso.IFE_LLCHAR"] = CodecInfo{"LLEStringE", "NoPadding", " ", 1}
+	supportedIsoTypes["org.jpos.iso.IFE_BINARY"] = CodecInfo{"StringE", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFE_NUMERIC"] = CodecInfo{"NumericA", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFE_CHAR"] = CodecInfo{"StringE", "RightPadding", " ", 1}
+	supportedIsoTypes["org.jpos.iso.IF_ECHAR"] = CodecInfo{"StringE", "RightPadding", " ", 1}
+	supportedIsoTypes["org.jpos.iso.IFE_LLLCHAR"] = CodecInfo{"LLLAStringE", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFE_LLBINARY"] = CodecInfo{"LLEStringE", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFE_LLLBINARY"] = CodecInfo{"LLLEStringE", "NoPadding", "", 1}
+	// supportedIsoTypes["org.jpos.iso.IFE_AMOUNT"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFE_LLLLBINARY"] = ""
+
+	// BINARY
+	supportedIsoTypes["org.jpos.iso.IFB_BITMAP"] = CodecInfo{"StringB", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFB_LLNUM"] = CodecInfo{"LLBNumericB", "NoPadding", "00", 1}
+	supportedIsoTypes["org.jpos.iso.IFB_LLLNUM"] = CodecInfo{"LLLBNumericB", "NoPadding", "00", 1}
+	supportedIsoTypes["org.jpos.iso.IFB_LLCHAR"] = CodecInfo{"LLBStringB", "NoPadding", "20", 1}
+	supportedIsoTypes["org.jpos.iso.IFB_BINARY"] = CodecInfo{"StringB", "NoPadding", "", 2}
+	supportedIsoTypes["org.jpos.iso.IFB_NUMERIC"] = CodecInfo{"NumericB", "NoPadding", "", 1}
+	supportedIsoTypes["org.jpos.iso.IFB_CHAR"] = CodecInfo{"StringB", "RightPadding", "20", 1}
+	supportedIsoTypes["org.jpos.iso.IFB_LLLCHAR"] = CodecInfo{"LLLBStringB", "NoPadding", "20", 1}
+	supportedIsoTypes["org.jpos.iso.IFB_LLBINARY"] = CodecInfo{"LLBStringB", "NoPadding", "20", 2}
+	supportedIsoTypes["org.jpos.iso.IFB_LLLBINARY"] = CodecInfo{"LLLBStringB", "NoPadding", "20", 2}
+	// supportedIsoTypes["org.jpos.iso.IFB_AMOUNT"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_LLLLBINARY"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_LLHECHAR"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_LLHBINARY"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_LLHNUM"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_FLLNUM"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_LLHCHAR"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFA_FLLNUM"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFEB_LLNUM"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFA_FLLCHAR"] = ""
+	// supportedIsoTypes["org.jpos.iso.IFB_AMOUNT2003"] = ""
 }
 
 func checkFlags(cmd *cobra.Command, args []string) {
@@ -244,7 +177,7 @@ func importProtocol(cmd *cobra.Command, args []string) {
 	isoPackager.Name = args[0]
 	_ = xml.Unmarshal(b, &isoPackager)
 
-	fileName := fmt.Sprintf("iso8583/%s.go", strings.ToLower(isoPackager.Name))
+	fileName := fmt.Sprintf("iso8583/codec/%s.go", strings.ToLower(isoPackager.Name))
 	if _, err := os.Stat(fileName); err == nil {
 		if force {
 			log.Println(fmt.Sprintf("Iso spec %s already exists, it will be overwritten!", fileName))
@@ -315,7 +248,8 @@ func findIsoTypes(cmd *cobra.Command, args []string) {
 		for _, s := range isoMap {
 			s = strings.TrimRight(s, " ")
 			if scanTypesMissing {
-				if !supportedIsoTypes[s] {
+				_, found := supportedIsoTypes[s]
+				if !found {
 					noMissing++
 					_, err = f.WriteString(s)
 					_, err = f.WriteString("\r\n")
@@ -330,7 +264,8 @@ func findIsoTypes(cmd *cobra.Command, args []string) {
 		for _, s := range isoMap {
 			s = strings.TrimRight(s, " ")
 			if scanTypesMissing {
-				if !supportedIsoTypes[s] {
+				_, found := supportedIsoTypes[s]
+				if !found {
 					log.Println("missing", s)
 				}
 			} else {
@@ -339,3 +274,109 @@ func findIsoTypes(cmd *cobra.Command, args []string) {
 		}
 	}
 }
+
+// func (isoField *IsoField) String() string {
+// 	length, err := strconv.Atoi(isoField.Length)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 		return ""
+// 	}
+// 	id := fmt.Sprintf("DE%03s", isoField.Id)
+// 	if isoField.Class == "org.jpos.iso.IFA_BITMAP" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length*2, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLNUM" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoAscii", length, "IsoNumeric", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLLNUM" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoAscii", length, "IsoNumeric", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoAscii", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_BINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length*2, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_NUMERIC" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoNumeric", "IsoLeftPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_AMOUNT" {
+// 		// TODO: Amount field should be defined
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLLCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoAscii", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IF_CHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoAscii", length, "IsoText", "IsoRightPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLLBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFA_LLLLBINARY" {
+// 		//TODO: Should be revised, not sure about LLLL encoding!
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLA", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_BITMAP" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length*2, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_LLNUM" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLE", "IsoEbcdic", length, "IsoNumeric", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_LLCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLE", "IsoEbcdic", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_BINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length*2, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_NUMERIC" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoNumeric", "IsoLeftPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_AMOUNT" {
+// 		// TODO: Amount field should be defined
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_CHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IF_ECHAR" { //deprecated type use IFE_CHAR instead
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoEbcdic", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_LLLCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoEbcdic", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_LLBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_LLLBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFE_LLLLBINARY" {
+// 		//TODO: Should be revised, not sure about LLLL encoding!
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLE", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_BITMAP" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLNUM" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLLNUM" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoAscii", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_BINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_NUMERIC" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length/2, "IsoNumeric", "IsoLeftPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_AMOUNT" {
+// 		// TODO: Amount field should be defined
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoLeftPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_CHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoFixed", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLHCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLLCHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoAscii", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLLBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLLLBINARY" {
+// 		//TODO: Should be revised, not sure about LLLL encoding!
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLHECHAR" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoEbcdic", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLHBINARY" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoText", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_LLHNUM" {
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", length, "IsoNumeric", "IsoNoPad")
+// 	} else if isoField.Class == "org.jpos.iso.IFB_FLLNUM" {
+// 		//TODO: Right pad with F, padding should be defined
+// 		l := length
+// 		if length%2 != 0 {
+// 			l = l/2 + 1
+// 		}
+// 		return fmt.Sprintf("&IsoCodec{\"%s\", \"%s\", %s, %s, %d, %s, %s}", id, isoField.Name, "IsoLLB", "IsoBinary", l, "IsoNumeric", "IsoNoPad")
+// 	} else {
+// 		log.Fatalf("IsoField type %s not supported!", isoField.Class)
+// 		return ""
+// 	}
+// }
