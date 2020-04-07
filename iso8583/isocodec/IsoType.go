@@ -53,7 +53,17 @@ func (isoType *IsoType) BeforeEncoding(s string) error {
 }
 
 func (isoType *IsoType) BeforeDecoding(b []byte) error {
-	panic("Implement me")
+	err := isoType.Len.BeforeDecoding(b)
+	if err != nil {
+		return err
+	}
+
+	err = isoType.Value.BeforeDecoding(b)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (isoType *IsoType) Pad(s string) (string, error) {
