@@ -27,7 +27,7 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 		return "", 0, err
 	}
 
-	if len(b) < sizeOfLen + decLen {
+	if len(b) < sizeOfLen+decLen {
 		return "", 0, NotEnoughData
 	}
 
@@ -38,8 +38,18 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 	return decValue, sizeOfLen + decLen, nil
 }
 
-func (isoType *IsoType) BeforeEncoding(string) error {
-	panic("implement me")
+func (isoType *IsoType) BeforeEncoding(s string) error {
+	err := isoType.Len.BeforeEncoding(s)
+	if err != nil {
+		return err
+	}
+
+	err = isoType.Value.BeforeEncoding(s)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (isoType *IsoType) BeforeDecoding(b []byte) error {
