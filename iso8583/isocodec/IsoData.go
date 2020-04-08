@@ -3,6 +3,7 @@ package isocodec
 import (
 	"../../utils"
 	"encoding/hex"
+	"fmt"
 	"math/big"
 	"strings"
 )
@@ -56,7 +57,7 @@ func (isoData *IsoData) BeforeEncoding(s string) error {
 		return InvalidLength
 	}
 
-	if isoData.Min == isoData.Max && isoData.Padding == IsoNoPad  && len(s) != isoData.Max {
+	if isoData.Min == isoData.Max && isoData.Padding == IsoNoPad && len(s) != isoData.Max {
 		return InvalidLength
 	}
 
@@ -111,4 +112,38 @@ func (isoData *IsoData) PadString() string {
 		}
 	}
 	return p
+}
+
+func (isoData *IsoData) AfterEncoding(b []byte) ([]byte, error) {
+	if isoData.Padding == IsoRightPadF {
+		if isoData.Encoding == IsoBinary {
+			if len(b)%2 != 0 {
+				return append(b, []byte{0xF}...), nil
+			}
+		} else if isoData.Encoding == IsoAscii {
+			return []byte(utils.RightPad2Len(string(b), " ", isoData.Max)), nil
+		}
+	}
+	return b, nil
+}
+
+func (isoData *IsoData) AfterDecoding(s string) error {
+	panic("Implement me")
+}
+
+func (isoData *IsoData) String() string {
+	return fmt.Sprintf(
+`&IsoData{
+			Encoding:%s, 
+			Min: %d,
+			Max: %d,
+			ContentType: %s,
+			Padding: %s,
+		}`,
+		isoData.Encoding,
+		isoData.Min,
+		isoData.Max,
+		isoData.ContentType,
+		isoData.Padding,
+	)
 }

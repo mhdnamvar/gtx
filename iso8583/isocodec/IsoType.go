@@ -2,6 +2,7 @@ package isocodec
 
 import (
 	"../../utils"
+	"fmt"
 )
 
 type IsoType struct {
@@ -109,4 +110,28 @@ func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	} else {
 		return 0, isoType.Len.Max, NotSupported
 	}
+}
+
+func (isoType *IsoType) AfterEncoding(b []byte) ([]byte, error) {
+	return isoType.Value.AfterEncoding(b)
+
+}
+
+func (isoType *IsoType) AfterDecoding(string) error {
+	panic("implement me")
+}
+
+func (isoType *IsoType) String() string {
+	if isoType.Len != nil {
+		return fmt.Sprintf(
+`&IsoType{
+		Len: %v, 
+		Value: %v,
+	}`, isoType.Len, isoType.Value)
+	}
+	return fmt.Sprintf(
+`&IsoType{
+		Len: nil, 
+		Value: %v,
+	}`, isoType.Value)
 }

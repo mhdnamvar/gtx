@@ -1,16 +1,18 @@
 package isocodec
 
 type IsoCodec interface {
-	Encode(string) ([]byte, error)
-	Decode([]byte) (string, int, error)
 	BeforeEncoding(string) error
+	Encode(string) ([]byte, error)
+	AfterEncoding([]byte) ([]byte, error)
 	BeforeDecoding([]byte) error
+	Decode([]byte) (string, int, error)
+	AfterDecoding(string) error
 	Pad(s string) (string, error)
 	PadString() string
 	Size() int
 }
 
-type IsoSpec [][]*IsoCodec
+type IsoSpec []*IsoType
 type IsoEncoding int
 type IsoPadding int
 type IsoContentType int
@@ -24,24 +26,63 @@ const (
 	IsoNoPad    IsoPadding = 0
 	IsoLeftPad  IsoPadding = 1
 	IsoRightPad IsoPadding = 2
+	IsoLeftPadF IsoPadding = 3
+	IsoRightPadF IsoPadding = 4
 
 	IsoString    IsoContentType = 0
 	IsoNumeric   IsoContentType = 1
-	IsoHexString IsoContentType = 3
-	IsoAmount    IsoContentType = 4
-	IsoBitmap    IsoContentType = 5
-	IsoTrack2    IsoContentType = 6
-	IsoTrack3    IsoContentType = 7
+	IsoHexString IsoContentType = 2
+	IsoAmount    IsoContentType = 3
+	IsoBitmap    IsoContentType = 4
+	IsoTrack2    IsoContentType = 5
+	IsoTrack3    IsoContentType = 6
 )
 
-var (
-	StringA = &IsoType{
-		nil,
-		&IsoData{IsoAscii, 0, 4, IsoString, IsoNoPad},
+func (isoEncoding IsoEncoding) String() string {
+	switch isoEncoding {
+	case 0:
+		return "IsoAscii"
+	case 1:
+		return "IsoEbcdic"
+	case 2:
+		return "IsoBinary"
 	}
+	return "IsoEncoding not defined"
+}
 
-	LLAStringA = &IsoType{
-		&IsoData{IsoAscii, 0, 0, IsoString, IsoNoPad},
-		&IsoData{IsoAscii, 0, 0, IsoString, IsoNoPad},
+func (isoPadding IsoPadding) String() string {
+	switch isoPadding {
+	case 0:
+		return "IsoNoPad"
+	case 1:
+		return "IsoLeftPad"
+	case 2:
+		return "IsoRightPad"
+	case 3:
+		return "IsoLeftPadF"
+	case 4:
+		return "IsoRightPadF"
 	}
-)
+	return "IsoPadding not defined"
+}
+
+func (isoContentType IsoContentType) String() string {
+	switch isoContentType {
+	case 0:
+		return "IsoString"
+	case 1:
+		return "IsoNumeric"
+	case 2:
+		return "IsoHexString"
+	case 3:
+		return "IsoAmount"
+	case 4:
+		return "IsoBitmap"
+	case 5:
+		return "IsoTrack2"
+	case 6:
+		return "IsoTrack3"
+	}
+	//log.Printf("-------------%v\n", isoContentType)
+	return "IsoContentType not defined"
+}
