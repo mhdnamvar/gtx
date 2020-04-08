@@ -1,12 +1,11 @@
 package isocodec
 
-var Tsp1Binary = IsoSpec{
+var Ascii87 = IsoSpec{
 	
 	/* DE000 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -16,9 +15,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE001 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoBitmap,
@@ -36,19 +34,18 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 19,
 			ContentType: IsoNumeric,
-			Padding: IsoRightPadF,
+			Padding: IsoNoPad,
 		},
 	},
 	
 	/* DE003 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
@@ -58,9 +55,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE004 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -70,9 +66,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE005 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -82,9 +77,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE006 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -94,9 +88,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE007 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -106,9 +99,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE008 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoNumeric,
@@ -118,9 +110,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE009 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoNumeric,
@@ -130,9 +121,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE010 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoNumeric,
@@ -142,9 +132,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE011 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
@@ -154,9 +143,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE012 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
@@ -166,9 +154,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE013 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -178,9 +165,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE014 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -190,9 +176,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE015 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -202,9 +187,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE016 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -214,9 +198,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE017 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -226,9 +209,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE018 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -238,9 +220,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE019 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -250,9 +231,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE020 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -262,9 +242,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE021 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -274,9 +253,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE022 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -286,9 +264,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE023 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -298,9 +275,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE024 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -310,9 +286,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE025 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
@@ -322,9 +297,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE026 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
@@ -334,9 +308,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE027 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoNumeric,
@@ -347,14 +320,14 @@ var Tsp1Binary = IsoSpec{
 	/* DE028 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -365,14 +338,14 @@ var Tsp1Binary = IsoSpec{
 	/* DE029 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -383,14 +356,14 @@ var Tsp1Binary = IsoSpec{
 	/* DE030 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -401,14 +374,14 @@ var Tsp1Binary = IsoSpec{
 	/* DE031 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -426,7 +399,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -444,7 +417,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -462,7 +435,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 28,
 			ContentType: IsoString,
@@ -480,11 +453,11 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 37,
 			ContentType: IsoNumeric,
-			Padding: IsoRightPadF,
+			Padding: IsoNoPad,
 		},
 	},
 	
@@ -498,7 +471,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 104,
 			ContentType: IsoString,
@@ -508,7 +481,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE037 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 12,
@@ -520,7 +492,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE038 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 6,
@@ -532,7 +503,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE039 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 2,
@@ -544,7 +514,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE040 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 3,
@@ -556,7 +525,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE041 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 8,
@@ -568,7 +536,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE042 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 15,
@@ -580,7 +547,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE043 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 40,
@@ -600,7 +566,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 25,
 			ContentType: IsoString,
@@ -618,7 +584,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 76,
 			ContentType: IsoString,
@@ -636,7 +602,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -654,10 +620,10 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
-			ContentType: IsoHexString,
+			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
 	},
@@ -672,7 +638,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -682,19 +648,17 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE049 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
-			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			ContentType: IsoString,
+			Padding: IsoRightPad,
 		},
 	},
 	
 	/* DE050 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 3,
@@ -706,7 +670,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE051 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 3,
@@ -718,9 +681,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE052 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoHexString,
@@ -730,9 +692,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE053 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
@@ -750,7 +711,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 120,
 			ContentType: IsoString,
@@ -768,10 +729,10 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
-			ContentType: IsoHexString,
+			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
 	},
@@ -786,7 +747,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -804,7 +765,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -822,7 +783,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -840,7 +801,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -858,7 +819,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -876,7 +837,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -894,7 +855,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -912,7 +873,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -922,9 +883,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE064 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoHexString,
@@ -934,9 +894,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE065 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoHexString,
@@ -946,9 +905,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE066 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoNumeric,
@@ -958,9 +916,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE067 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
@@ -970,9 +927,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE068 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -982,9 +938,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE069 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -994,9 +949,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE070 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
@@ -1006,9 +960,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE071 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -1018,9 +971,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE072 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
@@ -1030,9 +982,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE073 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
@@ -1042,9 +993,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE074 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1054,9 +1004,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE075 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1066,9 +1015,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE076 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1078,9 +1026,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE077 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1090,9 +1037,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE078 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1102,9 +1048,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE079 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1114,9 +1059,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE080 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1126,9 +1070,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE081 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
@@ -1138,9 +1081,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE082 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -1150,9 +1092,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE083 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -1162,9 +1103,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE084 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -1174,9 +1114,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE085 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
@@ -1186,9 +1125,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE086 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
@@ -1198,9 +1136,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE087 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
@@ -1210,9 +1147,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE088 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
@@ -1222,9 +1158,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE089 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
@@ -1234,9 +1169,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE090 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 42,
 			Max: 42,
 			ContentType: IsoNumeric,
@@ -1246,7 +1180,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE091 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 1,
@@ -1258,7 +1191,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE092 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 2,
@@ -1270,7 +1202,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE093 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 6,
@@ -1282,7 +1213,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE094 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 7,
@@ -1294,7 +1224,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE095 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 42,
@@ -1306,11 +1235,10 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE096 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 8,
-			Max: 8,
+			Encoding:IsoAscii, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoHexString,
 			Padding: IsoNoPad,
 		},
@@ -1319,14 +1247,14 @@ var Tsp1Binary = IsoSpec{
 	/* DE097 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 17,
 			Max: 17,
 			ContentType: IsoNumeric,
@@ -1336,7 +1264,6 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE098 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
 			Encoding:IsoAscii, 
 			Min: 25,
@@ -1356,7 +1283,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -1374,7 +1301,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -1392,7 +1319,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 17,
 			ContentType: IsoString,
@@ -1410,9 +1337,9 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
-			Max: 28,
+			Max: 99,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
@@ -1428,9 +1355,9 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
-			Max: 28,
+			Max: 99,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
@@ -1440,15 +1367,15 @@ var Tsp1Binary = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding:IsoBinary, 
-			Min: 2,
+			Min: 0,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
-			Max: 100,
+			Max: 99,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
@@ -1464,7 +1391,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1482,7 +1409,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1500,7 +1427,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1518,7 +1445,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1536,7 +1463,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1554,7 +1481,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1572,7 +1499,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1590,7 +1517,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1608,7 +1535,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1626,7 +1553,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1644,7 +1571,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1662,7 +1589,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1680,7 +1607,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1698,7 +1625,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1716,7 +1643,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1734,7 +1661,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1752,7 +1679,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1770,7 +1697,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1788,7 +1715,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1806,7 +1733,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1824,7 +1751,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1842,7 +1769,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1860,7 +1787,7 @@ var Tsp1Binary = IsoSpec{
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1870,9 +1797,8 @@ var Tsp1Binary = IsoSpec{
 	
 	/* DE128 */
 	 &IsoType{
-		Len: nil, 
 		Value: &IsoData{
-			Encoding:IsoBinary, 
+			Encoding:IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoHexString,
