@@ -134,7 +134,7 @@ func (isoData *IsoData) AfterDecoding(s string) error {
 func (isoData *IsoData) String() string {
 	return fmt.Sprintf(
 `&IsoData{
-			Encoding:%s, 
+			Encoding: %s, 
 			Min: %d,
 			Max: %d,
 			ContentType: %s,

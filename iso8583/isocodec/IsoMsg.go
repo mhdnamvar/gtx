@@ -1,4 +1,4 @@
-package codec
+package isocodec
 
 import (
 	"bytes"
@@ -10,12 +10,12 @@ import (
 const MaxField = 128
 
 type IsoMsg struct {
-	bitmap *IsoBitmap
+	bitmap *Bitmap
 	fields map[int]string
 }
 
 func NewIsoMsg() *IsoMsg {
-	return &IsoMsg{&IsoBitmap{}, make(map[int]string, MaxField)}
+	return &IsoMsg{&Bitmap{}, make(map[int]string, MaxField)}
 }
 
 func (isoMsg IsoMsg) String() string {
@@ -77,16 +77,16 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 
 func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 	offset := 0
-	s, i, err := isoSpec[0].Decode(b)
+	s, mtiLen, err := isoSpec[0].Decode(b)
 	if err != nil {
 		log.Fatal("Error in decoding DE000")
 		return err
 	}
 	isoMsg.Set(0, s)
-	log.Printf("DE%03d=%s", 0, s)
+	//log.Printf("DE%03d=%s", 0, s)
 
-	offset = i
-	s, j, err := isoSpec[1].Decode(b[offset:])
+	offset = mtiLen
+	s, bitmapLen, err := isoSpec[1].Decode(b[offset:])
 	if err != nil {
 		log.Fatal("Error in decoding DE001")
 		return err
@@ -97,19 +97,19 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 		log.Fatalf("Error in parsing bitmap: %v", err)
 		return err
 	}
-	log.Printf("DE%03d=%s", 1, s)
+	//log.Printf("DE%03d=%s", 1, s)
 
-	offset = isoSpec[0].LenSize() + i + isoSpec[1].LenSize() + j
+	offset = mtiLen + bitmapLen
 	for _, f := range isoMsg.bitmap.Array() {
 		if f > 1 {
-			s, n, err := isoSpec[f].Decode(b[offset:])
+			s, dataLen, err := isoSpec[f].Decode(b[offset:])
 			if err != nil {
-				log.Fatalf("Error in decoding DE%03d", f)
+				log.Fatalf("DE%03d, Error: %v", f, err)
 				return err
 			}
-			log.Printf("DE%03d=%s", f, s)
+			//log.Printf("DE%03d=%s", f, s)
 			isoMsg.Set(f, s)
-			offset = offset + isoSpec[f].LenSize() + n
+			offset = offset + dataLen
 		}
 	}
 	return nil

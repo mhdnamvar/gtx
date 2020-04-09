@@ -5,18 +5,18 @@ var Ascii87 = IsoSpec{
 	/* DE000 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE001 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoBitmap,
@@ -27,14 +27,14 @@ var Ascii87 = IsoSpec{
 	/* DE002 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 1,
-			Max: 1,
+			Encoding: IsoAscii, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 19,
 			ContentType: IsoNumeric,
@@ -45,289 +45,289 @@ var Ascii87 = IsoSpec{
 	/* DE003 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE004 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE005 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE006 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE007 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE008 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE009 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE010 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE011 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE012 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE013 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE014 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE015 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE016 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE017 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE018 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE019 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE020 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE021 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE022 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE023 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE024 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE025 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE026 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE027 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE028 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -338,14 +338,14 @@ var Ascii87 = IsoSpec{
 	/* DE029 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -356,14 +356,14 @@ var Ascii87 = IsoSpec{
 	/* DE030 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -374,14 +374,14 @@ var Ascii87 = IsoSpec{
 	/* DE031 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 9,
 			Max: 9,
 			ContentType: IsoNumeric,
@@ -392,14 +392,14 @@ var Ascii87 = IsoSpec{
 	/* DE032 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 1,
-			Max: 1,
+			Encoding: IsoAscii, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -410,14 +410,14 @@ var Ascii87 = IsoSpec{
 	/* DE033 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 1,
-			Max: 1,
+			Encoding: IsoAscii, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -428,14 +428,14 @@ var Ascii87 = IsoSpec{
 	/* DE034 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 28,
 			ContentType: IsoString,
@@ -446,14 +446,14 @@ var Ascii87 = IsoSpec{
 	/* DE035 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 1,
-			Max: 1,
+			Encoding: IsoAscii, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 37,
 			ContentType: IsoNumeric,
@@ -464,14 +464,14 @@ var Ascii87 = IsoSpec{
 	/* DE036 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 104,
 			ContentType: IsoString,
@@ -482,7 +482,7 @@ var Ascii87 = IsoSpec{
 	/* DE037 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoString,
@@ -493,7 +493,7 @@ var Ascii87 = IsoSpec{
 	/* DE038 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoString,
@@ -504,7 +504,7 @@ var Ascii87 = IsoSpec{
 	/* DE039 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoString,
@@ -515,7 +515,7 @@ var Ascii87 = IsoSpec{
 	/* DE040 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoString,
@@ -526,7 +526,7 @@ var Ascii87 = IsoSpec{
 	/* DE041 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoString,
@@ -537,7 +537,7 @@ var Ascii87 = IsoSpec{
 	/* DE042 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 15,
 			Max: 15,
 			ContentType: IsoString,
@@ -548,7 +548,7 @@ var Ascii87 = IsoSpec{
 	/* DE043 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 40,
 			Max: 40,
 			ContentType: IsoString,
@@ -559,14 +559,14 @@ var Ascii87 = IsoSpec{
 	/* DE044 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 25,
 			ContentType: IsoString,
@@ -577,14 +577,14 @@ var Ascii87 = IsoSpec{
 	/* DE045 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 76,
 			ContentType: IsoString,
@@ -595,14 +595,14 @@ var Ascii87 = IsoSpec{
 	/* DE046 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -613,14 +613,14 @@ var Ascii87 = IsoSpec{
 	/* DE047 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -631,14 +631,14 @@ var Ascii87 = IsoSpec{
 	/* DE048 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -649,7 +649,7 @@ var Ascii87 = IsoSpec{
 	/* DE049 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoString,
@@ -660,7 +660,7 @@ var Ascii87 = IsoSpec{
 	/* DE050 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoString,
@@ -671,7 +671,7 @@ var Ascii87 = IsoSpec{
 	/* DE051 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoString,
@@ -682,7 +682,7 @@ var Ascii87 = IsoSpec{
 	/* DE052 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoHexString,
@@ -693,25 +693,25 @@ var Ascii87 = IsoSpec{
 	/* DE053 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE054 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 120,
 			ContentType: IsoString,
@@ -722,17 +722,17 @@ var Ascii87 = IsoSpec{
 	/* DE055 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoBinary, 
 			Min: 0,
 			Max: 999,
-			ContentType: IsoString,
+			ContentType: IsoHexString,
 			Padding: IsoNoPad,
 		},
 	},
@@ -740,14 +740,14 @@ var Ascii87 = IsoSpec{
 	/* DE056 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -758,14 +758,14 @@ var Ascii87 = IsoSpec{
 	/* DE057 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -776,14 +776,14 @@ var Ascii87 = IsoSpec{
 	/* DE058 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -794,14 +794,14 @@ var Ascii87 = IsoSpec{
 	/* DE059 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -812,14 +812,14 @@ var Ascii87 = IsoSpec{
 	/* DE060 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -830,14 +830,14 @@ var Ascii87 = IsoSpec{
 	/* DE061 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -848,14 +848,14 @@ var Ascii87 = IsoSpec{
 	/* DE062 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -866,14 +866,14 @@ var Ascii87 = IsoSpec{
 	/* DE063 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -884,7 +884,7 @@ var Ascii87 = IsoSpec{
 	/* DE064 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoHexString,
@@ -895,7 +895,7 @@ var Ascii87 = IsoSpec{
 	/* DE065 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoHexString,
@@ -906,282 +906,282 @@ var Ascii87 = IsoSpec{
 	/* DE066 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE067 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE068 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE069 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE070 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE071 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE072 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 4,
 			Max: 4,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE073 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE074 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE075 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE076 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE077 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE078 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE079 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE080 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE081 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 10,
 			Max: 10,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE082 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE083 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE084 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE085 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 12,
 			Max: 12,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE086 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE087 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE088 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE089 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE090 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 42,
 			Max: 42,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		},
 	},
 	
 	/* DE091 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
@@ -1192,7 +1192,7 @@ var Ascii87 = IsoSpec{
 	/* DE092 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 2,
 			Max: 2,
 			ContentType: IsoString,
@@ -1203,7 +1203,7 @@ var Ascii87 = IsoSpec{
 	/* DE093 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 6,
 			Max: 6,
 			ContentType: IsoString,
@@ -1214,7 +1214,7 @@ var Ascii87 = IsoSpec{
 	/* DE094 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 7,
 			Max: 7,
 			ContentType: IsoString,
@@ -1225,7 +1225,7 @@ var Ascii87 = IsoSpec{
 	/* DE095 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 42,
 			Max: 42,
 			ContentType: IsoString,
@@ -1236,7 +1236,7 @@ var Ascii87 = IsoSpec{
 	/* DE096 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 16,
 			Max: 16,
 			ContentType: IsoHexString,
@@ -1247,14 +1247,14 @@ var Ascii87 = IsoSpec{
 	/* DE097 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 1,
 			Max: 1,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 17,
 			Max: 17,
 			ContentType: IsoNumeric,
@@ -1265,7 +1265,7 @@ var Ascii87 = IsoSpec{
 	/* DE098 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 25,
 			Max: 25,
 			ContentType: IsoString,
@@ -1276,14 +1276,14 @@ var Ascii87 = IsoSpec{
 	/* DE099 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 1,
-			Max: 1,
+			Encoding: IsoAscii, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -1294,14 +1294,14 @@ var Ascii87 = IsoSpec{
 	/* DE100 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 1,
-			Max: 1,
+			Encoding: IsoAscii, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
+			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
@@ -1312,14 +1312,14 @@ var Ascii87 = IsoSpec{
 	/* DE101 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 17,
 			ContentType: IsoString,
@@ -1330,14 +1330,14 @@ var Ascii87 = IsoSpec{
 	/* DE102 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 99,
 			ContentType: IsoString,
@@ -1348,14 +1348,14 @@ var Ascii87 = IsoSpec{
 	/* DE103 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 99,
 			ContentType: IsoString,
@@ -1366,14 +1366,14 @@ var Ascii87 = IsoSpec{
 	/* DE104 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 0,
+			Encoding: IsoAscii, 
+			Min: 2,
 			Max: 2,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 99,
 			ContentType: IsoString,
@@ -1384,14 +1384,14 @@ var Ascii87 = IsoSpec{
 	/* DE105 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1402,14 +1402,14 @@ var Ascii87 = IsoSpec{
 	/* DE106 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1420,14 +1420,14 @@ var Ascii87 = IsoSpec{
 	/* DE107 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1438,14 +1438,14 @@ var Ascii87 = IsoSpec{
 	/* DE108 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1456,14 +1456,14 @@ var Ascii87 = IsoSpec{
 	/* DE109 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1474,14 +1474,14 @@ var Ascii87 = IsoSpec{
 	/* DE110 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1492,14 +1492,14 @@ var Ascii87 = IsoSpec{
 	/* DE111 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1510,14 +1510,14 @@ var Ascii87 = IsoSpec{
 	/* DE112 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1528,14 +1528,14 @@ var Ascii87 = IsoSpec{
 	/* DE113 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1546,14 +1546,14 @@ var Ascii87 = IsoSpec{
 	/* DE114 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1564,14 +1564,14 @@ var Ascii87 = IsoSpec{
 	/* DE115 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1582,14 +1582,14 @@ var Ascii87 = IsoSpec{
 	/* DE116 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1600,14 +1600,14 @@ var Ascii87 = IsoSpec{
 	/* DE117 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1618,14 +1618,14 @@ var Ascii87 = IsoSpec{
 	/* DE118 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1636,14 +1636,14 @@ var Ascii87 = IsoSpec{
 	/* DE119 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1654,14 +1654,14 @@ var Ascii87 = IsoSpec{
 	/* DE120 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1672,14 +1672,14 @@ var Ascii87 = IsoSpec{
 	/* DE121 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1690,14 +1690,14 @@ var Ascii87 = IsoSpec{
 	/* DE122 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1708,14 +1708,14 @@ var Ascii87 = IsoSpec{
 	/* DE123 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1726,14 +1726,14 @@ var Ascii87 = IsoSpec{
 	/* DE124 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1744,14 +1744,14 @@ var Ascii87 = IsoSpec{
 	/* DE125 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1762,14 +1762,14 @@ var Ascii87 = IsoSpec{
 	/* DE126 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1780,14 +1780,14 @@ var Ascii87 = IsoSpec{
 	/* DE127 */
 	 &IsoType{
 		Len: &IsoData{
-			Encoding:IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Encoding: IsoAscii, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
 			ContentType: IsoString,
@@ -1798,7 +1798,7 @@ var Ascii87 = IsoSpec{
 	/* DE128 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding:IsoAscii, 
+			Encoding: IsoAscii, 
 			Min: 8,
 			Max: 8,
 			ContentType: IsoHexString,

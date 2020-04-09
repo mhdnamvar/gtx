@@ -3,6 +3,7 @@ package isocodec
 import (
 	"../../utils"
 	"fmt"
+	"strconv"
 )
 
 type IsoType struct {
@@ -11,32 +12,43 @@ type IsoType struct {
 }
 
 func (isoType *IsoType) Encode(s string) ([]byte, error) {
-	encLen, err := isoType.Len.Encode(s[:isoType.Len.Size()])
+	var encLen []byte
+	if isoType.Len != nil {
+		dataLen := len(s)
+		if isoType.Value.ContentType == IsoHexString ||
+			isoType.Value.ContentType == IsoBitmap {
+			dataLen /= 2
+		}
+		l, err := isoType.Len.Encode(strconv.Itoa(dataLen))
+		if err != nil {
+			return nil, err
+		}
+		encLen = l
+	}
+
+	encValue, err := isoType.Value.Encode(s)
 	if err != nil {
 		return nil, err
 	}
-	encValue, err := isoType.Value.Encode(s[isoType.Len.Size():])
-	if err != nil {
-		return nil, err
-	}
+
 	return append(encLen, encValue...), nil
 }
 
 func (isoType *IsoType) Decode(b []byte) (string, int, error) {
-	decLen, sizeOfLen, err := isoType.DecodeLen(b)
+	lenSize, decLen, err := isoType.DecodeLen(b)
 	if err != nil {
 		return "", 0, err
 	}
 
-	if len(b) < sizeOfLen+decLen {
+	if len(b) < lenSize + decLen {
 		return "", 0, NotEnoughData
 	}
 
-	decValue, _, err := isoType.Value.Decode(b[sizeOfLen:decLen])
+	decValue, _, err := isoType.Value.Decode(b[lenSize:lenSize+decLen])
 	if err != nil {
 		return "", 0, err
 	}
-	return decValue, sizeOfLen + decLen, nil
+	return decValue, lenSize + decLen, nil
 }
 
 func (isoType *IsoType) BeforeEncoding(s string) error {
@@ -87,12 +99,20 @@ func (isoType *IsoType) PadString() string {
 }
 
 func (isoType *IsoType) Size() int {
-	return 0
+	size := isoType.Value.Max
+	if isoType.Value.ContentType == IsoBitmap || isoType.Value.ContentType == IsoHexString {
+		size *=2
+	}
+	return size
 }
 
 func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	if isoType.Len == nil {
-		return 0, 0, nil
+		size := isoType.Size()
+		if len(b) < size &&	isoType.Value.ContentType != IsoBitmap{
+			return 0, size, NotEnoughData
+		}
+		return 0, size, nil
 	}
 
 	if len(b) < isoType.Len.Max {
@@ -100,15 +120,15 @@ func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	}
 	if isoType.Len.Encoding == IsoAscii {
 		i, err := utils.Btoi(b[:isoType.Len.Max])
-		return i, isoType.Len.Max, err
+		return isoType.Len.Max, i,  err
 	} else if isoType.Len.Encoding == IsoEbcdic {
 		i, err := utils.Btoi(utils.EbcdicToAsciiBytes(b[:isoType.Len.Max]))
-		return i, isoType.Len.Max, err
+		return isoType.Len.Max, i,  err
 	} else if isoType.Len.Encoding == IsoBinary {
 		i := utils.BcdToInt(b[:isoType.Len.Max])
-		return int(i), isoType.Len.Max, nil
+		return isoType.Len.Max, int(i), nil
 	} else {
-		return 0, isoType.Len.Max, NotSupported
+		return isoType.Len.Max, 0, NotSupported
 	}
 }
 
@@ -131,7 +151,6 @@ func (isoType *IsoType) String() string {
 	}
 	return fmt.Sprintf(
 `&IsoType{
-		Len: nil, 
 		Value: %v,
 	}`, isoType.Value)
 }
