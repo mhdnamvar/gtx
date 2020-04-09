@@ -49,7 +49,7 @@ func (isoMsg *IsoMsg) Get(i int) (string, error) {
 func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 	mti, err := isoSpec[0].Encode(isoMsg.fields[0])
 	if err != nil {
-		log.Fatal("Error in encoding DE000")
+		log.Fatal("Error in encoding DE000, ", err)
 		return nil, err
 	}
 

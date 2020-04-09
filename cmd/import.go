@@ -502,7 +502,7 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 				Min:         1,
 				Max:         1,
 				ContentType: IsoNumeric,
-				Padding:     IsoNoPad,
+				Padding:     IsoLeftPad,
 			},
 			Value: &IsoData{
 				Encoding:    IsoBinary,
@@ -533,13 +533,13 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		isoType = &IsoType{
 			Len: &IsoData{
 				Encoding:    IsoBinary,
-				Min:         2,
-				Max:         2,
+				Min:         1,
+				Max:         1,
 				ContentType: IsoNumeric,
 				Padding:     IsoLeftPad,
 			},
 			Value: &IsoData{
-				Encoding:    IsoBinary,
+				Encoding:    IsoAscii,
 				Min:         0,
 				Max:         length,
 				ContentType: IsoString,
@@ -558,14 +558,18 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 			},
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_NUMERIC") {
+		l := length/2
+		if length%2 != 0 {
+			l += 1
+		}
 		isoType = &IsoType{
 			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoBinary,
-				Min:         length,
-				Max:         length,
+				Min:         l,
+				Max:         l,
 				ContentType: IsoNumeric,
-				Padding:     IsoNoPad,
+				Padding:     IsoLeftPad,
 			},
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_CHAR") {
@@ -589,7 +593,7 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 				Padding:     IsoLeftPad,
 			},
 			Value: &IsoData{
-				Encoding:    IsoBinary,
+				Encoding:    IsoAscii,
 				Min:         0,
 				Max:         length,
 				ContentType: IsoString,

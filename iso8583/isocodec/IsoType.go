@@ -134,7 +134,6 @@ func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 
 func (isoType *IsoType) AfterEncoding(b []byte) ([]byte, error) {
 	return isoType.Value.AfterEncoding(b)
-
 }
 
 func (isoType *IsoType) AfterDecoding(string) error {

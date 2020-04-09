@@ -118,25 +118,6 @@ func BytesToBcd(b []byte) []byte {
 	return slice
 }
 
-func StrToBcdF(s string) []byte {
-	return BytesToBcdF([]byte(s))
-}
-
-func BytesToBcdF(b []byte) []byte {
-	if len(b)%2 != 0 {
-		b = append(b, []byte{0xF}...)
-	}
-	var slice = make([]byte, len(b)/2)
-	for i := 0; i < len(b); i++ {
-		step := 4
-		if (i & 1) == 1 {
-			step = 0
-		}
-		slice[i>>1] = slice[i>>1] | (b[i]-48)<<uint(step)
-	}
-	return slice
-}
-
 func Btoi(b []byte) (int, error) {
 	s := string(b)
 	n, err := strconv.Atoi(s)

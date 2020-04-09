@@ -4,6 +4,7 @@ import (
 	"../../utils"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"math/big"
 	"strings"
 )
@@ -25,11 +26,12 @@ func (isoData *IsoData) Encode(s string) ([]byte, error) {
 	if isoData.Encoding == IsoAscii {
 		return []byte(p), nil
 	} else if isoData.Encoding == IsoBinary {
-		if isoData.ContentType == IsoNumeric {
-			return utils.StrToBcd(p), nil
+		if len(p) %2!=0 {
+			p += "0"
 		}
 		bytes, err := hex.DecodeString(p)
 		if err != nil {
+			log.Printf("[%s], err[%v]", p, err)
 			return nil, InvalidData
 		}
 		return bytes, nil
@@ -81,6 +83,11 @@ func (isoData *IsoData) Pad(s string) (string, error) {
 		return utils.LeftPad2Len(s, isoData.PadString(), isoData.Size()), nil
 	} else if isoData.Padding == IsoRightPad {
 		return utils.RightPad2Len(s, isoData.PadString(), isoData.Size()), nil
+	} else if isoData.Padding == IsoRightPadF {
+		if len(s)%2 != 0 {
+			return utils.RightPad(s, "F", 1), nil
+		}
+		return s, nil
 	} else {
 		return s, nil
 	}
