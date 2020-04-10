@@ -7,7 +7,10 @@ import (
 	"log"
 )
 
-const MaxField = 128
+const (
+	MaxField = 128
+	Debug    = true
+)
 
 type IsoMsg struct {
 	bitmap *Bitmap
@@ -83,7 +86,9 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 		return err
 	}
 	isoMsg.Set(0, s)
-	log.Printf("DE%03d=%s", 0, s)
+	if Debug {
+		log.Printf("DE%03d=%s", 0, s)
+	}
 
 	offset = mtiLen
 	s, bitmapLen, err := isoSpec[1].Decode(b[offset:])
@@ -97,17 +102,20 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 		log.Fatalf("Error in parsing bitmap: [%s], %v", s, err)
 		return err
 	}
-	log.Printf("DE%03d=%s", 1, s)
-
+	if Debug {
+		log.Printf("DE%03d=%s", 1, s)
+	}
 	offset = mtiLen + bitmapLen
 	for _, f := range isoMsg.bitmap.Array() {
 		if f > 1 {
 			s, dataLen, err := isoSpec[f].Decode(b[offset:])
 			if err != nil {
-				log.Fatalf("DE%03d, Error: %v", f, err)
+				//log.Fatalf("DE%03d, Error: %v", f, err)
 				return err
 			}
-			log.Printf("DE%03d=%s", f, s)
+			if Debug {
+				log.Printf("DE%03d=%s", f, s)
+			}
 			isoMsg.Set(f, s)
 			offset = offset + dataLen
 		}

@@ -3,7 +3,6 @@ package isocodec
 import (
 	"../../utils"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -43,7 +42,6 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 	}
 
 	if len(b) < lenSize+decLen {
-		log.Printf("----error-------- %d, %d, %d", len(b), lenSize, decLen)
 		return "", 0, NotEnoughData
 	}
 
