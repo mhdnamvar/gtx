@@ -6,7 +6,7 @@ type IsoCodec interface {
 	AfterEncoding([]byte) ([]byte, error)
 	BeforeDecoding([]byte) error
 	Decode([]byte) (string, int, error)
-	AfterDecoding(string) error
+	AfterDecoding(string) (string, error)
 	Pad(s string) (string, error)
 	PadString() string
 	Size() int

@@ -3,7 +3,9 @@ package isocodec
 import (
 	"../../utils"
 	"fmt"
+	"log"
 	"strconv"
+	"strings"
 )
 
 type IsoType struct {
@@ -40,15 +42,24 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 		return "", 0, err
 	}
 
-	if len(b) < lenSize + decLen {
+	if len(b) < lenSize+decLen {
+		log.Printf("----error-------- %d, %d, %d", len(b), lenSize, decLen)
 		return "", 0, NotEnoughData
 	}
 
-	decValue, _, err := isoType.Value.Decode(b[lenSize:lenSize+decLen])
+	decValue, _, err := isoType.Value.Decode(b[lenSize : lenSize+decLen])
 	if err != nil {
 		return "", 0, err
 	}
+
 	return decValue, lenSize + decLen, nil
+
+	//afterDecoding, err := isoType.AfterDecoding(decValue)
+	//if err != nil {
+	//	return "", 0, err
+	//}
+	//return afterDecoding, lenSize + decLen, nil
+
 }
 
 func (isoType *IsoType) BeforeEncoding(s string) error {
@@ -100,8 +111,10 @@ func (isoType *IsoType) PadString() string {
 
 func (isoType *IsoType) Size() int {
 	size := isoType.Value.Max
-	if isoType.Value.ContentType == IsoBitmap || isoType.Value.ContentType == IsoHexString {
-		size *=2
+	if isoType.Value.Encoding != IsoBinary {
+		if isoType.Value.ContentType == IsoBitmap || isoType.Value.ContentType == IsoHexString {
+			size *= 2
+		}
 	}
 	return size
 }
@@ -126,6 +139,14 @@ func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 		return isoType.Len.Max, i,  err
 	} else if isoType.Len.Encoding == IsoBinary {
 		i := utils.BcdToInt(b[:isoType.Len.Max])
+		if isoType.Value.ContentType == IsoNumeric || isoType.Value.Padding == IsoRightPadF{
+			if i%2 != 0 {
+				i+=1
+			}
+		}
+		if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString{
+			i /= 2
+		}
 		return isoType.Len.Max, int(i), nil
 	} else {
 		return isoType.Len.Max, 0, NotSupported
@@ -136,8 +157,13 @@ func (isoType *IsoType) AfterEncoding(b []byte) ([]byte, error) {
 	return isoType.Value.AfterEncoding(b)
 }
 
-func (isoType *IsoType) AfterDecoding(string) error {
-	panic("implement me")
+func (isoType *IsoType) AfterDecoding(decValue string) (string, error) {
+	if isoType.Value.Padding == IsoRightPadF {
+		if strings.EqualFold(decValue[len(decValue)-1:], "F") {
+			decValue = decValue[:len(decValue)-1]
+		}
+	}
+	return decValue, nil
 }
 
 func (isoType *IsoType) String() string {

@@ -4,8 +4,6 @@ import (
 	"encoding/hex"
 	"log"
 	"strings"
-
-	"../../iso8583"
 )
 
 const (
@@ -64,16 +62,16 @@ func (bitmap *Bitmap) Clear(xs ...int) {
 func (bitmap *Bitmap) Parse(s string) error {
 	if len(s)%2 != 0 {
 		log.Fatal("bitmap length is wrong")
-		return iso8583.Errors[iso8583.InvalidLengthError]
+		return InvalidLength
 	}
 
 	b, err := hex.DecodeString(s)
 	if err != nil {
 		log.Printf("s=%s, b=%x", s, b)
-		return iso8583.Errors[iso8583.InvalidDataError]
+		return InvalidData
 	}
 	if len(b) > BitmapSize {
-		return iso8583.Errors[iso8583.InvalidLengthError]
+		return InvalidData
 	}
 
 	for i := 0; i < len(b); i++ {
