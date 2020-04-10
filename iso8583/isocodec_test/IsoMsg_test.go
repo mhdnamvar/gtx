@@ -243,7 +243,7 @@ func TestIsoMsgEncodeBinary87(t *testing.T) {
 	assert.Equal(t, expected, strings.ToUpper(hex.EncodeToString(bytes)))
 }
 
-func TestIsoMsgParseBinary(t *testing.T) {
+func TestIsoMsgParseBinary87(t *testing.T) {
 	isoMsg := NewIsoMsg()
 	s := "0210F2382201D8A1831A0200000000000001196734000000000000067F000000000000000101080608010" +
 		"282357910010008060528000109673005005011673901002000103132333435363738393000103132333435363738" +

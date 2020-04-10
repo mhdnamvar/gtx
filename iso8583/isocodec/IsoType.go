@@ -16,6 +16,9 @@ func (isoType *IsoType) Encode(s string) ([]byte, error) {
 	var encLen []byte
 	if isoType.Len != nil {
 		dataLen := len(s)
+		if isoType.Value.Padding != IsoNoPad {
+			dataLen = isoType.Value.Max
+		}
 		if isoType.Value.ContentType == IsoHexString ||
 			isoType.Value.ContentType == IsoBitmap {
 			dataLen /= 2

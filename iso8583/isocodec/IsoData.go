@@ -26,7 +26,7 @@ func (isoData *IsoData) Encode(s string) ([]byte, error) {
 	if isoData.Encoding == IsoAscii {
 		return []byte(p), nil
 	} else if isoData.Encoding == IsoBinary {
-		if len(p) %2!=0 {
+		if len(p)%2 != 0 {
 			p += "0"
 		}
 		bytes, err := hex.DecodeString(p)
