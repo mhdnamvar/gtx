@@ -6,6 +6,25 @@ import (
 	"testing"
 )
 
+func LaNumericA(size int) *IsoType{
+	return &IsoType{
+		Len: &IsoData{
+			Encoding: IsoAscii,
+			Min: 2,
+			Max: 2,
+			ContentType: IsoNumeric,
+			Padding: IsoLeftPad,
+		},
+		Value: &IsoData{
+			Encoding: IsoAscii,
+			Min: 0,
+			Max: size,
+			ContentType: IsoNumeric,
+			Padding: IsoNoPad,
+		},
+	}
+}
+
 func TestLaNumericAEncode(t *testing.T) {
 	value := "123456789"
 	expected := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39}
@@ -94,23 +113,4 @@ func TestLaNumericADecodeRightPadInvalidLen(t *testing.T) {
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, "", actual)
-}
-
-func LaNumericA(size int) *IsoType{
-	return &IsoType{
-		Len: &IsoData{
-			Encoding: IsoAscii,
-			Min: 2,
-			Max: 2,
-			ContentType: IsoNumeric,
-			Padding: IsoLeftPad,
-		},
-		Value: &IsoData{
-			Encoding: IsoAscii,
-			Min: 0,
-			Max: size,
-			ContentType: IsoNumeric,
-			Padding: IsoNoPad,
-		},
-	}
 }
