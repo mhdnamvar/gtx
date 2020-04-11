@@ -812,11 +812,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 				isoType.Value.Encoding = IsoAscii
 				isoType.Value.ContentType = IsoHexString
 			}
-		} else if isoType.Value.Encoding == IsoEbcdic {
-			if isoField.Id == "55" || isoField.Id == "128" {
-				isoType.Value.Encoding = IsoEbcdic
-				isoType.Value.ContentType = IsoHexString
-			}
 		} else if isoType.Value.Encoding == IsoBinary {
 			if isoField.Id == "55" || isoField.Id == "128" {
 				isoType.Value.Encoding = IsoBinary
