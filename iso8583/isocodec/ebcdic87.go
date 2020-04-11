@@ -1,1808 +1,1808 @@
 package isocodec
 
 var Ebcdic87 = IsoSpec{
-
+	
 	/* DE000 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE001 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoBinary,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoBinary, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoBitmap,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE002 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         19,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 19,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE003 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         6,
-			Max:         6,
+			Encoding: IsoEbcdic, 
+			Min: 6,
+			Max: 6,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE004 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE005 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE006 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE007 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE008 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoEbcdic, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE009 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoEbcdic, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE010 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoEbcdic, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE011 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         6,
-			Max:         6,
+			Encoding: IsoEbcdic, 
+			Min: 6,
+			Max: 6,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE012 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         6,
-			Max:         6,
+			Encoding: IsoEbcdic, 
+			Min: 6,
+			Max: 6,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE013 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE014 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE015 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE016 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE017 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE018 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE019 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE020 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE021 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE022 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE023 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE024 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE025 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE026 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE027 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE028 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
-		},
+			Padding: IsoNoPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         9,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 9,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE029 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
-		},
+			Padding: IsoNoPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         9,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 9,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE030 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
-		},
+			Padding: IsoNoPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         9,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 9,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE031 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
-		},
+			Padding: IsoNoPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         9,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 9,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE032 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         11,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 11,
 			ContentType: IsoNumeric,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE033 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         11,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 11,
 			ContentType: IsoNumeric,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE034 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         28,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 28,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE035 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         37,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 37,
 			ContentType: IsoNumeric,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE036 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         104,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 104,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE037 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE038 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         6,
-			Max:         6,
+			Encoding: IsoEbcdic, 
+			Min: 6,
+			Max: 6,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE039 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE040 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE041 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoEbcdic, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE042 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         15,
-			Max:         15,
+			Encoding: IsoEbcdic, 
+			Min: 15,
+			Max: 15,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE043 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         40,
-			Max:         40,
+			Encoding: IsoEbcdic, 
+			Min: 40,
+			Max: 40,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE044 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         25,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 25,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE045 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         76,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 76,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE046 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE047 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE048 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE049 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE050 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE051 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE052 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoBinary,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoBinary, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoHexString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE053 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoEbcdic, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE054 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         120,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 120,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE055 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoBinary, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoHexString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE056 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE057 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE058 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE059 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE060 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE061 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE062 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE063 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE064 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoEbcdic, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoHexString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE065 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoHexString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE066 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE067 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE068 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE069 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE070 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE071 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE072 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         4,
-			Max:         4,
+			Encoding: IsoEbcdic, 
+			Min: 4,
+			Max: 4,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE073 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         6,
-			Max:         6,
+			Encoding: IsoEbcdic, 
+			Min: 6,
+			Max: 6,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE074 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE075 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE076 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE077 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE078 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE079 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE080 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE081 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         10,
-			Max:         10,
+			Encoding: IsoEbcdic, 
+			Min: 10,
+			Max: 10,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE082 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE083 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE084 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE085 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         12,
-			Max:         12,
+			Encoding: IsoEbcdic, 
+			Min: 12,
+			Max: 12,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE086 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoEbcdic, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE087 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoEbcdic, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE088 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoEbcdic, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE089 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoEbcdic, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE090 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         42,
-			Max:         42,
+			Encoding: IsoEbcdic, 
+			Min: 42,
+			Max: 42,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE091 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE092 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE093 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         6,
-			Max:         6,
+			Encoding: IsoEbcdic, 
+			Min: 6,
+			Max: 6,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE094 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         7,
-			Max:         7,
+			Encoding: IsoEbcdic, 
+			Min: 7,
+			Max: 7,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE095 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         42,
-			Max:         42,
+			Encoding: IsoEbcdic, 
+			Min: 42,
+			Max: 42,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE096 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         16,
-			Max:         16,
+			Encoding: IsoEbcdic, 
+			Min: 16,
+			Max: 16,
 			ContentType: IsoHexString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE097 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         1,
-			Max:         1,
+			Encoding: IsoEbcdic, 
+			Min: 1,
+			Max: 1,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
-		},
+			Padding: IsoNoPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         17,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 17,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
+			Padding: IsoLeftPad,
 		},
 	},
-
+	
 	/* DE098 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         25,
-			Max:         25,
+			Encoding: IsoEbcdic, 
+			Min: 25,
+			Max: 25,
 			ContentType: IsoString,
-			Padding:     IsoRightPad,
+			Padding: IsoRightPad,
 		},
 	},
-
+	
 	/* DE099 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         11,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 11,
 			ContentType: IsoNumeric,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE100 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         11,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 11,
 			ContentType: IsoNumeric,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE101 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         17,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 17,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE102 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         99,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 99,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE103 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         99,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 99,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE104 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         2,
-			Max:         2,
+			Encoding: IsoEbcdic, 
+			Min: 2,
+			Max: 2,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         99,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 99,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE105 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE106 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE107 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE108 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE109 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE110 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE111 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE112 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE113 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE114 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE115 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE116 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE117 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE118 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE119 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE120 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE121 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE122 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE123 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE124 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE125 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE126 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE127 */
-	&IsoType{
+	 &IsoType{
 		Len: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         3,
-			Max:         3,
+			Encoding: IsoEbcdic, 
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
-			Padding:     IsoLeftPad,
-		},
+			Padding: IsoLeftPad,
+		}, 
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         0,
-			Max:         999,
+			Encoding: IsoEbcdic, 
+			Min: 0,
+			Max: 999,
 			ContentType: IsoString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
-
+	
 	/* DE128 */
-	&IsoType{
+	 &IsoType{
 		Value: &IsoData{
-			Encoding:    IsoEbcdic,
-			Min:         8,
-			Max:         8,
+			Encoding: IsoEbcdic, 
+			Min: 8,
+			Max: 8,
 			ContentType: IsoHexString,
-			Padding:     IsoNoPad,
+			Padding: IsoNoPad,
 		},
 	},
 }
