@@ -3,6 +3,7 @@ package isocodec
 import (
 	"../../utils"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -41,11 +42,16 @@ func (isoType *IsoType) Encode(s string) ([]byte, error) {
 func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 	lenSize, decLen, err := isoType.DecodeLen(b)
 	if err != nil {
-		return "", 0, err
+		return "", 0, InvalidLength
 	}
 
-	if len(b) < lenSize+decLen {
-		return "", 0, NotEnoughData
+	if Debug {
+		log.Printf("len(b)=%d, lenSize=%d, decLen=%d", len(b), lenSize, decLen)
+	}
+
+	if lenSize+decLen > len(b) {
+		log.Println("1")
+		return "", 0, InvalidLength
 	}
 
 	decValue, _, err := isoType.Value.Decode(b[lenSize : lenSize+decLen])
@@ -64,17 +70,7 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 }
 
 func (isoType *IsoType) BeforeEncoding(s string) error {
-	err := isoType.Len.BeforeEncoding(s)
-	if err != nil {
-		return err
-	}
-
-	err = isoType.Value.BeforeEncoding(s)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	panic("Not implemented")
 }
 
 func (isoType *IsoType) BeforeDecoding(b []byte) error {

@@ -9,7 +9,6 @@ import (
 
 const (
 	MaxField = 128
-	Debug    = true
 )
 
 type IsoMsg struct {

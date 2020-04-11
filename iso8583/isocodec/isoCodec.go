@@ -38,6 +38,10 @@ const (
 	IsoTrack3    IsoContentType = 6
 )
 
+var (
+	Debug    = true
+)
+
 func (isoEncoding IsoEncoding) String() string {
 	switch isoEncoding {
 	case 0:
@@ -83,6 +87,5 @@ func (isoContentType IsoContentType) String() string {
 	case 6:
 		return "IsoTrack3"
 	}
-	//log.Printf("-------------%v\n", isoContentType)
 	return "IsoContentType not defined"
 }

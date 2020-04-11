@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -122,7 +121,6 @@ func Btoi(b []byte) (int, error) {
 	s := string(b)
 	n, err := strconv.Atoi(s)
 	if err != nil {
-		log.Fatalf("Btoi() failed: %v", err)
 		return 0, err
 	}
 	return n, nil

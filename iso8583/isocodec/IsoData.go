@@ -18,6 +18,11 @@ type IsoData struct {
 }
 
 func (isoData *IsoData) Encode(s string) ([]byte, error) {
+	err := isoData.BeforeEncoding(s)
+	if err != nil {
+		return nil, err
+	}
+
 	p, err := isoData.Pad(s)
 	if err != nil {
 		return nil, err
@@ -55,14 +60,17 @@ func (isoData *IsoData) Decode(b []byte) (string, int, error) {
 }
 
 func (isoData *IsoData) BeforeEncoding(s string) error {
-	if len(s) > isoData.Max {
+	if len(s) > isoData.Size() {
 		return InvalidLength
 	}
 
-	if isoData.Min == isoData.Max && isoData.Padding == IsoNoPad && len(s) != isoData.Max {
-		return InvalidLength
+	if isoData.Padding == IsoNoPad && len(s) != isoData.Size() {
+		if isoData.Min == isoData.Max {
+			return InvalidLength
+		}
 	}
 
+	// check numeric content
 	if isoData.ContentType == IsoNumeric {
 		n := new(big.Int)
 		n, ok := n.SetString(s, 10)
@@ -94,11 +102,20 @@ func (isoData *IsoData) Pad(s string) (string, error) {
 }
 
 func (isoData *IsoData) Size() int {
-	var size int
+	size := isoData.Max
 	if isoData.Encoding == IsoBinary {
-		size = isoData.Max * 2
+		size *= 2
+		if isoData.ContentType == IsoNumeric {
+			if isoData.Padding == IsoRightPadF || isoData.Padding == IsoRightPad{
+				if size%2 != 0 {
+					size += 1
+				}
+			}
+		}
 	} else {
-		size = isoData.Max
+		if isoData.ContentType == IsoHexString || isoData.ContentType == IsoBitmap {
+			size *= 2
+		}
 	}
 	return size
 }
