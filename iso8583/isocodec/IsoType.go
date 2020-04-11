@@ -20,12 +20,14 @@ func (isoType *IsoType) Encode(s string) ([]byte, error) {
 		if isoType.Value.Padding != IsoNoPad {
 			dataLen = isoType.Value.Max
 		}
-		if isoType.Value.ContentType == IsoHexString ||
-			isoType.Value.ContentType == IsoBitmap {
+		if isoType.Value.ContentType == IsoHexString || isoType.Value.ContentType == IsoBitmap {
 			dataLen /= 2
 		}
 		l, err := isoType.Len.Encode(strconv.Itoa(dataLen))
 		if err != nil {
+			if Debug {
+				log.Println(err)
+			}
 			return nil, err
 		}
 		encLen = l
@@ -119,7 +121,7 @@ func (isoType *IsoType) Size() int {
 func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	if isoType.Len == nil {
 		size := isoType.Size()
-		if len(b) < size &&	isoType.Value.ContentType != IsoBitmap{
+		if len(b) < size && isoType.Value.ContentType != IsoBitmap {
 			return 0, size, NotEnoughData
 		}
 		return 0, size, nil
@@ -130,18 +132,18 @@ func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	}
 	if isoType.Len.Encoding == IsoAscii {
 		i, err := utils.Btoi(b[:isoType.Len.Max])
-		return isoType.Len.Max, i,  err
+		return isoType.Len.Max, i, err
 	} else if isoType.Len.Encoding == IsoEbcdic {
 		i, err := utils.Btoi(utils.EbcdicToAsciiBytes(b[:isoType.Len.Max]))
-		return isoType.Len.Max, i,  err
+		return isoType.Len.Max, i, err
 	} else if isoType.Len.Encoding == IsoBinary {
 		i := utils.BcdToInt(b[:isoType.Len.Max])
-		if isoType.Value.ContentType == IsoNumeric || isoType.Value.Padding == IsoRightPadF{
+		if isoType.Value.ContentType == IsoNumeric || isoType.Value.Padding == IsoRightPadF {
 			if i%2 != 0 {
-				i+=1
+				i += 1
 			}
 		}
-		if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString{
+		if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString {
 			i /= 2
 		}
 		return isoType.Len.Max, int(i), nil
@@ -166,13 +168,13 @@ func (isoType *IsoType) AfterDecoding(decValue string) (string, error) {
 func (isoType *IsoType) String() string {
 	if isoType.Len != nil {
 		return fmt.Sprintf(
-`&IsoType{
+			`&IsoType{
 		Len: %v, 
 		Value: %v,
 	}`, isoType.Len, isoType.Value)
 	}
 	return fmt.Sprintf(
-`&IsoType{
+		`&IsoType{
 		Value: %v,
 	}`, isoType.Value)
 }

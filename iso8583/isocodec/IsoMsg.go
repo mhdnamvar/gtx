@@ -55,10 +55,17 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 		return nil, err
 	}
 
+	if Debug {
+		log.Printf("DE000: %X", mti)
+	}
+
 	bitmap, err := isoSpec[1].Encode(isoMsg.fields[1])
 	if err != nil {
 		log.Fatalf("Error in encoding DE001: [%s], %v", isoMsg.fields[1], err)
 		return nil, err
+	}
+	if Debug {
+		log.Printf("DE001: %X", bitmap)
 	}
 
 	var b []byte
@@ -71,6 +78,9 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 		if err != nil {
 			log.Fatalf("Error in encoding DE%03d(%s), %v", f, isoMsg.fields[f], err)
 			return nil, err
+		}
+		if Debug {
+			log.Printf("DE%03d: %X", f, encoded)
 		}
 		b = append(b, encoded...)
 	}

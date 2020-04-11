@@ -61,12 +61,21 @@ func (isoData *IsoData) Decode(b []byte) (string, int, error) {
 
 func (isoData *IsoData) BeforeEncoding(s string) error {
 	if len(s) > isoData.Size() {
+		if Debug {
+			log.Printf("BeforeEncoding: len(s)=%d, isoData.Size()=%d", len(s), isoData.Size())
+		}
 		return InvalidLength
 	}
 
-	if isoData.Padding == IsoNoPad && len(s) != isoData.Size() {
-		if isoData.Min == isoData.Max {
-			return InvalidLength
+	if isoData.ContentType != IsoBitmap {
+		if isoData.Padding == IsoNoPad && len(s) != isoData.Size() {
+			if isoData.Min == isoData.Max {
+				if Debug {
+					log.Printf("BeforeEncoding: len(%s)=%d should be the same as isoData.Size()=%d",
+						s, len(s), isoData.Size())
+				}
+				return InvalidLength
+			}
 		}
 	}
 
@@ -75,6 +84,9 @@ func (isoData *IsoData) BeforeEncoding(s string) error {
 		n := new(big.Int)
 		n, ok := n.SetString(s, 10)
 		if !ok {
+			if Debug {
+				log.Printf("BeforeEncoding: invalid numeric content")
+			}
 			return InvalidData
 		}
 	}
@@ -106,7 +118,7 @@ func (isoData *IsoData) Size() int {
 	if isoData.Encoding == IsoBinary {
 		size *= 2
 		if isoData.ContentType == IsoNumeric {
-			if isoData.Padding == IsoRightPadF || isoData.Padding == IsoRightPad{
+			if isoData.Padding == IsoRightPadF || isoData.Padding == IsoRightPad {
 				if size%2 != 0 {
 					size += 1
 				}
@@ -157,7 +169,7 @@ func (isoData *IsoData) AfterDecoding(s string) error {
 
 func (isoData *IsoData) String() string {
 	return fmt.Sprintf(
-`&IsoData{
+		`&IsoData{
 			Encoding: %s, 
 			Min: %d,
 			Max: %d,

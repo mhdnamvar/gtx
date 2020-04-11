@@ -28,7 +28,7 @@ type IsoPackager struct {
 }
 
 var (
-	force             bool
+	force bool
 )
 
 func (isoField *IsoField) String() string {
@@ -56,8 +56,8 @@ func (isoPackager *IsoPackager) String() string {
 var importCmd = &cobra.Command{
 	Use:   "import",
 	Short: "Import protocol",
-	Long: `Example: gtx import protocol-iso87binary.xml Binary87`,
-	Run: checkFlags,
+	Long:  `Example: gtx import protocol-iso87binary.xml Binary87`,
+	Run:   checkFlags,
 }
 
 func init() {
@@ -111,7 +111,7 @@ func create(isoPackager IsoPackager, fileName string) {
 	log.Println("The protocol imported successfully.")
 }
 
-func (isoField *IsoField) GetIsoType() (*IsoType, error){
+func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 	var isoType *IsoType
 	length, err := strconv.Atoi(isoField.Length)
 	if err != nil {
@@ -121,7 +121,7 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 
 	if strings.EqualFold(isoField.Class, "org.jpos.iso.IFA_BITMAP") {
 		isoType = &IsoType{
-			Len: nil,
+
 			Value: &IsoData{
 				Encoding:    IsoAscii,
 				Min:         length,
@@ -132,7 +132,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFA_BINARY") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoAscii,
 				Min:         length,
@@ -143,7 +142,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IF_CHAR") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoAscii,
 				Min:         length,
@@ -222,7 +220,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFA_NUMERIC") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoAscii,
 				Min:         length,
@@ -284,7 +281,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFA_AMOUNT2003") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoAscii,
 				Min:         0,
@@ -312,9 +308,8 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_BITMAP") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
-				Encoding:    IsoEbcdic,
+				Encoding:    IsoAscii,
 				Min:         length,
 				Max:         length,
 				ContentType: IsoBitmap,
@@ -324,11 +319,11 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_LLNUM") {
 		isoType = &IsoType{
 			Len: &IsoData{
-				Encoding:    IsoBinary,
-				Min:         1,
-				Max:         1,
+				Encoding:    IsoEbcdic,
+				Min:         2,
+				Max:         2,
 				ContentType: IsoNumeric,
-				Padding:     IsoNoPad,
+				Padding:     IsoLeftPad,
 			},
 			Value: &IsoData{
 				Encoding:    IsoEbcdic,
@@ -357,7 +352,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_BINARY") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoEbcdic,
 				Min:         length,
@@ -368,18 +362,16 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_NUMERIC") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoEbcdic,
 				Min:         length,
 				Max:         length,
 				ContentType: IsoNumeric,
-				Padding:     IsoNoPad,
+				Padding:     IsoLeftPad,
 			},
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_CHAR") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoEbcdic,
 				Min:         length,
@@ -390,7 +382,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IF_ECHAR") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoEbcdic,
 				Min:         length,
@@ -436,9 +427,9 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_LLLBINARY") {
 		isoType = &IsoType{
 			Len: &IsoData{
-				Encoding:    IsoBinary,
-				Min:         2,
-				Max:         2,
+				Encoding:    IsoEbcdic,
+				Min:         3,
+				Max:         3,
 				ContentType: IsoNumeric,
 				Padding:     IsoLeftPad,
 			},
@@ -486,7 +477,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_BITMAP") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoBinary,
 				Min:         length,
@@ -548,7 +538,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_BINARY") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoBinary,
 				Min:         length,
@@ -558,12 +547,11 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 			},
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_NUMERIC") {
-		l := length/2
+		l := length / 2
 		if length%2 != 0 {
 			l += 1
 		}
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoBinary,
 				Min:         l,
@@ -574,7 +562,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_CHAR") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoBinary,
 				Min:         length,
@@ -789,7 +776,6 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 		}
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFB_AMOUNT2003") {
 		isoType = &IsoType{
-			Len: nil,
 			Value: &IsoData{
 				Encoding:    IsoBinary,
 				Min:         0,
@@ -818,11 +804,26 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error){
 	}
 
 	if isoType != nil {
-		if isoField.Id == "55" ||
-			isoField.Id == "128"{
-			isoType.Value.Encoding = IsoBinary
-			isoType.Value.ContentType = IsoHexString
+		if isoType.Value.Encoding == IsoAscii {
+			if isoField.Id == "55" {
+				isoType.Value.Encoding = IsoBinary
+				isoType.Value.ContentType = IsoHexString
+			} else if isoField.Id == "128" {
+				isoType.Value.Encoding = IsoAscii
+				isoType.Value.ContentType = IsoHexString
+			}
+		} else if isoType.Value.Encoding == IsoEbcdic {
+			if isoField.Id == "55" || isoField.Id == "128" {
+				isoType.Value.Encoding = IsoEbcdic
+				isoType.Value.ContentType = IsoHexString
+			}
+		} else if isoType.Value.Encoding == IsoBinary {
+			if isoField.Id == "55" || isoField.Id == "128" {
+				isoType.Value.Encoding = IsoBinary
+				isoType.Value.ContentType = IsoHexString
+			}
 		}
+
 		return isoType, nil
 	}
 	return isoType, NotSupported
