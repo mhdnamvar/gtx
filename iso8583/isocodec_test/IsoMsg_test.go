@@ -377,3 +377,117 @@ func TestIsoMsgParseBinary87(t *testing.T) {
 	assert.Equal(t, "2D2A98F12D2A98F1", f128)
 
 }
+
+func TestIsoMsgParseEbcdic87(t *testing.T) {
+	isoMsg := NewIsoMsg()
+	s := "F0F2F1F0F2382201D8A1831A0200000000000001F1F9F6F7F3F4F0F0F0F0F0F0F0F0F0F0F0F0F0F6F7F0F0F0F" +
+		"0F0F0F0F0F0F0F0F0F0F0F0F1F0F1F0F8F0F6F0F8F0F1F0F2F8F2F3F5F7F9F1F0F0F1F0F0F0F8F0F6F5F2F8F0F0F1F0F9F" +
+		"6F7F3F0F0F5F0F0F5F1F1F6F7F3F9F0F1F0F0F2F0F0F1F0F1F2F3F4F5F6F7F8F9F0F0F1F0F1F2F3F4F5F6F7F8F9F0F0F8F" +
+		"0F6F8F5F7F0F0F0F0F0C3D7D6E2F9F94040F0F6F5F0D4C1C5E2F1F1F5F2F5F2F8F0F0F3F0F0F0F0F3F5F4F04040404040" +
+		"404040404040404040F0F2F6D4C1C5E2F0F1F1F5F9F4F1F2F3F4F5F6F0F4F0F7404040404040F9F7F8F0F9F60209789A0" +
+		"31409029C01009F1A0209789F02063030323030309F03060000000000009F10201F4301AAAAAAAA0000112233440458560" +
+		"00000000000000000000000000000009F2701809F3602F1039F37044DDF27A982025C009505F070AC9800F0F0F8C1C2C3C" +
+		"4F1F2F3F4F0F0F0F0F2F3F0F2F0F0F5F8F8F0F0F0F0F0F0F0F0F0F1F54040F0F0F1F0F2F9F0F2F6F0F0F0F0F0F0F0F0F0F" +
+		"0F8F0F0F5F2F8F3F5F2F6D3C240404040F5F6F6F6F2C4F2C1F9F8C6F1F2C4F2C1F9F8C6F1"
+
+	err := isoMsg.Parse(Ebcdic87, s)
+	assert.Equal(t, err, nil)
+
+	mti, err := isoMsg.Get(0)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "0210", mti)
+
+	bitmap, err := isoMsg.Get(1)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "F2382201D8A1831A0200000000000001", bitmap)
+
+	pan, err := isoMsg.Get(2)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "6734000000000000067", pan)
+
+	f3, err := isoMsg.Get(3)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "000000", f3)
+
+	f4, err := isoMsg.Get(4)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "000000000101", f4)
+
+	f7, err := isoMsg.Get(7)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "0806080102", f7)
+
+	f11, err := isoMsg.Get(11)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "823579", f11)
+
+	f12, err := isoMsg.Get(12)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "100100", f12)
+
+	f13, err := isoMsg.Get(13)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "0806", f13)
+
+	f19, err := isoMsg.Get(19)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "528", f19)
+
+	f23, err := isoMsg.Get(23)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "001", f23)
+
+	f32, err := isoMsg.Get(32)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "673005005", f32)
+
+	f33, err := isoMsg.Get(33)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "67390100200", f33)
+
+	f37, err := isoMsg.Get(37)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "080685700000", f37)
+
+	f41, err := isoMsg.Get(41)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "CPOS99  ", f41)
+
+	f43, err := isoMsg.Get(43)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "0650MAES115252800300003540              ", f43)
+
+	f48, err := isoMsg.Get(48)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "MAES0115941234560407      ", f48)
+
+	f49, err := isoMsg.Get(49)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "978", f49)
+
+	f55, err := isoMsg.Get(55)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "0209789A031409029C01009F1A0209789F02063030323030309F03060000000000009F1"+
+		"0201F4301AAAAAAAA000011223344045856000000000000000000000000000000009F2701809F3602F1039F37044DDF2"+
+		"7A982025C009505F070AC9800", f55)
+
+	f60, err := isoMsg.Get(60)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "", f60)
+
+	f61, err := isoMsg.Get(61)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "020058800000000015  001", f61)
+
+	f63, err := isoMsg.Get(63)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "02600000000008005283526LB    ", f63)
+
+	f71, err := isoMsg.Get(71)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "5666", f71)
+
+	f128, err := isoMsg.Get(128)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "2D2A98F12D2A98F1", f128)
+}
