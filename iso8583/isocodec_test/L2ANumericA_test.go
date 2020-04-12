@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func LaNumericA(size int) *IsoType{
+func L2ANumericA(size int) *IsoType{
 	return &IsoType{
 		Len: &IsoData{
 			Encoding: IsoAscii,
@@ -28,7 +28,7 @@ func LaNumericA(size int) *IsoType{
 func TestLaNumericAEncode(t *testing.T) {
 	value := "123456789"
 	expected := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39}
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -37,7 +37,7 @@ func TestLaNumericAEncode(t *testing.T) {
 func TestLaNumericAEncodeLeftPad(t *testing.T) {
 	value := "12345678"
 	expected := []byte{0x30, 0x39, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38}
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoLeftPad
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, nil, err)
@@ -47,7 +47,7 @@ func TestLaNumericAEncodeLeftPad(t *testing.T) {
 func TestLaNumericAEncodeRightPad(t *testing.T) {
 	value := "12345678"
 	expected := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x30}
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoRightPad
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, nil, err)
@@ -56,7 +56,7 @@ func TestLaNumericAEncodeRightPad(t *testing.T) {
 
 func TestLaNumericAEncodeInvalidData(t *testing.T) {
 	value := "12iso8583"
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidData, err)
 	assert.Equal(t, []byte(nil), actual)
@@ -64,7 +64,7 @@ func TestLaNumericAEncodeInvalidData(t *testing.T) {
 
 func TestLaNumericAEncodeInvalidLen(t *testing.T) {
 	value := "8583"
-	isoType := LaNumericA(3)
+	isoType := L2ANumericA(3)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
@@ -73,7 +73,7 @@ func TestLaNumericAEncodeInvalidLen(t *testing.T) {
 func TestLaNumericADecode(t *testing.T) {
 	value := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42}
 	expected := "1234567AB"
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -81,7 +81,7 @@ func TestLaNumericADecode(t *testing.T) {
 
 func TestLaNumericADecodeInvalidLen(t *testing.T) {
 	value := []byte{0x30, 0x36, 0x31, 0x32, 0x33, 0x34}
-	isoType := LaNumericA(6)
+	isoType := L2ANumericA(6)
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, "", actual)
@@ -90,7 +90,7 @@ func TestLaNumericADecodeInvalidLen(t *testing.T) {
 func TestLaNumericADecodeLeftPad(t *testing.T) {
 	value := []byte{0x30, 0x39, 0x20, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37}
 	expected := "  1234567"
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoLeftPad
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, nil, err)
@@ -99,7 +99,7 @@ func TestLaNumericADecodeLeftPad(t *testing.T) {
 
 func TestLaNumericADecodeLeftPadInvalidLen(t *testing.T) {
 	value := []byte{0x41, 0x20, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42}
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoLeftPad
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, InvalidLength, err)
@@ -108,7 +108,7 @@ func TestLaNumericADecodeLeftPadInvalidLen(t *testing.T) {
 
 func TestLaNumericADecodeRightPadInvalidLen(t *testing.T) {
 	value := []byte{0x41, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42, 0x20, 0x20}
-	isoType := LaNumericA(9)
+	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoRightPad
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, InvalidLength, err)
