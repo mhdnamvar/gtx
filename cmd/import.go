@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	. "../iso8583/isocodec"
+	. "../codec/iso8583"
 	"github.com/spf13/cobra"
 )
 
@@ -56,7 +56,7 @@ func (isoPackager *IsoPackager) String() string {
 var importCmd = &cobra.Command{
 	Use:   "import",
 	Short: "Import protocol",
-	Long:  `Example: gtx import protocol-iso87binary.xml Binary87`,
+	Long:  `Example: gtx import protocol-iso87binary.xml MyBinary87`,
 	Run:   checkFlags,
 }
 
