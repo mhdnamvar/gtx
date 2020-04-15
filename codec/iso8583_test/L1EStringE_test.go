@@ -19,7 +19,7 @@ func L1EStringE(size int) *IsoType{
 			Encoding: IsoEbcdic,
 			Min: 0,
 			Max: size,
-			ContentType: IsoNumeric,
+			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
 	}
@@ -55,8 +55,8 @@ func TestL1EStringEEncodeRightPad(t *testing.T) {
 }
 
 func TestL1EStringEEncodeInvalidLen(t *testing.T) {
-	value := "iso8583"
-	isoType := L1EStringE(9)
+	value := "8583"
+	isoType := L1EStringE(3)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
