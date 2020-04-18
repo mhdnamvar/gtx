@@ -491,3 +491,12 @@ func TestIsoMsgParseEbcdic87(t *testing.T) {
 	assert.Equal(t, nil, err)
 	assert.Equal(t, "2D2A98F12D2A98F1", f128)
 }
+
+func TestIsoMsgEncodeBinaryField32(t *testing.T) {
+	isoMsg := NewIsoMsg()
+	isoMsg.Set(0, "100")
+	isoMsg.Set(32, "673005005")
+	_, _ = isoMsg.Encode(DefaultBinary87)
+	d, _ := isoMsg.Dump(DefaultBinary87)
+	log.Println(d)
+}

@@ -25,7 +25,7 @@ func L2ANumericA(size int) *IsoType{
 	}
 }
 
-func TestLaNumericAEncode(t *testing.T) {
+func TestL2NumericAEncode(t *testing.T) {
 	value := "123456789"
 	expected := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39}
 	isoType := L2ANumericA(9)
@@ -34,7 +34,7 @@ func TestLaNumericAEncode(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLaNumericAEncodeLeftPad(t *testing.T) {
+func TestL2ANumericAEncodeLeftPad(t *testing.T) {
 	value := "12345678"
 	expected := []byte{0x30, 0x39, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38}
 	isoType := L2ANumericA(9)
@@ -44,7 +44,7 @@ func TestLaNumericAEncodeLeftPad(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLaNumericAEncodeRightPad(t *testing.T) {
+func TestL2ANumericAEncodeRightPad(t *testing.T) {
 	value := "12345678"
 	expected := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x30}
 	isoType := L2ANumericA(9)
@@ -54,7 +54,7 @@ func TestLaNumericAEncodeRightPad(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLaNumericAEncodeInvalidData(t *testing.T) {
+func TestL2ANumericAEncodeInvalidData(t *testing.T) {
 	value := "12iso8583"
 	isoType := L2ANumericA(9)
 	actual, err := isoType.Encode(value)
@@ -62,7 +62,7 @@ func TestLaNumericAEncodeInvalidData(t *testing.T) {
 	assert.Equal(t, []byte(nil), actual)
 }
 
-func TestLaNumericAEncodeInvalidLen(t *testing.T) {
+func TestL2ANumericAEncodeInvalidLen(t *testing.T) {
 	value := "8583"
 	isoType := L2ANumericA(3)
 	actual, err := isoType.Encode(value)
@@ -70,7 +70,7 @@ func TestLaNumericAEncodeInvalidLen(t *testing.T) {
 	assert.Equal(t, []byte(nil), actual)
 }
 
-func TestLaNumericADecode(t *testing.T) {
+func TestL2ANumericADecode(t *testing.T) {
 	value := []byte{0x30, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42}
 	expected := "1234567AB"
 	isoType := L2ANumericA(9)
@@ -79,7 +79,7 @@ func TestLaNumericADecode(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLaNumericADecodeInvalidLen(t *testing.T) {
+func TestL2ANumericADecodeInvalidLen(t *testing.T) {
 	value := []byte{0x30, 0x36, 0x31, 0x32, 0x33, 0x34}
 	isoType := L2ANumericA(6)
 	actual, _, err := isoType.Decode(value)
@@ -87,7 +87,7 @@ func TestLaNumericADecodeInvalidLen(t *testing.T) {
 	assert.Equal(t, "", actual)
 }
 
-func TestLaNumericADecodeLeftPad(t *testing.T) {
+func TestL2ANumericADecodeLeftPad(t *testing.T) {
 	value := []byte{0x30, 0x39, 0x20, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37}
 	expected := "  1234567"
 	isoType := L2ANumericA(9)
@@ -97,7 +97,7 @@ func TestLaNumericADecodeLeftPad(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestLaNumericADecodeLeftPadInvalidLen(t *testing.T) {
+func TestL2ANumericADecodeLeftPadInvalidLen(t *testing.T) {
 	value := []byte{0x41, 0x20, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42}
 	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoLeftPad
@@ -106,7 +106,7 @@ func TestLaNumericADecodeLeftPadInvalidLen(t *testing.T) {
 	assert.Equal(t, "", actual)
 }
 
-func TestLaNumericADecodeRightPadInvalidLen(t *testing.T) {
+func TestL2ANumericADecodeRightPadInvalidLen(t *testing.T) {
 	value := []byte{0x41, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x41, 0x42, 0x20, 0x20}
 	isoType := L2ANumericA(9)
 	isoType.Value.Padding = IsoRightPad
