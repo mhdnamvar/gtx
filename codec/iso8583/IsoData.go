@@ -28,11 +28,17 @@ func (isoData *IsoData) Encode(s string) ([]byte, error) {
 		return nil, err
 	}
 
+	log.Println("pad=", p)
+
+	if isoData == nil {
+		return nil, nil
+	}
+
 	if isoData.Encoding == IsoAscii {
 		return []byte(p), nil
 	} else if isoData.Encoding == IsoBinary {
 		if len(p)%2 != 0 {
-			p += "0"
+			p = "0" + p
 		}
 		bytes, err := hex.DecodeString(p)
 		if err != nil {
@@ -60,6 +66,9 @@ func (isoData *IsoData) Decode(b []byte) (string, int, error) {
 }
 
 func (isoData *IsoData) BeforeEncoding(s string) error {
+	if isoData == nil {
+		return nil
+	}
 	if len(s) > isoData.Size() {
 		if Debug {
 			log.Printf("BeforeEncoding: len(s)=%d, isoData.Size()=%d", len(s), isoData.Size())
@@ -99,36 +108,55 @@ func (isoData *IsoData) BeforeDecoding(b []byte) error {
 }
 
 func (isoData *IsoData) Pad(s string) (string, error) {
-	if isoData.Padding == IsoLeftPad {
-		return utils.LeftPad2Len(s, isoData.PadString(), isoData.Size()), nil
-	} else if isoData.Padding == IsoRightPad {
-		return utils.RightPad2Len(s, isoData.PadString(), isoData.Size()), nil
-	} else if isoData.Padding == IsoRightPadF {
-		if len(s)%2 != 0 {
-			return utils.RightPad(s, "F", 1), nil
-		}
-		return s, nil
-	} else {
-		return s, nil
+	if isoData == nil {
+		return "", nil
 	}
+
+	p := s
+	if isoData.Padding == IsoLeftPad {
+		p = utils.LeftPad2Len(s, isoData.PadString(), isoData.Size())
+	} else if isoData.Padding == IsoRightPad || isoData.Padding == IsoRightPadF {
+		p = utils.RightPad2Len(s, isoData.PadString(), isoData.Size())
+	}
+
+	if isoData.Encoding == IsoBinary {
+		if len(p)%2 != 0 {
+			if isoData.Padding == IsoLeftPad {
+				p =  "0" + p
+			} else if isoData.Padding == IsoLeftPadF {
+				p =  "F" + p
+			} else if isoData.Padding == IsoRightPad {
+				p += "0"
+			} else if isoData.Padding == IsoRightPadF {
+				p += "F"
+			} else {
+				p += "0"
+			}
+		}
+	}
+
+	return p, nil
 }
 
 func (isoData *IsoData) Size() int {
-	size := isoData.Max
-	if isoData.Encoding == IsoBinary {
-		size *= 2
-		if isoData.ContentType == IsoNumeric {
-			if isoData.Padding == IsoRightPadF || isoData.Padding == IsoRightPad {
-				if size%2 != 0 {
-					size += 1
-				}
-			}
-		}
-	} else {
-		if isoData.ContentType == IsoHexString || isoData.ContentType == IsoBitmap {
-			size *= 2
-		}
+	if isoData == nil {
+		return 0
 	}
+	size := isoData.Max
+	//if isoData.Encoding == IsoBinary {
+	//	size *= 2
+	//	if isoData.ContentType == IsoNumeric {
+	//		if isoData.Padding == IsoRightPadF || isoData.Padding == IsoRightPad {
+	//			if size%2 != 0 {
+	//				size += 1
+	//			}
+	//		}
+	//	}
+	//} else {
+	//	if isoData.ContentType == IsoHexString || isoData.ContentType == IsoBitmap {
+	//		size *= 2
+	//	}
+	//}
 	return size
 }
 
