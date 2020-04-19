@@ -28,8 +28,6 @@ func (isoData *IsoData) Encode(s string) ([]byte, error) {
 		return nil, err
 	}
 
-	log.Println("pad=", p)
-
 	if isoData == nil {
 		return nil, nil
 	}
@@ -76,17 +74,17 @@ func (isoData *IsoData) BeforeEncoding(s string) error {
 		return InvalidLength
 	}
 
-	if isoData.ContentType != IsoBitmap {
-		if isoData.Padding == IsoNoPad && len(s) != isoData.Size() {
-			if isoData.Min == isoData.Max {
-				if Debug {
-					log.Printf("BeforeEncoding: len(%s)=%d should be the same as isoData.Size()=%d",
-						s, len(s), isoData.Size())
-				}
-				return InvalidLength
-			}
-		}
-	}
+	//if isoData.ContentType != IsoBitmap {
+	//	if isoData.Padding == IsoNoPad && len(s) != isoData.Size() {
+	//		if isoData.Min == isoData.Max {
+	//			if Debug {
+	//				log.Printf("BeforeEncoding: len(%s)=%d should be the same as isoData.Size()=%d",
+	//					s, len(s), isoData.Size())
+	//			}
+	//			return InvalidLength
+	//		}
+	//	}
+	//}
 
 	// check numeric content
 	if isoData.ContentType == IsoNumeric {
@@ -153,9 +151,9 @@ func (isoData *IsoData) Size() int {
 	//		}
 	//	}
 	//} else {
-	//	if isoData.ContentType == IsoHexString || isoData.ContentType == IsoBitmap {
-	//		size *= 2
-	//	}
+		if isoData.ContentType == IsoHexString || isoData.ContentType == IsoBitmap {
+			size *= 2
+		}
 	//}
 	return size
 }

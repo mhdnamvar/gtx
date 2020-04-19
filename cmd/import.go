@@ -124,7 +124,7 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 
 			Value: &IsoData{
 				Encoding:    IsoAscii,
-				Min:         length,
+				Min:         0,
 				Max:         length,
 				ContentType: IsoBitmap,
 				Padding:     IsoNoPad,
@@ -309,8 +309,8 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFE_BITMAP") {
 		isoType = &IsoType{
 			Value: &IsoData{
-				Encoding:    IsoAscii,
-				Min:         length,
+				Encoding:    IsoEbcdic,
+				Min:         0,
 				Max:         length,
 				ContentType: IsoBitmap,
 				Padding:     IsoNoPad,
@@ -479,7 +479,7 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 		isoType = &IsoType{
 			Value: &IsoData{
 				Encoding:    IsoBinary,
-				Min:         length,
+				Min:         0,
 				Max:         length,
 				ContentType: IsoBitmap,
 				Padding:     IsoNoPad,
@@ -570,8 +570,8 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 		isoType = &IsoType{
 			Len: &IsoData{
 				Encoding:    IsoBinary,
-				Min:         2,
-				Max:         2,
+				Min:         3,
+				Max:         3,
 				ContentType: IsoNumeric,
 				Padding:     IsoLeftPad,
 			},
@@ -604,8 +604,8 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 		isoType = &IsoType{
 			Len: &IsoData{
 				Encoding:    IsoBinary,
-				Min:         2,
-				Max:         2,
+				Min:         3,
+				Max:         3,
 				ContentType: IsoNumeric,
 				Padding:     IsoLeftPad,
 			},
@@ -817,10 +817,10 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 				isoType.Value.ContentType = IsoHexString
 			}
 		} else if isoType.Value.Encoding == IsoBinary {
-			if isoField.Id == "55" || isoField.Id == "128" {
-				isoType.Value.Encoding = IsoBinary
-				isoType.Value.ContentType = IsoHexString
-			}
+			//if isoField.Id == "55" || isoField.Id == "128" {
+			//	isoType.Value.Encoding = IsoBinary
+			//	isoType.Value.ContentType = IsoHexString
+			//}
 		}
 
 		return isoType, nil

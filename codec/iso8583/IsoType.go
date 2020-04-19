@@ -45,7 +45,11 @@ func (isoType *IsoType) Encode(s string) ([]byte, error) {
 	//	return nil, InvalidLength
 	//}
 
-	encLen, err := isoType.Len.Encode(strconv.Itoa(len(s)))
+	i := len(s)
+	if isoType.Value.ContentType == IsoHexString {
+		i /= 2
+	}
+	encLen, err := isoType.Len.Encode(strconv.Itoa(i))
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -89,7 +93,7 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 	}
 
 	odd := size % 2 != 0
-	if isoType.Value.Encoding == IsoBinary {
+	if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString{
 		if odd {
 			size /= 2
 			size += 1
@@ -119,9 +123,24 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 		decValue = decValue[:len(decValue) - padSize]
 	}
 
-	if isoType.Value.Encoding == IsoBinary && odd {
-		return decValue[:len(decValue)-1], lenSize + lenSize + dataSize, nil
+	if isoType.Value.Encoding == IsoBinary {
+		if odd && isoType.Value.ContentType != IsoHexString{
+			if isoType.Value.Padding == IsoRightPadF{
+				log.Println("------------1")
+				return decValue[:len(decValue)-1], (lenSize + dataSize)/2+1, nil
+			} else if isoType.Value.Padding == IsoLeftPad{
+				log.Println("------------2")
+				return decValue, (lenSize + dataSize)/2, nil
+			} else {
+				log.Println("------------3")
+				return decValue[:len(decValue)-1], (lenSize + dataSize)/2, nil
+			}
+		} else {
+			log.Println("------------4")
+			return decValue, (lenSize + dataSize)/2, nil
+		}
 	} else {
+		log.Println("------------5")
 		return decValue, lenSize + dataSize, nil
 	}
 
@@ -136,7 +155,7 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 func (isoType *IsoType) BeforeEncoding(s string) error {
 	//Check size of data to be encoded
 	if isoType.Len == nil {// DE has fixed length
-		if isoType.Value.Padding == IsoNoPad {
+		if isoType.Value.Padding == IsoNoPad && isoType.Value.ContentType != IsoBitmap{
 			if len(s) != isoType.Value.Max {
 				return InvalidLength
 			}

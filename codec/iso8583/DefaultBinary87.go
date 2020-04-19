@@ -17,7 +17,7 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Value: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 16,
+			Min: 0,
 			Max: 16,
 			ContentType: IsoBitmap,
 			Padding: IsoNoPad,
@@ -401,9 +401,9 @@ var DefaultBinary87 = IsoSpec{
 		Value: &IsoData{
 			Encoding: IsoBinary, 
 			Min: 0,
-			Max: 11,
+			Max: 20,
 			ContentType: IsoNumeric,
-			Padding: IsoRightPad,
+			Padding: IsoNoPad,
 		},
 	},
 	
@@ -421,7 +421,7 @@ var DefaultBinary87 = IsoSpec{
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
-			Padding: IsoRightPad,
+			Padding: IsoNoPad,
 		},
 	},
 	
@@ -465,8 +465,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -596,8 +596,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -614,8 +614,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -632,8 +632,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -705,8 +705,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -723,8 +723,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -741,8 +741,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -759,8 +759,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -777,8 +777,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -795,8 +795,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -813,8 +813,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -831,8 +831,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -849,8 +849,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -867,8 +867,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1287,7 +1287,7 @@ var DefaultBinary87 = IsoSpec{
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
-			Padding: IsoRightPad,
+			Padding: IsoNoPad,
 		},
 	},
 	
@@ -1305,7 +1305,7 @@ var DefaultBinary87 = IsoSpec{
 			Min: 0,
 			Max: 11,
 			ContentType: IsoNumeric,
-			Padding: IsoRightPad,
+			Padding: IsoNoPad,
 		},
 	},
 	
@@ -1367,8 +1367,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1385,8 +1385,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1403,8 +1403,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1421,8 +1421,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1439,8 +1439,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1457,8 +1457,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1475,8 +1475,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1493,8 +1493,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1511,8 +1511,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1529,8 +1529,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1547,8 +1547,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1565,8 +1565,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1583,8 +1583,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1601,8 +1601,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1619,8 +1619,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1637,8 +1637,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1655,8 +1655,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1673,8 +1673,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1691,8 +1691,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1709,8 +1709,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1727,8 +1727,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1745,8 +1745,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1763,8 +1763,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
@@ -1781,8 +1781,8 @@ var DefaultBinary87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoBinary, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
