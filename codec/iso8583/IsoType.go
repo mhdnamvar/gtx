@@ -130,6 +130,9 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 				return decValue[:len(decValue)-1], (lenSize + dataSize)/2+1, nil
 			} else if isoType.Value.Padding == IsoLeftPad{
 				log.Println("------------2")
+				if isoType.Value.ContentType == IsoNumeric {
+					return decValue[:len(decValue)-1], (lenSize + dataSize)/2, nil
+				}
 				return decValue, (lenSize + dataSize)/2, nil
 			} else {
 				log.Println("------------3")
