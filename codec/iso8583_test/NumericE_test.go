@@ -54,7 +54,7 @@ func TestNumericEEncodeRightPad(t *testing.T) {
 
 func TestNumericEEncodeInvalidLen(t *testing.T) {
 	value := "123456789"
-	isoType := NumericE(10)
+	isoType := NumericE(8)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
