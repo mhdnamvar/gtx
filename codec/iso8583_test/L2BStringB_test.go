@@ -19,7 +19,7 @@ func L2BStringB(size int) *IsoType{
 			Encoding: IsoBinary,
 			Min: 0,
 			Max: size,
-			ContentType: IsoString,
+			ContentType: IsoHexString,
 			Padding: IsoNoPad,
 		},
 	}
@@ -41,7 +41,7 @@ func TestL2BStringBEncode(t *testing.T) {
 func TestL2BStringBEncodeLeftPad(t *testing.T) {
 	value := "D45678901234567890"
 	expected := []byte{
-		0x10,
+		0x09,
 		0x20,
 		0xD4, 0x56, 0x78, 0x90,
 		0x12, 0x34, 0x56, 0x78, 0x90,
@@ -56,7 +56,7 @@ func TestL2BStringBEncodeLeftPad(t *testing.T) {
 func TestL2BStringBEncodeRightPad(t *testing.T) {
 	value := "E234567890123456"
 	expected := []byte{
-		0x09,
+		0x08,
 		0xE2, 0x34, 0x56, 0x78, 0x90,
 		0x12, 0x34, 0x56,
 		0x20,
@@ -70,19 +70,12 @@ func TestL2BStringBEncodeRightPad(t *testing.T) {
 
 func TestL2BStringBEncodeInvalidLen(t *testing.T) {
 	value := "D234567890123456"
-	isoType := L2BStringB(9)
+	isoType := L2BStringB(7)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
 }
 
-func TestL2BStringBEncodeInvalidData(t *testing.T) {
-	value := "D234567890123456MN"
-	isoType := L2BStringB(9)
-	actual, err := isoType.Encode(value)
-	assert.Equal(t, InvalidLength, err)
-	assert.Equal(t, []byte(nil), actual)
-}
 
 func TestL2BStringBDecode(t *testing.T) {
 	value := []byte{
@@ -101,7 +94,7 @@ func TestL2BStringBDecodeInvalidLen(t *testing.T) {
 	value := []byte{
 		0x08,
 		0xD2, 0x34, 0x56, 0x78, 0x90,
-		0x12, 0x34, 0x56,
+		0x12, 0x34,
 	}
 	isoType := L2BStringB(9)
 	actual, _, err := isoType.Decode(value)
