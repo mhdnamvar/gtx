@@ -71,6 +71,12 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 			size /= 2
 		}
 	}
+
+	if isoType.Value.Encoding != IsoBinary && isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
+		log.Println("----------1")
+		 size *= 2
+	}
+
 	log.Printf("len(b)=%d, lenSize=%d, size=%d, binary=%v",
 		len(b), lenSize, size, isoType.Value.Encoding == IsoBinary)
 	if len(b) < lenSize + size {
@@ -101,9 +107,14 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 	// return values
 	if isoType.Value.Encoding == IsoBinary{
 		if isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
-			return decValue, (lenSize + size)/2, nil
+			log.Println("----------5")
+			return decValue, size/2, nil
 		}
+	} else if isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
+		log.Println("----------6")
+		return decValue, size*2, nil
 	}
+	log.Println("----------7")
 	return decValue, lenSize + size, nil
 }
 

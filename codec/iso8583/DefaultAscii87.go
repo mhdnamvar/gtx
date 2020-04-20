@@ -16,8 +16,8 @@ var DefaultAscii87 = IsoSpec{
 	/* DE001 */
 	 &IsoType{
 		Value: &IsoData{
-			Encoding: IsoAscii, 
-			Min: 16,
+			Encoding: IsoBinary, 
+			Min: 0,
 			Max: 16,
 			ContentType: IsoBitmap,
 			Padding: IsoNoPad,
@@ -652,8 +652,8 @@ var DefaultAscii87 = IsoSpec{
 			Encoding: IsoAscii, 
 			Min: 3,
 			Max: 3,
-			ContentType: IsoString,
-			Padding: IsoRightPad,
+			ContentType: IsoNumeric,
+			Padding: IsoLeftPad,
 		},
 	},
 	
@@ -1237,10 +1237,10 @@ var DefaultAscii87 = IsoSpec{
 	 &IsoType{
 		Value: &IsoData{
 			Encoding: IsoAscii, 
-			Min: 16,
-			Max: 16,
-			ContentType: IsoHexString,
-			Padding: IsoNoPad,
+			Min: 8,
+			Max: 8,
+			ContentType: IsoString,
+			Padding: IsoRightPad,
 		},
 	},
 	
@@ -1339,7 +1339,7 @@ var DefaultAscii87 = IsoSpec{
 		Value: &IsoData{
 			Encoding: IsoAscii, 
 			Min: 0,
-			Max: 99,
+			Max: 28,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
@@ -1357,7 +1357,7 @@ var DefaultAscii87 = IsoSpec{
 		Value: &IsoData{
 			Encoding: IsoAscii, 
 			Min: 0,
-			Max: 99,
+			Max: 28,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
@@ -1367,15 +1367,15 @@ var DefaultAscii87 = IsoSpec{
 	 &IsoType{
 		Len: &IsoData{
 			Encoding: IsoAscii, 
-			Min: 2,
-			Max: 2,
+			Min: 3,
+			Max: 3,
 			ContentType: IsoNumeric,
 			Padding: IsoLeftPad,
 		}, 
 		Value: &IsoData{
 			Encoding: IsoAscii, 
 			Min: 0,
-			Max: 99,
+			Max: 100,
 			ContentType: IsoString,
 			Padding: IsoNoPad,
 		},
@@ -1412,7 +1412,7 @@ var DefaultAscii87 = IsoSpec{
 			Encoding: IsoAscii, 
 			Min: 0,
 			Max: 999,
-			ContentType: IsoString,
+			ContentType: IsoHexString,
 			Padding: IsoNoPad,
 		},
 	},

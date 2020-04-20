@@ -204,9 +204,9 @@ func (isoField *IsoField) GetIsoType() (*IsoType, error) {
 	} else if strings.EqualFold(isoField.Class, "org.jpos.iso.IFA_LLLBINARY") {
 		isoType = &IsoType{
 			Len: &IsoData{
-				Encoding:    IsoBinary,
-				Min:         2,
-				Max:         2,
+				Encoding:    IsoAscii,
+				Min:         3,
+				Max:         3,
 				ContentType: IsoNumeric,
 				Padding:     IsoLeftPad,
 			},
