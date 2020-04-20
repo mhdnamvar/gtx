@@ -56,13 +56,8 @@ func TestStringB_Encode_InvalidData(t *testing.T) {
 }
 func TestStringB_Encode_InvalidLen(t *testing.T) {
 	value := "2D2A98F12D2A98"
-	isoType := StringB(8)
+	isoType := StringB(6)
 	actual, err := isoType.Encode(value)
-	assert.Equal(t, InvalidLength, err)
-	assert.Equal(t, []byte(nil), actual)
-
-	isoType = StringB(4)
-	actual, err = isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
 

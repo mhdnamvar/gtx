@@ -14,37 +14,6 @@ type IsoType struct {
 }
 
 func (isoType *IsoType) Encode(s string) ([]byte, error) {
-	//var encLen []byte
-	//dataLen := len(s)
-	//if isoType.Len != nil {
-	//	//log.Println(dataLen)
-	//	if isoType.Value.Padding != IsoNoPad {
-	//		if dataLen > isoType.Value.Max {
-	//			log.Printf("Error: Variable length and dataLen(%d) > isoType.Value.Max(%d)",
-	//				dataLen, isoType.Value.Max)
-	//			return nil, InvalidLength
-	//		}
-	//		dataLen = isoType.Value.Max
-	//	}
-	//	//log.Println(dataLen)
-	//	//if isoType.Value.ContentType == IsoHexString || isoType.Value.ContentType == IsoBitmap {
-	//	//	dataLen /= 2
-	//	//}
-	//	log.Println(dataLen)
-	//	l, err := isoType.Len.Encode(strconv.Itoa(dataLen))
-	//	if err != nil {
-	//		log.Println(err)
-	//		return nil, err
-	//	}
-	//	encLen = l
-	//}
-	//
-	//if dataLen > isoType.Value.Max {
-	//	log.Printf("Error: Fixed length and dataLen(%d) > isoType.Value.Max(%d)",
-	//		dataLen, isoType.Value.Max)
-	//	return nil, InvalidLength
-	//}
-
 	i := len(s)
 	if isoType.Value.ContentType == IsoHexString {
 		i /= 2
