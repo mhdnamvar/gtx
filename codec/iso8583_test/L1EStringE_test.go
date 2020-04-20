@@ -36,7 +36,7 @@ func TestL1EStringEEncode(t *testing.T) {
 
 func TestL1EStringEEncodeLeftPad(t *testing.T) {
 	value := "ABC3D"
-	expected := []byte{0xF7, 0x40, 0x40, 0xC1, 0xC2, 0xC3, 0xF3, 0xC4}
+	expected := []byte{0xF5, 0x40, 0x40, 0xC1, 0xC2, 0xC3, 0xF3, 0xC4}
 	isoType := L1EStringE(7)
 	isoType.Value.Padding = IsoLeftPad
 	actual, err := isoType.Encode(value)
@@ -46,7 +46,7 @@ func TestL1EStringEEncodeLeftPad(t *testing.T) {
 
 func TestL1EStringEEncodeRightPad(t *testing.T) {
 	value := "ABCD"
-	expected := []byte{0xF7, 0xC1, 0xC2, 0xC3, 0xC4, 0x40, 0x40, 0x40}
+	expected := []byte{0xF4, 0xC1, 0xC2, 0xC3, 0xC4, 0x40, 0x40, 0x40}
 	isoType := L1EStringE(7)
 	isoType.Value.Padding = IsoRightPad
 	actual, err := isoType.Encode(value)

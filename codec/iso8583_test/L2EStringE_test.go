@@ -36,7 +36,7 @@ func TestL2EStringE_Encode(t *testing.T) {
 
 func TestL2EStringE_Encode_LeftPad(t *testing.T) {
 	value := "12345678A"
-	expected := []byte{0xF1, 0xF1, 0x40, 0x40, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xC1}
+	expected := []byte{0xF0, 0xF9, 0x40, 0x40, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xC1}
 	isoType := L2EStringE(11)
 	isoType.Value.Padding = IsoLeftPad
 	actual, err := isoType.Encode(value)
@@ -46,7 +46,7 @@ func TestL2EStringE_Encode_LeftPad(t *testing.T) {
 
 func TestL2EStringE_Encode_RightPad(t *testing.T) {
 	value := "1234567A"
-	expected := []byte{0xF1, 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xC1, 0x40, 0x40}
+	expected := []byte{0xF0, 0xF8, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xC1, 0x40, 0x40}
 	isoType := L2EStringE(10)
 	isoType.Value.Padding = IsoRightPad
 	actual, err := isoType.Encode(value)
@@ -56,7 +56,7 @@ func TestL2EStringE_Encode_RightPad(t *testing.T) {
 
 func TestL2EStringE_Encode_InvalidLen(t *testing.T) {
 	value := "iso8583"
-	isoType := L2EStringE(10)
+	isoType := L2EStringE(6)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
@@ -72,7 +72,7 @@ func TestL2EStringE_Decode(t *testing.T) {
 }
 
 func TestL2EStringE_Decode_InvalidLen(t *testing.T) {
-	value := []byte{0xF1, 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xC1, 0xC2, 0xC3}
+	value := []byte{0xF1, 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xC1, 0xC2}
 	isoType := L2EStringE(11)
 	actual, _, err := isoType.Decode(value)
 	assert.Equal(t, InvalidLength, err)

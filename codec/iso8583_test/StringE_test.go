@@ -52,7 +52,7 @@ func TestStringEEncodeRightPad(t *testing.T) {
 
 func TestStringEEncodeInvalidLen(t *testing.T) {
 	value := "iso8583"
-	isoType := StringE(10)
+	isoType := StringE(6)
 	actual, err := isoType.Encode(value)
 	assert.Equal(t, InvalidLength, err)
 	assert.Equal(t, []byte(nil), actual)
