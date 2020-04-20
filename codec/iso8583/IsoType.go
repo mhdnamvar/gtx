@@ -75,6 +75,7 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 
 	log.Printf("len(b)=%d, lenSize=%d, dataSize=%d", len(b), lenSize, dataSize)
 
+	// PadSize
 	padSize := 0
 	if isoType.Value.Padding != IsoNoPad {
 		padSize = isoType.Value.Max - dataSize
@@ -83,17 +84,17 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 			return "", 0, InvalidLength
 		}
 	}
-	//if isoType.Value.Padding == IsoRightPadF {
-	//	padSize += 1
-	//}
+	if isoType.Value.Encoding == IsoBinary && dataSize % 2 != 0 && isoType.Value.ContentType == IsoNumeric {
+		padSize++
+	}
 
+	// Size of data
 	size := dataSize
 	if isoType.Value.Padding != IsoNoPad {
 		size = isoType.Value.Max
 	}
-
 	odd := size % 2 != 0
-	if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString{
+	if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString && isoType.Value.ContentType != IsoBitmap{
 		if odd {
 			size /= 2
 			size += 1
@@ -101,11 +102,8 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 			size /= 2
 		}
 	}
-
-	log.Printf("len(b)=%d, lenSize=%d, dataSize=%d, binary=%v",
+	log.Printf("len(b)=%d, lenSize=%d, size=%d, binary=%v",
 		len(b), lenSize, size, isoType.Value.Encoding == IsoBinary)
-
-
 	if len(b) < lenSize + size {
 		log.Printf("Error: len(b)=%d < lenSize=%d + size=%d", len(b), lenSize, size)
 		return "", 0, InvalidLength
@@ -116,43 +114,28 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 		return "", 0, err
 	}
 
-	log.Printf("padSize=%d", padSize)
+	// Padding
+	log.Printf("padSize=%d, %v", padSize, isoType.Value.Padding)
 	if isoType.Value.Padding == IsoLeftPad {
+		log.Println("----------2")
 		decValue = decValue[padSize:]
-	} else if isoType.Value.Padding == IsoRightPad {
+	} else if isoType.Value.Padding == IsoRightPad || isoType.Value.Padding == IsoRightPadF{
+		log.Println("----------3")
 		decValue = decValue[:len(decValue) - padSize]
-	}
-
-	if isoType.Value.Encoding == IsoBinary {
-		if odd && isoType.Value.ContentType != IsoHexString{
-			if isoType.Value.Padding == IsoRightPadF{
-				log.Println("------------1")
-				return decValue[:len(decValue)-1], (lenSize + dataSize)/2+1, nil
-			} else if isoType.Value.Padding == IsoLeftPad{
-				log.Println("------------2")
-				if isoType.Value.ContentType == IsoNumeric {
-					return decValue[:len(decValue)-1], (lenSize + dataSize)/2, nil
-				}
-				return decValue, (lenSize + dataSize)/2, nil
-			} else {
-				log.Println("------------3")
-				return decValue[:len(decValue)-1], (lenSize + dataSize)/2, nil
-			}
-		} else {
-			log.Println("------------4")
-			return decValue, (lenSize + dataSize)/2, nil
+	} else if isoType.Value.Padding == IsoNoPad {
+		if isoType.Value.Encoding == IsoBinary && dataSize % 2 != 0 && isoType.Value.ContentType == IsoNumeric {
+			log.Println("----------4")
+			decValue = decValue[:len(decValue) - padSize]
 		}
-	} else {
-		log.Println("------------5")
-		return decValue, lenSize + dataSize, nil
 	}
 
-	//afterDecoding, err := isoType.AfterDecoding(decValue)
-	//if err != nil {
-	//	return "", 0, err
-	//}
-	//return afterDecoding, lenSize + dataSize, nil
-
+	// return values
+	if isoType.Value.Encoding == IsoBinary{
+		if isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
+			return decValue, (lenSize + size)/2, nil
+		}
+	}
+	return decValue, lenSize + size, nil
 }
 
 func (isoType *IsoType) BeforeEncoding(s string) error {
@@ -221,18 +204,8 @@ func (isoType *IsoType) Size() int {
 
 func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	if isoType.Len == nil {
-		//size := isoType.Value.Max
-		//if len(b) < size && isoType.Value.ContentType != IsoBitmap {
-		//	return 0, size, NotEnoughData
-		//}
-		//return 0, size, nil
 		log.Print("Fixed length")
 		return 0, isoType.Value.Max, nil
-	}
-
-	if len(b) < isoType.Len.Max {
-		log.Print("---------len(b) < isoType.Len.Max---------")
-		return 0, isoType.Len.Max, NotEnoughData
 	}
 
 	if isoType.Len.Encoding == IsoAscii {
@@ -247,14 +220,6 @@ func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 			l++
 		}
 		i := utils.BcdToInt(b[:l])
-		//if isoType.Value.ContentType == IsoNumeric || isoType.Value.Padding == IsoRightPadF {
-		//	if i%2 != 0 {
-		//		i += 1
-		//	}
-		//}
-		//if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString {
-		//	i /= 2
-		//}
 		return l, int(i), nil
 	} else {
 		return isoType.Len.Max, 0, NotSupported

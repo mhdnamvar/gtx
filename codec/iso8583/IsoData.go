@@ -68,32 +68,16 @@ func (isoData *IsoData) BeforeEncoding(s string) error {
 		return nil
 	}
 	if len(s) > isoData.Size() {
-		if Debug {
-			log.Printf("BeforeEncoding: len(s)=%d, isoData.Size()=%d", len(s), isoData.Size())
-		}
+		log.Printf("BeforeEncoding: len(s)=%d, isoData.Size()=%d", len(s), isoData.Size())
 		return InvalidLength
 	}
-
-	//if isoData.ContentType != IsoBitmap {
-	//	if isoData.Padding == IsoNoPad && len(s) != isoData.Size() {
-	//		if isoData.Min == isoData.Max {
-	//			if Debug {
-	//				log.Printf("BeforeEncoding: len(%s)=%d should be the same as isoData.Size()=%d",
-	//					s, len(s), isoData.Size())
-	//			}
-	//			return InvalidLength
-	//		}
-	//	}
-	//}
 
 	// check numeric content
 	if isoData.ContentType == IsoNumeric {
 		n := new(big.Int)
 		n, ok := n.SetString(s, 10)
 		if !ok {
-			if Debug {
-				log.Printf("BeforeEncoding: invalid numeric content")
-			}
+			log.Printf("BeforeEncoding: invalid numeric content")
 			return InvalidData
 		}
 	}

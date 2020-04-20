@@ -55,18 +55,14 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 		return nil, err
 	}
 
-	if Debug {
-		log.Printf("DE000: %X", mti)
-	}
+	log.Printf("DE000(%X)", mti)
 
 	bitmap, err := isoSpec[1].Encode(isoMsg.fields[1])
 	if err != nil {
 		log.Fatalf("Error in encoding DE001: [%s], %v", isoMsg.fields[1], err)
 		return nil, err
 	}
-	if Debug {
-		log.Printf("DE001: %X", bitmap)
-	}
+	log.Printf("DE001(%X)", bitmap)
 
 	var b []byte
 	fields := isoMsg.bitmap.Array()
@@ -79,9 +75,7 @@ func (isoMsg *IsoMsg) Encode(isoSpec IsoSpec) ([]byte, error) {
 			log.Fatalf("Error in encoding DE%03d(%s), %v", f, isoMsg.fields[f], err)
 			return nil, err
 		}
-		if Debug {
-			log.Printf("DE%03d: %X", f, encoded)
-		}
+		log.Printf("DE%03d(%X)", f, encoded)
 		b = append(b, encoded...)
 	}
 	return append(append(mti, bitmap...), b...), nil
@@ -95,9 +89,7 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 		return err
 	}
 	isoMsg.Set(0, s)
-	if Debug {
-		log.Printf("DE%03d=%s", 0, s)
-	}
+	log.Printf("DE%03d(%s)", 0, s)
 
 	offset = mtiLen
 	s, bitmapLen, err := isoSpec[1].Decode(b[offset:])
@@ -111,9 +103,7 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 		log.Fatalf("Error in parsing bitmap: [%s], %v", s, err)
 		return err
 	}
-	if Debug {
-		log.Printf("DE%03d=%s", 1, s)
-	}
+	log.Printf("DE%03d(%s)", 1, s)
 	offset = mtiLen + bitmapLen
 	for _, f := range isoMsg.bitmap.Array() {
 		if f > 1 {
@@ -122,9 +112,7 @@ func (isoMsg *IsoMsg) Decode(isoSpec IsoSpec, b []byte) error {
 				//log.Fatalf("DE%03d, Error: %v", f, err)
 				return err
 			}
-			if Debug {
-				log.Printf("DE%03d=%s", f, s)
-			}
+			log.Printf("DE%03d(%s)", f, s)
 			isoMsg.Set(f, s)
 			offset = offset + dataLen
 		}

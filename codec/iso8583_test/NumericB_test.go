@@ -88,7 +88,7 @@ func TestNumericBDecodeInvalidLen(t *testing.T) {
 
 func TestNumericBDecodeLeftPad(t *testing.T) {
 	value := []byte{0x01, 0x23, 0x45, 0x67, 0x89}
-	expected := "01234"
+	expected := "12345"
 	isoType := NumericB(5)
 	isoType.Value.Padding = IsoLeftPad
 	actual, _, err := isoType.Decode(value)
