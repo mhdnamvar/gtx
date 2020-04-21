@@ -3,7 +3,7 @@ package iso8583
 import (
 	"../../utils"
 	"fmt"
-	"log"
+	"github.com/fatih/color"
 	"strconv"
 	"strings"
 )
@@ -20,13 +20,13 @@ func (isoType *IsoType) Encode(s string) ([]byte, error) {
 	}
 	encLen, err := isoType.Len.Encode(strconv.Itoa(i))
 	if err != nil {
-		log.Println(err)
+		color.Red("%v", err)
 		return nil, err
 	}
 
 	encValue, err := isoType.Value.Encode(s)
 	if err != nil {
-		log.Println(err)
+		color.Red("%v", err)
 		return nil, err
 	}
 
@@ -35,25 +35,26 @@ func (isoType *IsoType) Encode(s string) ([]byte, error) {
 
 func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 
-	log.Printf("data=(%X)", b)
+	color.White("data(%X)", b)
 
 	lenSize, dataSize, err := isoType.DecodeLen(b)
 	if err != nil {
 		return "", 0, InvalidLength
 	}
 
-	log.Printf("len(b)=%d, lenSize=%d, dataSize=%d", len(b), lenSize, dataSize)
-
 	// PadSize
 	padSize := 0
 	if isoType.Value.Padding != IsoNoPad {
 		padSize = isoType.Value.Max - dataSize
 		if padSize < 0 {
-			log.Printf("Error: dataSize(%d) > Max(%d), ", dataSize, isoType.Value.Max)
+			color.Red("Error: dataSize(%d) > Max(%d), ", dataSize, isoType.Value.Max)
 			return "", 0, InvalidLength
 		}
 	}
-	if isoType.Value.Encoding == IsoBinary && dataSize % 2 != 0 && isoType.Value.ContentType == IsoNumeric {
+
+	if isoType.Value.Encoding == IsoBinary &&
+		dataSize % 2 != 0 &&
+		isoType.Value.ContentType == IsoNumeric {
 		padSize++
 	}
 
@@ -63,7 +64,9 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 		size = isoType.Value.Max
 	}
 	odd := size % 2 != 0
-	if isoType.Value.Encoding == IsoBinary && isoType.Value.ContentType != IsoHexString && isoType.Value.ContentType != IsoBitmap{
+	if isoType.Value.Encoding == IsoBinary &&
+		isoType.Value.ContentType != IsoHexString &&
+		isoType.Value.ContentType != IsoBitmap{
 		if odd {
 			size /= 2
 			size += 1
@@ -72,15 +75,16 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 		}
 	}
 
-	if isoType.Value.Encoding != IsoBinary && isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
-		log.Println("----------1")
+	if isoType.Value.Encoding != IsoBinary &&
+		isoType.Value.ContentType == IsoHexString &&
+		isoType.Len == nil{
 		 size *= 2
 	}
 
-	log.Printf("len(b)=%d, lenSize=%d, size=%d, binary=%v",
+	color.Cyan("len(%d), lenSize(%d), size(%d), binary(%v)",
 		len(b), lenSize, size, isoType.Value.Encoding == IsoBinary)
 	if len(b) < lenSize + size {
-		log.Printf("Error: len(b)=%d < lenSize=%d + size=%d", len(b), lenSize, size)
+		color.Red("Error: len(b)=%d < lenSize=%d + size=%d", len(b), lenSize, size)
 		return "", 0, InvalidLength
 	}
 
@@ -90,31 +94,37 @@ func (isoType *IsoType) Decode(b []byte) (string, int, error) {
 	}
 
 	// Padding
-	log.Printf("padSize=%d, %v", padSize, isoType.Value.Padding)
 	if isoType.Value.Padding == IsoLeftPad {
-		log.Println("----------2")
 		decValue = decValue[padSize:]
 	} else if isoType.Value.Padding == IsoRightPad || isoType.Value.Padding == IsoRightPadF{
-		log.Println("----------3")
 		decValue = decValue[:len(decValue) - padSize]
 	} else if isoType.Value.Padding == IsoNoPad {
 		if isoType.Value.Encoding == IsoBinary && dataSize % 2 != 0 && isoType.Value.ContentType == IsoNumeric {
-			log.Println("----------4")
 			decValue = decValue[:len(decValue) - padSize]
 		}
 	}
 
 	// return values
+	if isoType.Value.ContentType == IsoBitmap && isoType.Value.Encoding == IsoBinary{
+		var bitmap Bitmap
+		err = bitmap.Parse(decValue[:8])
+		if err != nil {
+			return "", 0, err
+		}
+		sBitmap := 1
+		color.Yellow("Second bitmap = %v", bitmap.Get(sBitmap))
+		if !bitmap.Get(sBitmap) {
+			size /= 2
+		}
+	}
+
 	if isoType.Value.Encoding == IsoBinary{
 		if isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
-			log.Println("----------5")
 			return decValue, size/2, nil
 		}
 	} else if isoType.Value.ContentType == IsoHexString && isoType.Len == nil{
-		log.Println("----------6")
 		return decValue, size*2, nil
 	}
-	log.Println("----------7")
 	return decValue, lenSize + size, nil
 }
 
@@ -172,22 +182,15 @@ func (isoType *IsoType) PadString() string {
 }
 
 func (isoType *IsoType) Size() int {
-	//size := isoType.Value.Max
-	//if isoType.Value.Encoding != IsoBinary {
-	//	if isoType.Value.ContentType == IsoBitmap || isoType.Value.ContentType == IsoHexString {
-	//		size *= 2
-	//	}
-	//}
-	//return size
 	panic("Not implemented!")
 }
 
 func (isoType *IsoType) DecodeLen(b []byte) (int, int, error) {
 	if isoType.Len == nil {
-		log.Print("Fixed length")
+		color.Cyan("Fixed length")
 		return 0, isoType.Value.Max, nil
 	}
-
+	color.Cyan("Variable length")
 	if isoType.Len.Encoding == IsoAscii {
 		i, err := utils.Btoi(b[:isoType.Len.Max])
 		return isoType.Len.Max, i, err

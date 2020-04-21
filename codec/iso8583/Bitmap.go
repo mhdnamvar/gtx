@@ -2,6 +2,7 @@ package iso8583
 
 import (
 	"encoding/hex"
+	"github.com/fatih/color"
 	"log"
 	"strings"
 )
@@ -67,7 +68,7 @@ func (bitmap *Bitmap) Parse(s string) error {
 
 	b, err := hex.DecodeString(s)
 	if err != nil {
-		log.Printf("s=%s, b=%x", s, b)
+		color.Red("s)%s, b=%x", s, b)
 		return InvalidData
 	}
 	if len(b) > BitmapSize {

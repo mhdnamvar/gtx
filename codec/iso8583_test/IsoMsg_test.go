@@ -2,7 +2,7 @@ package iso8583_test
 
 import (
 	"encoding/hex"
-	"log"
+	"github.com/fatih/color"
 	"strings"
 	"testing"
 
@@ -220,7 +220,6 @@ func TestIsoMsgEncodeEbcdic87(t *testing.T) {
 	expected := "F0F2F1F0F2382201D8A1831A0200000000000001F1F9F6F7F3F4F0F0F0F0F0F0F0F0F0F0F0F0F0F6F7F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F1F0F1F0F8F0F6F0F8F0F1F0F2F8F2F3F5F7F9F1F0F0F1F0F0F0F8F0F6F5F2F8F0F0F1F0F9F6F7F3F0F0F5F0F0F5F1F1F6F7F3F9F0F1F0F0F2F0F0F1F0F1F2F3F4F5F6F7F8F9F0F0F1F0F1F2F3F4F5F6F7F8F9F0F0F8F0F6F8F5F7F0F0F0F0F0C3D7D6E2F9F94040F0F6F5F0D4C1C5E2F1F1F5F2F5F2F8F0F0F3F0F0F0F0F3F5F4F04040404040404040404040404040F0F2F6D4C1C5E2F0F1F1F5F9F4F1F2F3F4F5F6F0F4F0F7404040404040F9F7F8F0F9F85F2A0209789A031409029C01009F1A0209789F02063030323030309F03060000000000009F10201F4301AAAAAAAA000011223344045856000000000000000000000000000000009F2701809F3602F1039F37044DDF27A982025C009505F070AC9800F0F0F8C1C2C3C4F1F2F3F4F0F0F0F0F2F3F0F2F0F0F5F8F8F0F0F0F0F0F0F0F0F0F1F54040F0F0F1F0F2F9F0F2F6F0F0F0F0F0F0F0F0F0F0F8F0F0F5F2F8F3F5F2F6D3C240404040F5F6F6F6F2C4F2C1F9F8C6F1F2C4F2C1F9F8C6F1"
 	bytes, err := isoMsg.Encode(DefaultEbcdic87)
 	s := strings.ToUpper(hex.EncodeToString(bytes))
-	log.Printf("Hex: %s", s)
 	assert.Equal(t, err, nil)
 	assert.Equal(t, expected, s)
 }
@@ -454,12 +453,11 @@ func TestIsoMsgEncodeBinaryField32(t *testing.T) {
 	b, err := isoMsg.Encode(DefaultBinary87)
 	assert.Equal(t, err, nil)
 	s := strings.ToUpper(hex.EncodeToString(b))
-	log.Println(s)
 	assert.Equal(t, expected, s)
 }
 
 func TestIsoMsgBinary87Field55(t *testing.T) {
-	log.Println("----> Encoding...")
+	color.Yellow("----> Encoding...")
 	isoMsg := NewIsoMsg()
 	isoMsg.Set(0, "0210")
 	isoMsg.Set(55, "5F2A0209789A031409029C01009F1A0209789F02063030323030309F03060000000000009F10201F4301AAAAAAAA000011223344045856000000000000000000000000000000009F2701809F3602F1039F37044DDF27A982025C009505F070AC9800")
@@ -469,7 +467,7 @@ func TestIsoMsgBinary87Field55(t *testing.T) {
 	assert.Equal(t, err, nil)
 	assert.Equal(t, expected, strings.ToUpper(hex.EncodeToString(b)))
 
-	log.Println("----> Decoding...")
+	color.Yellow("----> Decoding...")
 	err = isoMsg.Decode(DefaultBinary87, b)
 	assert.Equal(t, err, nil)
 
@@ -484,7 +482,7 @@ func TestIsoMsgBinary87Field55(t *testing.T) {
 }
 
 func TestIsoMsgBinary87Field43(t *testing.T) {
-	log.Println("----> Encoding...")
+	color.Yellow("----> Encoding...")
 	isoMsg := NewIsoMsg()
 	isoMsg.Set(0, "0210")
 	isoMsg.Set(43, "0650MAES115252800300003540")
@@ -494,7 +492,7 @@ func TestIsoMsgBinary87Field43(t *testing.T) {
 	assert.Equal(t, err, nil)
 	assert.Equal(t, expected, strings.ToUpper(hex.EncodeToString(b)))
 
-	log.Println("----> Decoding...")
+	color.Yellow("----> Decoding...")
 	err = isoMsg.Decode(DefaultBinary87, b)
 	assert.Equal(t, err, nil)
 
@@ -509,7 +507,7 @@ func TestIsoMsgBinary87Field43(t *testing.T) {
 }
 
 func TestIsoMsgBinary87Field36(t *testing.T) {
-	log.Println("----> Encoding...")
+	color.Yellow("----> Encoding...")
 	isoMsg := NewIsoMsg()
 	isoMsg.Set(0, "0210")
 	isoMsg.Set(36, "1234567890")
@@ -519,7 +517,7 @@ func TestIsoMsgBinary87Field36(t *testing.T) {
 	assert.Equal(t, err, nil)
 	assert.Equal(t, expected, strings.ToUpper(hex.EncodeToString(b)))
 
-	log.Println("----> Decoding...")
+	color.Yellow("----> Decoding...")
 	err = isoMsg.Decode(DefaultBinary87, b)
 	assert.Equal(t, err, nil)
 
@@ -534,7 +532,7 @@ func TestIsoMsgBinary87Field36(t *testing.T) {
 }
 
 func TestIsoMsgBinary87Field2(t *testing.T) {
-	log.Println("----> Encoding...")
+	color.Yellow("----> Encoding...")
 	isoMsg := NewIsoMsg()
 	isoMsg.Set(0, "0210")
 	isoMsg.Set(2, "6734000000000000067")
@@ -544,7 +542,7 @@ func TestIsoMsgBinary87Field2(t *testing.T) {
 	assert.Equal(t, err, nil)
 	assert.Equal(t, expected, strings.ToUpper(hex.EncodeToString(b)))
 
-	log.Println("----> Decoding...")
+	color.Yellow("----> Decoding...")
 	err = isoMsg.Decode(DefaultBinary87, b)
 	assert.Equal(t, err, nil)
 
@@ -556,4 +554,47 @@ func TestIsoMsgBinary87Field2(t *testing.T) {
 
 	f2, _ := isoMsg.Get(2)
 	assert.Equal(t, "6734000000000000067", f2)
+}
+
+func TestIsoMsgAsciiField2(t *testing.T) {
+	color.Yellow("----> Encoding...")
+	isoMsg := NewIsoMsg()
+	isoMsg.Set(0, "0210")
+	isoMsg.Set(2, "6734000000000000067")
+	expected := "3032313034303030303030303030303030303030313936373334303030303030303030303030303637"
+
+	spec := DefaultAscii87
+	spec[1] = &IsoType{
+			Value: &IsoData{
+				Encoding: IsoAscii,
+				Min: 0,
+				Max: 16,
+				ContentType: IsoBitmap,
+				Padding: IsoNoPad,
+			},
+		}
+	b, err := isoMsg.Encode(spec)
+	assert.Equal(t, err, nil)
+	assert.Equal(t, expected, strings.ToUpper(hex.EncodeToString(b)))
+
+	color.Yellow("----> Decoding...")
+	err = isoMsg.Decode(spec, b)
+	assert.Equal(t, err, nil)
+
+	f0, _ := isoMsg.Get(0)
+	assert.Equal(t, "0210", f0)
+
+	f1, _ := isoMsg.Get(1)
+	assert.Equal(t, "4000000000000000", f1)
+
+	f2, _ := isoMsg.Get(2)
+	assert.Equal(t, "6734000000000000067", f2)
+
+	// secondary bitmap
+	isoMsg.Set(60, "Field60")
+	err = isoMsg.Decode(spec, b)
+	assert.Equal(t, err, nil)
+
+	f60, _ := isoMsg.Get(60)
+	assert.Equal(t, "Field60", f60)
 }

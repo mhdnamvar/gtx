@@ -4,7 +4,7 @@ import (
 	"../../utils"
 	"encoding/hex"
 	"fmt"
-	"log"
+	"github.com/fatih/color"
 	"math/big"
 	"strings"
 )
@@ -40,7 +40,7 @@ func (isoData *IsoData) Encode(s string) ([]byte, error) {
 		}
 		bytes, err := hex.DecodeString(p)
 		if err != nil {
-			log.Printf("[%s], err[%v]", p, err)
+			color.Red("(%s), err(%v)", p, err)
 			return nil, InvalidData
 		}
 		return bytes, nil
@@ -68,7 +68,7 @@ func (isoData *IsoData) BeforeEncoding(s string) error {
 		return nil
 	}
 	if len(s) > isoData.Size() {
-		log.Printf("BeforeEncoding: len(s)=%d, isoData.Size()=%d", len(s), isoData.Size())
+		color.Yellow("BeforeEncoding: len(s)=%d, isoData.Size()=%d", len(s), isoData.Size())
 		return InvalidLength
 	}
 
@@ -77,7 +77,7 @@ func (isoData *IsoData) BeforeEncoding(s string) error {
 		n := new(big.Int)
 		n, ok := n.SetString(s, 10)
 		if !ok {
-			log.Printf("BeforeEncoding: invalid numeric content")
+			color.Red("BeforeEncoding: invalid numeric content")
 			return InvalidData
 		}
 	}
