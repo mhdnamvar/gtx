@@ -20,7 +20,7 @@ var (
 	wg       sync.WaitGroup
 	runCmd   = &cobra.Command{
 		Use:   "run",
-		Short: "runs a gtx server",
+		Short: "Run a GTX server",
 		Long:  ``,
 		Run:   checkRunFlags,
 	}

@@ -55,7 +55,7 @@ func (isoPackager *IsoPackager) String() string {
 // importCmd represents the import command
 var importCmd = &cobra.Command{
 	Use:   "import",
-	Short: "Import protocol",
+	Short: "Import jPos ISO 8583 protocols",
 	Long:  `Example: gtx import protocol-iso87binary.xml MyBinary87`,
 	Run:   checkFlags,
 }

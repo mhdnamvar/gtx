@@ -11,7 +11,7 @@ var cfgFile string
 
 var rootCmd = &cobra.Command{
 	Use:   "gtx",
-	Short: "GTX is a transaction management system in Go",
+	Short: "\nGTX: Transaction management system",
 }
 
 func Execute() {
